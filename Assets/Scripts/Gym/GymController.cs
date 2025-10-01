@@ -7,6 +7,7 @@ public class GymController : ShowerAbstractClass
     [SerializeField] private Button _horizontalBar;
     [SerializeField] private Button _bench;
     [SerializeField] private Button _balks;
+    [SerializeField] private Button _foots;
 
     protected override void OnDestroy()
     {
@@ -16,6 +17,7 @@ public class GymController : ShowerAbstractClass
         _horizontalBar.onClick.RemoveAllListeners();
         _bench.onClick.RemoveAllListeners();
         _balks.onClick.RemoveAllListeners();
+        _foots.onClick.RemoveAllListeners();
     }
 
     public override void Initialize()
@@ -27,6 +29,7 @@ public class GymController : ShowerAbstractClass
         _horizontalBar.onClick.AddListener(() => ShowerManager.Instance.onShowOnScreen?.Invoke(Identificate.HorizontalBar));
         _bench.onClick.AddListener(() => ShowerManager.Instance.onShowOnScreen?.Invoke(Identificate.Bench));
         _balks.onClick.AddListener(() => ShowerManager.Instance.onShowOnScreen?.Invoke(Identificate.Balks));
+        _foots.onClick.AddListener(() => ShowerManager.Instance.onShowOnScreen?.Invoke(Identificate.Foots));
 
     }
 

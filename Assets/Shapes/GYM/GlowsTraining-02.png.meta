@@ -126,12 +126,12 @@ TextureImporter:
       name: BanchGlow
       rect:
         serializedVersion: 2
-        x: 0
-        y: 39
-        width: 28
-        height: 26
+        x: 31
+        y: 3
+        width: 33
+        height: 28
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -147,12 +147,12 @@ TextureImporter:
       name: HorizontalBarGlow
       rect:
         serializedVersion: 2
-        x: 32
-        y: 22
-        width: 28
-        height: 42
+        x: 6
+        y: 32
+        width: 22
+        height: 33
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -168,12 +168,12 @@ TextureImporter:
       name: BalksGlow
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 34
+        y: 32
         width: 28
-        height: 29
+        height: 33
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -181,6 +181,27 @@ TextureImporter:
       bones: []
       spriteID: 6f60e290ca90b254ebfd5d202d7c9f04
       internalID: 2101876950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GlowsFoots
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5
+        width: 31
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f258a91c7fa47744a693ab0dfdd2dc7
+      internalID: -92369964
       vertices: []
       indices: 
       edges: []
@@ -198,6 +219,7 @@ TextureImporter:
     nameFileIdTable:
       BalksGlow: 2101876950
       BanchGlow: -112944834
+      GlowsFoots: -92369964
       HorizontalBarGlow: -1964292963
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

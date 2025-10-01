@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class Bench : ShowerAbstractClass
 {
     protected override void OnDestroy()

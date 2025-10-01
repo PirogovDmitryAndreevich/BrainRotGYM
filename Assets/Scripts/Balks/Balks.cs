@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class Balks : ShowerAbstractClass
 {
     protected override void OnDestroy()

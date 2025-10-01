@@ -131,7 +131,7 @@ TextureImporter:
         width: 230
         height: 379
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -152,7 +152,7 @@ TextureImporter:
         width: 250
         height: 305
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -173,7 +173,7 @@ TextureImporter:
         width: 228
         height: 200
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -181,6 +181,27 @@ TextureImporter:
       bones: []
       spriteID: f24d3e1ccea122b458245f65377b0213
       internalID: -1285682819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TrainingFoots
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 8
+        width: 185
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 550878935d8b8a54495ecedda72012b7
+      internalID: -123381158
       vertices: []
       indices: 
       edges: []
@@ -198,6 +219,7 @@ TextureImporter:
     nameFileIdTable:
       TrainingBalks: 175039368
       TrainingBanch: -1285682819
+      TrainingFoots: -123381158
       TrainingHorizontal: -1822650952
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

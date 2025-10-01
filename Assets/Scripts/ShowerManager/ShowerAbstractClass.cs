@@ -1,11 +1,14 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
+[RequireComponent(typeof(Button))]
 public abstract class ShowerAbstractClass : MonoBehaviour
 {
     protected Identificate _identificate;
     protected bool _isInitialized;
     protected Vector3 _originalPosition;
+    protected Button _button;
 
     protected virtual void OnDestroy()
     {
@@ -19,11 +22,16 @@ public abstract class ShowerAbstractClass : MonoBehaviour
             ShowerMover.Instance.HidingIsCompleted -= Hide;
             ShowerMover.Instance.ShowIsCompleted -= ShowingIsCompleted;
         }
+
+        _button.onClick.RemoveAllListeners();
     }
 
     public virtual void Initialize() 
     {
         if (_isInitialized) return;
+
+        _button = GetComponent<Button>();
+        _button.onClick.AddListener(OnClickButton);
 
         Debug.Log($"{transform.name} is initialized");
         _originalPosition = transform.position;
@@ -68,5 +76,10 @@ public abstract class ShowerAbstractClass : MonoBehaviour
     {
         ShowerMover.Instance.HidingIsCompleted -= Hide;
         gameObject.SetActive(false);
+    }
+
+    protected virtual void OnClickButton()
+    {
+
     }
 }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6e637a2b108e4fd46aca9cb4c0b69a2a
+guid: 031c133b3d6d6d641aab412db937fc77
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 64
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ShadowHorizontalBar
+      name: BenchIcon
       rect:
         serializedVersion: 2
         x: 1
-        y: 36
-        width: 31
-        height: 21
+        y: 66
+        width: 61
+        height: 63
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 790aae02a3274c54f91647b1d26ad397
-      internalID: -1050982921
+      spriteID: 6620d44d72e0eb44c9865facb210afcb
+      internalID: -1614157570
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShadowBench
+      name: BalksIcon
       rect:
         serializedVersion: 2
-        x: 32
-        y: 38
-        width: 33
-        height: 21
+        x: 65
+        y: 66
+        width: 61
+        height: 63
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ec7fa66aa0bb4af40bed106227e9d746
-      internalID: 1891816382
+      spriteID: b9d60ae666af2974abe7741e1b2bc521
+      internalID: 1887556706
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShadowBalks
+      name: FootsIcon
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 0
-        width: 33
-        height: 28
+        width: 61
+        height: 63
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,20 +179,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a52a663437108c745b2f3b1096a9220d
-      internalID: 2137413649
+      spriteID: 2cdc9b97679ec5040be20c0cb98bed91
+      internalID: -1190325753
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ShadowFoots
+      name: HorizontalBarIcon
       rect:
         serializedVersion: 2
-        x: 33
+        x: 65
         y: 0
-        width: 31
-        height: 28
+        width: 61
+        height: 63
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,8 +200,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 609509622c9f32f4fb5033b186c666a4
-      internalID: 1945011631
+      spriteID: 11f27a530e15bbc469ff92fe08fe7be9
+      internalID: 1250331715
       vertices: []
       indices: 
       edges: []
@@ -217,10 +217,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ShadowBalks: 2137413649
-      ShadowBench: 1891816382
-      ShadowFoots: 1945011631
-      ShadowHorizontalBar: -1050982921
+      BalksIcon: 1887556706
+      BenchIcon: -1614157570
+      FootsIcon: -1190325753
+      HorizontalBarIcon: 1250331715
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

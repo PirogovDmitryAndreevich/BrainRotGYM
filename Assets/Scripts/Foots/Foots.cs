@@ -1,4 +1,4 @@
-public class HorizontalBar : ShowerAbstractClass
+public class Foots : ShowerAbstractClass
 {
     protected override void OnDestroy()
     {
@@ -8,11 +8,11 @@ public class HorizontalBar : ShowerAbstractClass
     public override void Initialize()
     {
         base.Initialize();
-        _identificate = Identificate.HorizontalBar;
+        _identificate = Identificate.Foots;
     }
 
     protected override void ShowOnScreen(Identificate identificate)
-    {       
+    {
         base.ShowOnScreen(identificate);
     }
 
@@ -23,11 +23,11 @@ public class HorizontalBar : ShowerAbstractClass
 
     protected override void ShowingIsCompleted()
     {
-       base.ShowingIsCompleted();       
+        base.ShowingIsCompleted();
     }
 
     protected override void Hide()
     {
-       base.Hide();
+        base.Hide();
     }
 }
