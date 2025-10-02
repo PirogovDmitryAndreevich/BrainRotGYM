@@ -1,25 +1,28 @@
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button), typeof(ShakeAreaEffect))]
+[RequireComponent(typeof(Button), typeof(ShakeAreaEffect), typeof(ResistanceProgressBar))]
 public class TrainingButtonBehaviour : MonoBehaviour
 {
     protected Button _button;
     protected bool _isInitialized;
     protected Identificate _identificate;
     protected ShakeAreaEffect _shakeAreaEffect;
+    protected ResistanceProgressBar _progressBar;
 
     protected virtual void OnEnable()
     {
         if (MyPrefabs.Instance != null)
             MyPrefabs.Instance.SetValueInScorePrefab(GetCurrentLvlValue(_identificate));
+
+        if (Progress.Instance != null)
+            _progressBar.Initialize(GetCurrentLvlValue(_identificate));
     }
 
     protected virtual void OnDestroy()
     {
         _button.onClick.RemoveAllListeners();
+        //_progressBar.OnProgressBarIsCompleted -=
     }
 
     public virtual void Initialize(Identificate identificate)
@@ -27,6 +30,9 @@ public class TrainingButtonBehaviour : MonoBehaviour
         if (_isInitialized) return;
 
         _shakeAreaEffect = GetComponent<ShakeAreaEffect>();
+
+        _progressBar = GetComponent<ResistanceProgressBar>();
+        //_progressBar.OnProgressBarIsCompleted +=
 
         _button = GetComponent<Button>();
         _button.onClick.AddListener(OnClickButton);
@@ -40,6 +46,7 @@ public class TrainingButtonBehaviour : MonoBehaviour
     {
         StatsManager.Instance.AddStat?.Invoke(_identificate, GetCurrentLvlValue(_identificate));
 
+        _progressBar.OnButtonClick();
         _shakeAreaEffect.Shake();
         FlyingUpScoreEffect.Instance.CreateClickUIEffect(Input.mousePosition);
     }
