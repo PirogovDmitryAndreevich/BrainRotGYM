@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class StatsManager : MonoBehaviour
@@ -66,6 +67,14 @@ public class StatsManager : MonoBehaviour
 
     private void InitializeStats()
     {
+        // Проверяем, готов ли Progress.Instance
+        if (Progress.Instance?.PlayerInfo == null)
+        {
+            Debug.Log("Progress.Instance not ready, delaying initialization...");
+            StartCoroutine(DelayedInitializeStats());
+            return;
+        }
+
         foreach (var stat in _statsUI)
         {
             stat.Initialize();
@@ -73,6 +82,15 @@ public class StatsManager : MonoBehaviour
             int currentValue = GetCurrentStatValue(stat.StatType);
             UpdateUIStats?.Invoke(stat.StatType, currentValue);
         }
+    }
+
+    private IEnumerator DelayedInitializeStats()
+    {
+        // Ждем один кадр
+        yield return null;
+
+        // Пробуем снова
+        InitializeStats();
     }
 
     private int GetCurrentStatValue(Stats statType)
