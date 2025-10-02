@@ -3,12 +3,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
+[RequireComponent(typeof(Button), typeof(ShakeAreaEffect))]
 public class TrainingButtonBehaviour : MonoBehaviour
 {
     protected Button _button;
     protected bool _isInitialized;
     protected Identificate _identificate;
+    protected ShakeAreaEffect _shakeAreaEffect;
 
     protected virtual void OnEnable()
     {
@@ -25,6 +26,8 @@ public class TrainingButtonBehaviour : MonoBehaviour
     {
         if (_isInitialized) return;
 
+        _shakeAreaEffect = GetComponent<ShakeAreaEffect>();
+
         _button = GetComponent<Button>();
         _button.onClick.AddListener(OnClickButton);
 
@@ -37,7 +40,8 @@ public class TrainingButtonBehaviour : MonoBehaviour
     {
         StatsManager.Instance.AddStat?.Invoke(_identificate, GetCurrentLvlValue(_identificate));
 
-        FlyingUpScoreEffect.Instance.CreateFlyingText(MyPrefabs.Instance.ScorePrefab, Input.mousePosition);
+        _shakeAreaEffect.Shake();
+        FlyingUpScoreEffect.Instance.CreateClickUIEffect(Input.mousePosition);
     }
 
     private int GetCurrentLvlValue(Identificate statType)

@@ -1,12 +1,15 @@
-using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MyPrefabs : MonoBehaviour
 {
     public static MyPrefabs Instance;
 
     [SerializeField] public GameObject ScorePrefab;
-    private TextMeshProUGUI _scoreText; 
+    private Text _scoreText;
+
+    [SerializeField] public GameObject ClickEffect;
 
     private void Awake()
     {
@@ -15,7 +18,7 @@ public class MyPrefabs : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            _scoreText = ScorePrefab.GetComponentInChildren<TextMeshProUGUI>();
+            _scoreText = ScorePrefab.GetComponentInChildren<Text>();
         }
         else
         {
