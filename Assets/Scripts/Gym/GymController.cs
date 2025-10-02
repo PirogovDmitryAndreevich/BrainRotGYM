@@ -32,24 +32,4 @@ public class GymController : ShowerAbstractClass
         _foots.onClick.AddListener(() => ShowerManager.Instance.onShowOnScreen?.Invoke(Identificate.Foots));
 
     }
-
-    protected override void ShowOnScreen(Identificate identificate)
-    {
-        base.ShowOnScreen(identificate);
-    }
-
-    protected override void Hide()
-    {
-        base.Hide();
-    }
-
-    protected override void Show()
-    {
-        base.Show();
-    }
-
-    protected override void ShowingIsCompleted()
-    {
-        base.ShowingIsCompleted();
-    }
 }

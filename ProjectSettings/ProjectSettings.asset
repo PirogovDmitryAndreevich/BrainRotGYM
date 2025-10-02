@@ -599,8 +599,17 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Standalone: PLUGIN_YG_2;TMP_YG2
-    WebGL: PLUGIN_YG_2;TMP_YG2
+    Android: PLUGIN_YG_2;TMP_YG2;Authorization_yg;Storage_yg
+    LinuxHeadlessSimulation: PLUGIN_YG_2;TMP_YG2;Authorization_yg;Storage_yg
+    Nintendo Switch: PLUGIN_YG_2;TMP_YG2;Authorization_yg;Storage_yg
+    PS4: PLUGIN_YG_2;TMP_YG2;Authorization_yg;Storage_yg
+    PS5: PLUGIN_YG_2;TMP_YG2;Authorization_yg;Storage_yg
+    Standalone: PLUGIN_YG_2;TMP_YG2;Authorization_yg;Storage_yg
+    WebGL: PLUGIN_YG_2;TMP_YG2;RU_YG2;Authorization_yg;Storage_yg
+    Windows Store Apps: PLUGIN_YG_2;TMP_YG2;Authorization_yg;Storage_yg
+    XboxOne: PLUGIN_YG_2;TMP_YG2;Authorization_yg;Storage_yg
+    iPhone: PLUGIN_YG_2;TMP_YG2;Authorization_yg;Storage_yg
+    tvOS: PLUGIN_YG_2;TMP_YG2;Authorization_yg;Storage_yg
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
