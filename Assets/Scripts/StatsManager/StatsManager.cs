@@ -7,7 +7,7 @@ public class StatsManager : MonoBehaviour
 
     [SerializeField] private StatsType[] _statsUI;
 
-    public Action<Stats, int> AddStat;
+    public Action<Identificate, int> AddStat;
     public Action<Stats, int> UpdateUIStats;
 
     private void Awake()
@@ -26,7 +26,6 @@ public class StatsManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
     }
 
     private void OnDestroy()
@@ -34,21 +33,27 @@ public class StatsManager : MonoBehaviour
         AddStat -= AddingStat;
     }
 
-    private void AddingStat(Stats stat, int value)
+    private void AddingStat(Identificate stat, int value)
     {
+        Stats statType;
+
         switch (stat)
         {
-            case Stats.Balks:
+            case Identificate.Balks:
                 Progress.Instance.PlayerInfo.Balk += value;
+                statType = Stats.Balks;
                 break;
-            case Stats.Bench:
+            case Identificate.Bench:
                 Progress.Instance.PlayerInfo.Bench += value;
+                statType = Stats.Bench;
                 break;
-            case Stats.HorizontalBar:
+            case Identificate.HorizontalBar:
                 Progress.Instance.PlayerInfo.HorizontalBars += value;
+                statType = Stats.HorizontalBar;
                 break;
-            case Stats.Foots:
+            case Identificate.Foots:
                 Progress.Instance.PlayerInfo.Foots += value;
+                statType = Stats.Foots;
                 break;
             default:
                 Debug.LogWarning($"Unknown stat type: {stat}");
@@ -56,7 +61,7 @@ public class StatsManager : MonoBehaviour
         }
 
         Progress.Instance.Save();
-        UpdateUIStats?.Invoke(stat, value);
+        UpdateUIStats?.Invoke(statType, GetCurrentStatValue(statType));
     }
 
     private void InitializeStats()

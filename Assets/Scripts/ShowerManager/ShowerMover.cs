@@ -27,8 +27,6 @@ public class ShowerMover : MonoBehaviour
 
     public void Hide(Vector3 originPosition, Transform targetTransform)
     {
-        Debug.Log($"ShowerMover: {targetTransform.name} - Hiding");
-
         StopMovement(targetTransform);
 
         Coroutine coroutine = StartCoroutine(MoveToTargetRoutine(originPosition, targetTransform));
@@ -37,8 +35,6 @@ public class ShowerMover : MonoBehaviour
 
     public void Show(Vector3 originPosition, Transform targetTransform)
     {
-        Debug.Log($"ShowerMover: {targetTransform.name} - Showing");
-
         StopMovement(targetTransform);
 
         Coroutine coroutine = StartCoroutine(UpDownMovementRoutine(originPosition, targetTransform));
@@ -59,8 +55,6 @@ public class ShowerMover : MonoBehaviour
 
     private IEnumerator MoveToTargetRoutine(Vector3 position, Transform targetTransform)
     {
-        Debug.Log($"Hide started for {targetTransform.name}");
-
         yield return MoveToPosition(position + Vector3.up * _moveHeight, _moveDuration, targetTransform);
 
         yield return MoveToPosition(_target.position, _moveDuration, targetTransform);
@@ -99,7 +93,6 @@ public class ShowerMover : MonoBehaviour
             yield return null;
         }
 
-        // √арантируем точное достижение целевой позиции
         targetTransform.position = targetPosition;
     }
 

@@ -1,0 +1,21 @@
+{
+    "intExample": 5,
+    "strExample": "Hello!",
+    "boolExample": [
+        false,
+        false,
+        false,
+        false
+    ],
+    "idSave": 283,
+    "PlayerInfo": {
+        "Balk": 9,
+        "Bench": 0,
+        "HorizontalBars": 266,
+        "Foots": 8,
+        "LvlBalk": 1,
+        "LvlBench": 1,
+        "LvlHorizontalBars": 1,
+        "LvlFoots": 1
+    }
+}
