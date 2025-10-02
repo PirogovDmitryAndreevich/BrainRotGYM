@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +9,12 @@ public class TrainingButtonBehaviour : MonoBehaviour
     protected Button _button;
     protected bool _isInitialized;
     protected Identificate _identificate;
+
+    protected virtual void OnEnable()
+    {
+        if (MyPrefabs.Instance != null)
+            MyPrefabs.Instance.SetValueInScorePrefab(GetCurrentLvlValue(_identificate));
+    }
 
     protected virtual void OnDestroy()
     {
@@ -28,6 +36,8 @@ public class TrainingButtonBehaviour : MonoBehaviour
     protected virtual void OnClickButton()
     {
         StatsManager.Instance.AddStat?.Invoke(_identificate, GetCurrentLvlValue(_identificate));
+
+        FlyingUpScoreEffect.Instance.CreateFlyingText(MyPrefabs.Instance.ScorePrefab, Input.mousePosition);
     }
 
     private int GetCurrentLvlValue(Identificate statType)
