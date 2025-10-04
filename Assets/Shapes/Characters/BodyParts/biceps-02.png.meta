@@ -1,0 +1,360 @@
+fileFormatVersion: 2
+guid: 1c3f5a62c8a89e648a80b93d482e78e6
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 1_biceps_Left
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 30
+        width: 87
+        height: 99
+      alignment: 9
+      pivot: {x: 0.7291016, y: 0.7615241}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be190f76f6779b843a1e139e1f49ba25
+      internalID: 493880118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 1_biceps_Rigth
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 30
+        width: 87
+        height: 99
+      alignment: 9
+      pivot: {x: 0.2837093, y: 0.7911398}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88a28a730eb04c64abb4ca82d6330fb8
+      internalID: 1417272007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_biceps_Left
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 30
+        width: 87
+        height: 99
+      alignment: 9
+      pivot: {x: 0.8509907, y: 0.8457106}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fae96554f9497304999129eda8229d1d
+      internalID: 1298769755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 2_biceps_Rigth
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 30
+        width: 87
+        height: 99
+      alignment: 9
+      pivot: {x: 0.1732967, y: 0.8556648}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff65d1135f1e395409c72f5d3413cbbf
+      internalID: 34591109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 3_biceps_Left
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 30
+        width: 87
+        height: 99
+      alignment: 9
+      pivot: {x: 0.8217335, y: 0.858566}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53b99d358710e014ca38d58a5eedfa61
+      internalID: -1633175136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 3_biceps_Rigth
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 30
+        width: 87
+        height: 99
+      alignment: 9
+      pivot: {x: 0.16842055, y: 0.84709454}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d327efb16e4e8024ea051ab23cdb2041
+      internalID: 1290403322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_biceps_Left
+      rect:
+        serializedVersion: 2
+        x: 620
+        y: 30
+        width: 87
+        height: 99
+      alignment: 9
+      pivot: {x: 0.85699743, y: 0.7547308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33cf7bffb3b8761408b11d5306c2347a
+      internalID: -1972843796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 4_biceps_Rigth
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 30
+        width: 87
+        height: 99
+      alignment: 9
+      pivot: {x: 0.13402128, y: 0.75989}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0581c051f1c1b1947aa151a4024f5236
+      internalID: -1689037132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 5_biceps_Left
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 30
+        width: 87
+        height: 99
+      alignment: 9
+      pivot: {x: 0.69810677, y: 0.7892599}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e04906c98052af247a2bf1d25b940db1
+      internalID: -772257736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 5_biceps_Rigth
+      rect:
+        serializedVersion: 2
+        x: 923
+        y: 30
+        width: 87
+        height: 99
+      alignment: 9
+      pivot: {x: 0.2616486, y: 0.7493079}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bd858e2ae882214eb4db4c3f54f3861
+      internalID: -59027347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      1_biceps_Left: 493880118
+      1_biceps_Rigth: 1417272007
+      2_biceps_Left: 1298769755
+      2_biceps_Rigth: 34591109
+      3_biceps_Left: -1633175136
+      3_biceps_Rigth: 1290403322
+      4_biceps_Left: -1972843796
+      4_biceps_Rigth: -1689037132
+      5_biceps_Left: -772257736
+      5_biceps_Rigth: -59027347
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

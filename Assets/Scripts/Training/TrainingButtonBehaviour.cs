@@ -15,7 +15,7 @@ public class TrainingButtonBehaviour : MonoBehaviour
         if (MyPrefabs.Instance != null)
             MyPrefabs.Instance.SetValueInScorePrefab(GetCurrentLvlValue(_identificate));
 
-        if (Progress.Instance != null)
+        if (Progress.Instance != null && _progressBar != null)
             _progressBar.Initialize(GetCurrentLvlValue(_identificate));
     }
 
@@ -32,6 +32,9 @@ public class TrainingButtonBehaviour : MonoBehaviour
         _shakeAreaEffect = GetComponent<ShakeAreaEffect>();
 
         _progressBar = GetComponent<ResistanceProgressBar>();
+
+        if (Progress.Instance != null)
+            _progressBar.Initialize(GetCurrentLvlValue(_identificate));
         //_progressBar.OnProgressBarIsCompleted +=
 
         _button = GetComponent<Button>();
