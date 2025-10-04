@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 609b9dae855d4224bb5994ded12bd60d
+guid: a21d1fe062aa02a4aa7c83dab47acaf4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,43 +123,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hand-Left
+      name: BodyParts_Press_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 7
-        width: 70
-        height: 67
+        x: 14
+        y: 30
+        width: 85.8
+        height: 99
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 287a1ef1c87bdcf45a74b85b095d39ec
-      internalID: -340618641
+      spriteID: 6e23634d283236a42ac0a20e93b68e8d
+      internalID: 1735084351
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hand-Right
+      name: BodyParts_Press_1
       rect:
         serializedVersion: 2
-        x: 109
-        y: 7
-        width: 69
-        height: 67
+        x: 113
+        y: 30
+        width: 85.8
+        height: 99
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 303dc288fb25369439606b7a3ff1b3cc
-      internalID: 1334889180
+      spriteID: aa676ce579b33154788a3bd2d7babefe
+      internalID: -1397358269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BodyParts_Press_2
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 30
+        width: 85.8
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bd01cdd286bf044a84717345848954d
+      internalID: 650769425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BodyParts_Press_3
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 30
+        width: 86
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11c92ef33abb32f4797ddc221a3eb18d
+      internalID: -506346596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BodyParts_Press_4
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 30
+        width: 86
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efeb2c9785b922243badd0a650203643
+      internalID: -1896648044
       vertices: []
       indices: 
       edges: []
@@ -175,8 +238,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      hand-Left: -340618641
-      hand-Right: 1334889180
+      BodyParts_Press_0: 1735084351
+      BodyParts_Press_1: -1397358269
+      BodyParts_Press_2: 650769425
+      BodyParts_Press_3: -506346596
+      BodyParts_Press_4: -1896648044
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

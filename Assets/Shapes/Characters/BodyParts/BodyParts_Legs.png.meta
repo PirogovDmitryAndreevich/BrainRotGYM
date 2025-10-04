@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 50eddfa7cefc8b64dbce96ff4561c5ac
+guid: f535082247ac58a48a19a246dd9bc20d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,211 +123,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 1_shin_Left
+      name: Legs_1
       rect:
         serializedVersion: 2
         x: 14
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        y: 34
+        width: 85.8
+        height: 95
+      alignment: 9
+      pivot: {x: 0.53, y: 0.89}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8730dec8f8d7b54eb8ab1714156d7de
-      internalID: -1903565002
+      spriteID: 7bfcb71c346326749bcd1765b3c8476d
+      internalID: -1772533850
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_shin_Rigth
+      name: Legs_2
       rect:
         serializedVersion: 2
-        x: 115
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 113
+        y: 34
+        width: 85.8
+        height: 95
+      alignment: 9
+      pivot: {x: 0.53, y: 0.89}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a801e060d10e8c4591291091aaee935
-      internalID: -1439162499
+      spriteID: 9769c3642dbb8554c802c4158d0171f4
+      internalID: 616096771
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2_shin_Left
+      name: Legs_3
       rect:
         serializedVersion: 2
-        x: 216
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 212
+        y: 34
+        width: 85.8
+        height: 95
+      alignment: 9
+      pivot: {x: 0.53, y: 0.89}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27ff5ebf2262870469a83e1a76d73873
-      internalID: 2019800737
+      spriteID: 9a45d3075ddc322418d1b8f17dc6771a
+      internalID: 2077541658
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2_shin_Rigth
+      name: Legs_4
       rect:
         serializedVersion: 2
-        x: 317
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 311
+        y: 34
+        width: 85.8
+        height: 95
+      alignment: 9
+      pivot: {x: 0.53, y: 0.89}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f8371698e5453549aa6963df259c23b
-      internalID: 512780371
+      spriteID: aef9e39224ef41c4d96fe7289f14d8f1
+      internalID: 970636256
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_shin_Left
+      name: Legs_5
       rect:
         serializedVersion: 2
-        x: 418
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 410
+        y: 34
+        width: 85.8
+        height: 95
+      alignment: 9
+      pivot: {x: 0.53, y: 0.89}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9590e1ffdb2d77145b0e9ad9a92c4b86
-      internalID: -1184956653
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 3_shin_Rigth
-      rect:
-        serializedVersion: 2
-        x: 519
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 111547be7342b2e4d8c97b9d7fa9c536
-      internalID: -1741301932
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 4_shin_Left
-      rect:
-        serializedVersion: 2
-        x: 620
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fb562e130669b9a49bd3f084c0ef6e91
-      internalID: 897045946
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 4_shin_Rigth
-      rect:
-        serializedVersion: 2
-        x: 721
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 09acfa620fbbaf54688aa2cec6d39eda
-      internalID: -1276000766
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 5_shin_Left
-      rect:
-        serializedVersion: 2
-        x: 822
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 39fddb5eb76e0ca41b1804dd0eedf441
-      internalID: -283735383
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 5_shin_Rigth
-      rect:
-        serializedVersion: 2
-        x: 923
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4d0915e1340792c42a9b0ef0419dabfd
-      internalID: -1783235791
+      spriteID: 6f086c743484de044a2e5f23c4135102
+      internalID: -1699293483
       vertices: []
       indices: 
       edges: []
@@ -343,16 +238,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      1_shin_Left: -1903565002
-      1_shin_Rigth: -1439162499
-      2_shin_Left: 2019800737
-      2_shin_Rigth: 512780371
-      3_shin_Left: -1184956653
-      3_shin_Rigth: -1741301932
-      4_shin_Left: 897045946
-      4_shin_Rigth: -1276000766
-      5_shin_Left: -283735383
-      5_shin_Rigth: -1783235791
+      Legs_1: -1772533850
+      Legs_2: 616096771
+      Legs_3: 2077541658
+      Legs_4: 970636256
+      Legs_5: -1699293483
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

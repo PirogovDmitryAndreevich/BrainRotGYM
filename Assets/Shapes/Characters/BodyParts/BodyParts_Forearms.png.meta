@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c8acd4d964830864b8c1e7b2572d2b24
+guid: 053b7302eb70ead41b5b4fe4b005379d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,211 +123,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 1_Leg_Left
+      name: Forearms_1
       rect:
         serializedVersion: 2
         x: 14
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        y: 34
+        width: 85.8
+        height: 95
+      alignment: 9
+      pivot: {x: 0.55, y: 0.88}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a7ea800303056c74eb9757b80ec007ff
-      internalID: -1770161740
+      spriteID: 6778625f4f84e714c8ac65ae22d2b601
+      internalID: -1578273132
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_Leg_Right
+      name: Forearms_2
       rect:
         serializedVersion: 2
-        x: 115
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 113
+        y: 34
+        width: 85.8
+        height: 95
+      alignment: 9
+      pivot: {x: 0.55, y: 0.88}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 942ee4cd5028be847b0076ba6f2373ed
-      internalID: -40274579
+      spriteID: cf5755b350bebd9408d69b5b52327d9d
+      internalID: 1635511060
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2_Leg_Left
+      name: Forearms_3
       rect:
         serializedVersion: 2
-        x: 216
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 212
+        y: 34
+        width: 85.8
+        height: 95
+      alignment: 9
+      pivot: {x: 0.55, y: 0.88}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3736efdcd22548d4c9fe71dd21c0b6d4
-      internalID: -1237649212
+      spriteID: 913c04f96b7e76a49a69ae64c4508b5b
+      internalID: -1362942294
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2_Leg_Right
+      name: Forearms_4
       rect:
         serializedVersion: 2
-        x: 317
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 311
+        y: 34
+        width: 85.8
+        height: 95
+      alignment: 9
+      pivot: {x: 0.55, y: 0.88}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74e81f14cb3ed97468bc291b6fda5439
-      internalID: 1326199343
+      spriteID: aec5a5849c2309f4c9e89d3e0e33ae4c
+      internalID: -1516161801
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_Leg_Left
+      name: Forearms_5
       rect:
         serializedVersion: 2
-        x: 418
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 410
+        y: 34
+        width: 85.8
+        height: 95
+      alignment: 9
+      pivot: {x: 0.55, y: 0.88}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba11c4b451282bb4db56f0ecefcf29f9
-      internalID: 156147325
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 3_Leg_Right
-      rect:
-        serializedVersion: 2
-        x: 519
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4f006e2d9f5792840aa4b0964e86394f
-      internalID: -522587039
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 4_Leg_Left
-      rect:
-        serializedVersion: 2
-        x: 620
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6889fe62cb99c1743983a5d3ab0e8fa5
-      internalID: 966435007
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 4_Leg_Right
-      rect:
-        serializedVersion: 2
-        x: 721
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 192c031b4831b3549b0a1b896730ae1a
-      internalID: -385231366
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 5_Leg_Left
-      rect:
-        serializedVersion: 2
-        x: 822
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a08e1903e923796499d190de8067cbef
-      internalID: 1875537657
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 5_Leg_Right
-      rect:
-        serializedVersion: 2
-        x: 923
-        y: 30
-        width: 87
-        height: 99
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 461e670de7172b248a5dba07d00f9ab8
-      internalID: 668030287
+      spriteID: 8a4086fa1b16b42419c522dbd64afc5e
+      internalID: 1663083273
       vertices: []
       indices: 
       edges: []
@@ -343,16 +238,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      1_Leg_Left: -1770161740
-      1_Leg_Right: -40274579
-      2_Leg_Left: -1237649212
-      2_Leg_Right: 1326199343
-      3_Leg_Left: 156147325
-      3_Leg_Right: -522587039
-      4_Leg_Left: 966435007
-      4_Leg_Right: -385231366
-      5_Leg_Left: 1875537657
-      5_Leg_Right: 668030287
+      Forearms_1: -1578273132
+      Forearms_2: 1635511060
+      Forearms_3: -1362942294
+      Forearms_4: -1516161801
+      Forearms_5: 1663083273
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

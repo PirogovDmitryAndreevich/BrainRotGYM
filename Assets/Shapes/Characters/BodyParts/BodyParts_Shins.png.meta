@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1171de6d5edb14045b0a594fc0ca6128
+guid: b3688ee56aaa4ce4cbb9dded2b0e73e2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -123,211 +123,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 1 lvl_Left_shoulders
+      name: Shins_1
       rect:
         serializedVersion: 2
         x: 14
-        y: 30
-        width: 87
-        height: 99
+        y: 34
+        width: 85.8
+        height: 95
       alignment: 9
-      pivot: {x: 0.76944304, y: 0.8369607}
+      pivot: {x: 0.525, y: 0.89}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e12b4efce3d5a604ca2634a07ae453c5
-      internalID: 1506797763
+      spriteID: f345fb7583f54d34587ad49c22486c37
+      internalID: -904535648
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1 lvl_Rigth_shoulders
+      name: Shins_2
       rect:
         serializedVersion: 2
-        x: 115
-        y: 30
-        width: 87
-        height: 99
+        x: 113
+        y: 34
+        width: 85.8
+        height: 95
       alignment: 9
-      pivot: {x: 0.19255838, y: 0.8521391}
+      pivot: {x: 0.525, y: 0.89}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b09ba3b59fb1a9f47996c295d57f481b
-      internalID: -2138801400
+      spriteID: 83b6de6e4164d0d41915fefad1d4d409
+      internalID: 1634208500
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2 lvl_Left_shoulders
+      name: Shins_3
       rect:
         serializedVersion: 2
-        x: 216
-        y: 30
-        width: 87
-        height: 99
+        x: 212
+        y: 34
+        width: 85.8
+        height: 95
       alignment: 9
-      pivot: {x: 0.78671473, y: 0.8278537}
+      pivot: {x: 0.525, y: 0.89}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7e3b3c607acd21b4faba73a933f5242a
-      internalID: 1740326868
+      spriteID: dd4a82ab80dbf7a45b5bf44fecfa1fee
+      internalID: 898970086
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2 lvl_Rigth_shoulders
+      name: Shins_4
       rect:
         serializedVersion: 2
-        x: 317
-        y: 30
-        width: 87
-        height: 99
+        x: 311
+        y: 34
+        width: 85.8
+        height: 95
       alignment: 9
-      pivot: {x: 0.1925582, y: 0.815711}
+      pivot: {x: 0.525, y: 0.89}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5dba3a7765f117a45aa18962b51da460
-      internalID: -1721127875
+      spriteID: aca3940ca7a91d34d9b8561be27cca53
+      internalID: 324412463
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3 lvl_Left_shoulders
+      name: Shins_5
       rect:
         serializedVersion: 2
-        x: 418
-        y: 30
-        width: 87
-        height: 99
+        x: 410
+        y: 34
+        width: 85.8
+        height: 95
       alignment: 9
-      pivot: {x: 0.8005322, y: 0.8339251}
+      pivot: {x: 0.525, y: 0.89}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bf3c79b7f872244799f00aa71c8de91
-      internalID: 1937189323
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 3 lvl_Rigth_shoulders
-      rect:
-        serializedVersion: 2
-        x: 519
-        y: 30
-        width: 87
-        height: 99
-      alignment: 9
-      pivot: {x: 0.17528665, y: 0.8157109}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 10fbc22573492e04bbae0269193c08ca
-      internalID: 1690507812
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 4 lvl_Left_shoulders
-      rect:
-        serializedVersion: 2
-        x: 620
-        y: 30
-        width: 87
-        height: 99
-      alignment: 9
-      pivot: {x: 0.7003553, y: 0.7792827}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 05f3d75bc1102cc428b6b6f3d0294ae6
-      internalID: -495237237
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 4 lvl_Rigth_shoulders
-      rect:
-        serializedVersion: 2
-        x: 721
-        y: 30
-        width: 87
-        height: 99
-      alignment: 9
-      pivot: {x: 0.2685547, y: 0.7823184}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a29ff8bac0159004985f5206a50af2e5
-      internalID: -443894647
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 5 lvl_Left_shoulders
-      rect:
-        serializedVersion: 2
-        x: 822
-        y: 30
-        width: 87
-        height: 99
-      alignment: 9
-      pivot: {x: 0.64853853, y: 0.79142547}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ef92975ec2c93de439d4dfae99433e98
-      internalID: -509116796
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 5 lvl_Rigth_shoulders
-      rect:
-        serializedVersion: 2
-        x: 923
-        y: 30
-        width: 87
-        height: 99
-      alignment: 9
-      pivot: {x: 0.33764297, y: 0.776247}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 776c3e7272c454c4c8788894cba3645f
-      internalID: -428350516
+      spriteID: a576bfb543395294395c855e41985454
+      internalID: -1920386483
       vertices: []
       indices: 
       edges: []
@@ -343,16 +238,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      1 lvl_Left_shoulders: 1506797763
-      1 lvl_Rigth_shoulders: -2138801400
-      2 lvl_Left_shoulders: 1740326868
-      2 lvl_Rigth_shoulders: -1721127875
-      3 lvl_Left_shoulders: 1937189323
-      3 lvl_Rigth_shoulders: 1690507812
-      4 lvl_Left_shoulders: -495237237
-      4 lvl_Rigth_shoulders: -443894647
-      5 lvl_Left_shoulders: -509116796
-      5 lvl_Rigth_shoulders: -428350516
+      Shins_1: -904535648
+      Shins_2: 1634208500
+      Shins_3: 898970086
+      Shins_4: 324412463
+      Shins_5: -1920386483
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
