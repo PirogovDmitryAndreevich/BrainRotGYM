@@ -18,6 +18,15 @@ public class CharacterManager : MonoBehaviour
         UpdateView();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            _lvl = 1;
+            UpdateView();
+        }
+    }
+
     public void TestUpdate()
     {
         _lvl++;
@@ -25,7 +34,7 @@ public class CharacterManager : MonoBehaviour
         UpdateView();
     }
 
-    public void UpdateView()
+    private void UpdateView()
     {
         _viewController.UpdateLvlView(_lvl);
     }

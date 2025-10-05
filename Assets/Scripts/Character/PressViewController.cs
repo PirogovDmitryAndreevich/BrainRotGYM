@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TorsoViewController : MonoBehaviour
+public class PressViewController : MonoBehaviour
 {
     [Header("Press Parts")]
     [SerializeField] private BodyPart[] _pressParts;

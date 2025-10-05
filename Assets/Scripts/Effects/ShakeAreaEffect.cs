@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ShakeAreaEffect : MonoBehaviour
 {
+    public static ShakeAreaEffect Instance;
+
     [SerializeField] private Transform _areaForShake;
 
     private float _shakeIntensity = 2f; // Интенсивность тряски
@@ -14,6 +16,16 @@ public class ShakeAreaEffect : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         _originalRotation = _areaForShake.localEulerAngles;
     }
 

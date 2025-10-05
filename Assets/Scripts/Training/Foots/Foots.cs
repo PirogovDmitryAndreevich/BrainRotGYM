@@ -8,8 +8,8 @@ public class Foots : ShowerAbstractClass
     public override void Initialize()
     {
         base.Initialize();
-        _identificate = Identificate.Foots;
+        _identifierEnum = Identificate.Foots;
         _button = GetComponent<ButtonFoots>();
-        _button.Initialize(_identificate);
+        _button.Initialize(_identifierEnum);
     }
 }

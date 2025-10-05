@@ -14,15 +14,21 @@ public class ShowerMover : MonoBehaviour
 
     private Dictionary<Transform, Coroutine> _activeCoroutines = new Dictionary<Transform, Coroutine>();
 
-    public Action HidingIsCompleted;
-    public Action ShowIsCompleted;
+    public Action OnHidingIsCompleted;
+    public Action OnShowIsCompleted;
 
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         else
+        {
             Destroy(gameObject);
+            return;
+        }
     }
 
     public void Hide(Vector3 originPosition, Transform targetTransform)
@@ -59,7 +65,7 @@ public class ShowerMover : MonoBehaviour
 
         yield return MoveToPosition(_target.position, _moveDuration, targetTransform);
 
-        HidingIsCompleted?.Invoke();
+        OnHidingIsCompleted?.Invoke();
 
         if (_activeCoroutines.ContainsKey(targetTransform))        
             _activeCoroutines.Remove(targetTransform);        
@@ -71,7 +77,7 @@ public class ShowerMover : MonoBehaviour
 
         yield return MoveToPosition(position, _moveDuration, targetTransform);
 
-        ShowIsCompleted?.Invoke();
+        OnShowIsCompleted?.Invoke();
 
         if (_activeCoroutines.ContainsKey(targetTransform))
             _activeCoroutines.Remove(targetTransform);

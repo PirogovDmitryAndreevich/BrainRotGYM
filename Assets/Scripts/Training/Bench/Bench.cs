@@ -8,8 +8,8 @@ public class Bench : ShowerAbstractClass
     public override void Initialize()
     {
         base.Initialize();
-        _identificate = Identificate.Bench;
+        _identifierEnum = Identificate.Bench;
         _button = GetComponent<ButtonBench>();
-        _button.Initialize(_identificate);
+        _button.Initialize(_identifierEnum);
     }
 }

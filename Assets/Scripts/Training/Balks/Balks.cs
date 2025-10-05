@@ -8,8 +8,8 @@ public class Balks : ShowerAbstractClass
     public override void Initialize()
     {
         base.Initialize();
-        _identificate = Identificate.Balks;
+        _identifierEnum = Identificate.Balks;
         _button = GetComponent<ButtonBalks>();
-        _button.Initialize(_identificate);
+        _button.Initialize(_identifierEnum);
     }
 }

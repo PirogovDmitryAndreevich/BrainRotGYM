@@ -1,24 +1,24 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public abstract class ShowerAbstractClass : MonoBehaviour
 {
-    protected Identificate _identificate;
+    [SerializeField] protected Identificate _identifierEnum;
+    //[SerializeField] protected Transform _trainerTransform;
+
+    protected Vector3 _originalPosition;    
     protected bool _isInitialized;
-    protected Vector3 _originalPosition;
 
-    protected virtual void OnDestroy()
+    public Identificate Identifier => _identifierEnum;
+
+    public Vector3 OriginalPosition => _originalPosition;
+
+   //public Transform TrainerTransform => _trainerTransform;
+
+    private void Awake()
     {
-        // Отписка от событий
-        if (ShowerManager.Instance != null)
-            ShowerManager.Instance.onShowOnScreen -= ShowOnScreen;
-
-        if (ShowerMover.Instance != null)
-        {
-            ShowerMover.Instance.HidingIsCompleted -= Show;
-            ShowerMover.Instance.HidingIsCompleted -= Hide;
-            ShowerMover.Instance.ShowIsCompleted -= ShowingIsCompleted;
-        }        
+        WaitingLoad.Instance.WaitAndExecute(
+            () => ShowManager.Instance != null,
+            () => ShowManager.Instance.Scenes.Add(this));
     }
 
     public virtual void Initialize() 
@@ -28,45 +28,7 @@ public abstract class ShowerAbstractClass : MonoBehaviour
         Debug.Log($"{transform.name} is initialized");
         _originalPosition = transform.position;
 
-        if (ShowerManager.Instance != null)
-            ShowerManager.Instance.onShowOnScreen += ShowOnScreen;
-        else
-            return;
-
         _isInitialized = true;
-        gameObject.SetActive(false);
-    }
-
-    protected virtual void ShowOnScreen(Identificate identificate)
-    {
-        if (identificate != _identificate)
-        {
-            ShowerMover.Instance.HidingIsCompleted += Hide;
-           ShowerMover.Instance.Hide(_originalPosition, transform);
-        }
-        else
-        {
-            ShowerMover.Instance.HidingIsCompleted += Show;
-        }
-    }
-
-    protected virtual void Show()
-    {
-        ShowerMover.Instance.HidingIsCompleted -= Show;
-
-        gameObject.SetActive(true);
-        ShowerMover.Instance.ShowIsCompleted += ShowingIsCompleted;
-        ShowerMover.Instance.Show(_originalPosition, transform);
-    }
-
-    protected virtual void ShowingIsCompleted()
-    {
-        ShowerMover.Instance.ShowIsCompleted -= ShowingIsCompleted;
-    }
-
-    protected virtual void Hide()
-    {
-        ShowerMover.Instance.HidingIsCompleted -= Hide;
         gameObject.SetActive(false);
     }    
 }

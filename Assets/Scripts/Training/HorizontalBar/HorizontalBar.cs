@@ -8,8 +8,8 @@ public class HorizontalBar : ShowerAbstractClass
     public override void Initialize()
     {
         base.Initialize();
-        _identificate = Identificate.HorizontalBar;
+        _identifierEnum = Identificate.HorizontalBar;
         _button = GetComponent<ButtonHorizontalBar>();
-        _button.Initialize(_identificate);
+        _button.Initialize(_identifierEnum);
     }
 }

@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button), typeof(ShakeAreaEffect), typeof(ResistanceProgressBar))]
+[RequireComponent(typeof(Button), typeof(ResistanceProgressBar))]
 public class TrainingButtonBehaviour : MonoBehaviour
 {
     protected Button _button;
     protected bool _isInitialized;
     protected Identificate _identificate;
-    protected ShakeAreaEffect _shakeAreaEffect;
     protected ResistanceProgressBar _progressBar;
 
     protected virtual void OnEnable()
@@ -29,8 +28,6 @@ public class TrainingButtonBehaviour : MonoBehaviour
     {
         if (_isInitialized) return;
 
-        _shakeAreaEffect = GetComponent<ShakeAreaEffect>();
-
         _progressBar = GetComponent<ResistanceProgressBar>();
 
         if (Progress.Instance != null)
@@ -50,7 +47,7 @@ public class TrainingButtonBehaviour : MonoBehaviour
         StatsManager.Instance.AddStat?.Invoke(_identificate, GetCurrentLvlValue(_identificate));
 
         _progressBar.OnButtonClick();
-        _shakeAreaEffect.Shake();
+        ShakeAreaEffect.Instance.Shake();
         FlyingUpScoreEffect.Instance.CreateClickUIEffect(Input.mousePosition);
     }
 

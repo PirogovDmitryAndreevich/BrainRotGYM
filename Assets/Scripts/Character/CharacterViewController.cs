@@ -1,15 +1,18 @@
 using UnityEngine;
 
-[RequireComponent (typeof(ArmsViewController), typeof(LegsViewController), typeof(TorsoViewController))]
+[RequireComponent (typeof(ArmsViewController), typeof(LegsViewController), typeof(PressViewController))]
+[RequireComponent (typeof(TorsViewController), typeof(PressViewController))]
 public class CharacterViewController : MonoBehaviour
 {
     private LegsViewController _legsViewer;
     private ArmsViewController _armViewer;
-    private TorsoViewController _torsoViewer;
+    private PressViewController _pressViewer;
+    private TorsViewController _torsViewer;
 
     private void Awake()
     {
-        _torsoViewer = GetComponent<TorsoViewController>();
+        _torsViewer = GetComponent<TorsViewController>();        
+        _pressViewer = GetComponent<PressViewController>();
         _legsViewer = GetComponent<LegsViewController>();
         _armViewer = GetComponent<ArmsViewController>();
 
@@ -19,8 +22,11 @@ public class CharacterViewController : MonoBehaviour
 
     public void UpdateLvlView(int lvl)
     {
-        if (_torsoViewer != null)
-            _torsoViewer.UpdateSprites(lvl);
+        if (_pressViewer != null)
+            _pressViewer.UpdateSprites(lvl);
+
+        if (_pressViewer != null)
+            _torsViewer.UpdateSprites(lvl);
 
         if (_armViewer != null)
             _armViewer.UpdateSprites(lvl);
