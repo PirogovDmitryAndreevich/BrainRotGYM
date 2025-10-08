@@ -6,8 +6,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private const float WaitSecond = 10f;
-
     public Action OnScenesIsReady;
     private int _maxScenes;
 
@@ -30,7 +28,7 @@ public class GameManager : MonoBehaviour
 
         WaitingLoad.Instance.WaitAndExecute(
                     () => ShowManager.Instance != null && ShowManager.Instance.Scenes.Count == _maxScenes,
-                    () => OnScenesIsReady?.Invoke(),
-                    WaitSecond);
+                    () => OnScenesIsReady?.Invoke()
+                    );
     }
 }

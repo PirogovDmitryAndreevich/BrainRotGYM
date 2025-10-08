@@ -3,16 +3,13 @@ using UnityEngine;
 public abstract class ShowerAbstractClass : MonoBehaviour
 {
     [SerializeField] protected Identificate _identifierEnum;
-    //[SerializeField] protected Transform _trainerTransform;
 
     protected Vector3 _originalPosition;    
-    protected bool _isInitialized;
+    protected bool _isInitialized = false;
 
     public Identificate Identifier => _identifierEnum;
 
     public Vector3 OriginalPosition => _originalPosition;
-
-   //public Transform TrainerTransform => _trainerTransform;
 
     private void Awake()
     {
@@ -23,9 +20,10 @@ public abstract class ShowerAbstractClass : MonoBehaviour
 
     public virtual void Initialize() 
     {
+        Debug.Log($"{transform.name} is initialized");
+
         if (_isInitialized) return;        
 
-        Debug.Log($"{transform.name} is initialized");
         _originalPosition = transform.position;
 
         _isInitialized = true;

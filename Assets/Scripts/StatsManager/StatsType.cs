@@ -16,7 +16,7 @@ public class StatsType : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        StatsManager.Instance.UpdateUIStats -= UpdateUI;
+        StatsManager.Instance.OnUpdateUIStats -= UpdateUI;
     }
 
     public virtual void Initialize()
@@ -24,7 +24,7 @@ public class StatsType : MonoBehaviour
         if (_isInitialized) return;
 
         if (StatsManager.Instance != null)
-            StatsManager.Instance.UpdateUIStats += UpdateUI;
+            StatsManager.Instance.OnUpdateUIStats += UpdateUI;
 
         _isInitialized = true;
     }

@@ -8,19 +8,17 @@ public class StatsManager : MonoBehaviour
 
     [SerializeField] private StatsType[] _statsUI;
 
-    public Action<Identificate, int> AddStat;
-    public Action<Stats, int> UpdateUIStats;
+    public Action<Identificate, int> OnAddStat;
+    public Action<Stats, int> OnUpdateUIStats;
 
     private void Awake()
     {
-        Debug.Log("StatsPlayer: Instance created");
-
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            AddStat += AddingStat;
-            InitializeStats();
+            OnAddStat += AddingStat;
+            StartCoroutine(InitializeWhenReady());
         }
         else
         {
@@ -31,7 +29,26 @@ public class StatsManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        AddStat -= AddingStat;
+        OnAddStat -= AddingStat;
+    }
+
+    private void InitializeStats()
+    {
+        foreach (var stat in _statsUI)
+        {
+            stat.Initialize();
+
+            int currentValue = GetCurrentStatValue(stat.StatType);
+            OnUpdateUIStats?.Invoke(stat.StatType, currentValue);
+        }
+    }
+
+    private IEnumerator InitializeWhenReady()
+    {
+        // Ждем Progress.Instance и PlayerInfo
+        yield return new WaitUntil(() => Progress.Instance?.PlayerInfo != null);
+
+        InitializeStats();
     }
 
     private void AddingStat(Identificate stat, int value)
@@ -62,35 +79,7 @@ public class StatsManager : MonoBehaviour
         }
 
         Progress.Instance.Save();
-        UpdateUIStats?.Invoke(statType, GetCurrentStatValue(statType));
-    }
-
-    private void InitializeStats()
-    {
-        // Проверяем, готов ли Progress.Instance
-        if (Progress.Instance?.PlayerInfo == null)
-        {
-            Debug.Log("Progress.Instance not ready, delaying initialization...");
-            StartCoroutine(DelayedInitializeStats());
-            return;
-        }
-
-        foreach (var stat in _statsUI)
-        {
-            stat.Initialize();
-
-            int currentValue = GetCurrentStatValue(stat.StatType);
-            UpdateUIStats?.Invoke(stat.StatType, currentValue);
-        }
-    }
-
-    private IEnumerator DelayedInitializeStats()
-    {
-        // Ждем один кадр
-        yield return null;
-
-        // Пробуем снова
-        InitializeStats();
+        OnUpdateUIStats?.Invoke(statType, GetCurrentStatValue(statType));
     }
 
     private int GetCurrentStatValue(Stats statType)

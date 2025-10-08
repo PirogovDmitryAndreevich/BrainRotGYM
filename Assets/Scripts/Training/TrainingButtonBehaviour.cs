@@ -19,7 +19,7 @@ public class TrainingButtonBehaviour : MonoBehaviour
     }
 
     protected virtual void OnDestroy()
-    {
+    {        
         _button.onClick.RemoveAllListeners();
         //_progressBar.OnProgressBarIsCompleted -=
     }
@@ -28,27 +28,32 @@ public class TrainingButtonBehaviour : MonoBehaviour
     {
         if (_isInitialized) return;
 
+        _identificate = identificate;
         _progressBar = GetComponent<ResistanceProgressBar>();
+        _button = GetComponent<Button>();
 
-        if (Progress.Instance != null)
+        if (Progress.Instance != null)        
             _progressBar.Initialize(GetCurrentLvlValue(_identificate));
+        
         //_progressBar.OnProgressBarIsCompleted +=
 
-        _button = GetComponent<Button>();
         _button.onClick.AddListener(OnClickButton);
-
-        _identificate = identificate;
 
         _isInitialized = true;
     }
 
     protected virtual void OnClickButton()
     {
-        StatsManager.Instance.AddStat?.Invoke(_identificate, GetCurrentLvlValue(_identificate));
+        if (StatsManager.Instance != null)
+            StatsManager.Instance.OnAddStat?.Invoke(_identificate, GetCurrentLvlValue(_identificate));
 
         _progressBar.OnButtonClick();
-        ShakeAreaEffect.Instance.Shake();
-        FlyingUpScoreEffect.Instance.CreateClickUIEffect(Input.mousePosition);
+
+        if (ShakeAreaEffect.Instance != null) ShakeAreaEffect.Instance.Shake();
+        else  Debug.LogWarning("ShakeAreaEffect.Instance is null");
+
+        if (FlyingUpScoreEffect.Instance != null)  FlyingUpScoreEffect.Instance.CreateClickUIEffect(Input.mousePosition);
+        else  Debug.LogWarning("FlyingUpScoreEffect.Instance is null");
     }
 
     private int GetCurrentLvlValue(Identificate statType)

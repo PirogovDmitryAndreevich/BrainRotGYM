@@ -1,41 +1,52 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
-[RequireComponent (typeof(CharacterViewController))]
+[RequireComponent(typeof(CharacterViewController), typeof(CharacterAnimation))]
 public class CharacterManager : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI _text;
+
     private int _lvl;
     private const int MaxLvl = 5;
+    private const int MinLvl = 1;
     private CharacterViewController _viewController;
+    private CharacterAnimation _animation;
+    private Vector2 _gymPosition;
+    private Vector2 _trainingPosition;
+
+    private Identificate _currentIdentifier;
 
     private void Awake()
     {
+        _lvl = MinLvl;
         _viewController = GetComponent<CharacterViewController>();
-        _lvl = 1;
+        _animation = GetComponent<CharacterAnimation>();
+        _gymPosition = transform.localPosition;
+        _trainingPosition = Vector2.zero;
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        UpdateView();
+        _animation.Play(_currentIdentifier);
+        SetPosition();
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            _lvl = 1;
-            UpdateView();
-        }
+        
     }
 
-    public void TestUpdate()
+    public void Showing(Identificate identifier)
     {
-        _lvl++;
-        _lvl = Mathf.Clamp(_lvl, 1, MaxLvl);
-        UpdateView();
+        _currentIdentifier = identifier;
     }
 
-    private void UpdateView()
+    public void SetPosition()
     {
-        _viewController.UpdateLvlView(_lvl);
+        if (_currentIdentifier == Identificate.GYM)
+            transform.localPosition = _gymPosition;
+        else
+            transform.localPosition = _trainingPosition;
     }
 }

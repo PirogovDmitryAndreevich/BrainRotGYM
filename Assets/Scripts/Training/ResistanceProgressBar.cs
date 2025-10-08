@@ -59,7 +59,7 @@ public class ResistanceProgressBar : MonoBehaviour
         _fillAmountPerClick = Mathf.Max(0.04f, BaseFillPerClick - (0.02f * (playerLevel - 1)));
         _progressFill.fillAmount = MinFillValue;
 
-        if (_resistanceCoroutine == null)
+        if (_resistanceCoroutine == null && gameObject.activeSelf)
         {
             _resistanceCoroutine = StartCoroutine(ResistanceRoutine());
         }

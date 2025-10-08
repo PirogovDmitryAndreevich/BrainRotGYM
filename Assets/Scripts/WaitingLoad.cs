@@ -20,28 +20,14 @@ public class WaitingLoad : MonoBehaviour
         }
     }
 
-    public void WaitAndExecute(Func<bool> condition, Action method, float timeout = 10f)
+    public void WaitAndExecute(Func<bool> condition, Action method)
     {
-        StartCoroutine(WaitAndExecuteCoroutine(condition, method, timeout));
+        StartCoroutine(WaitAndExecuteCoroutine(condition, method));
     }
 
-    private IEnumerator WaitAndExecuteCoroutine(Func<bool> condition, Action method, float timeout)
+    private IEnumerator WaitAndExecuteCoroutine(Func<bool> condition, Action method)
     {
-        float timer = 0f;
-
-        while (!condition() && timer < timeout)
-        {
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        if (condition())
-        {
-            method();
-        }
-        else
-        {
-            Debug.LogError($"{condition.Method.Name} = {condition}, {method.Method.Name} was not fulfilled");
-        }
+        yield return new WaitUntil(condition);
+        method?.Invoke();
     }
 }
