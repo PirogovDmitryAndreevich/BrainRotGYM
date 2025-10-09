@@ -1,16 +1,24 @@
 using UnityEngine;
 
-public class PressViewController : MonoBehaviour
+public class ViewControllerAbstract : MonoBehaviour
 {
-    [Header("Press Parts")]
-    [SerializeField] private BodyPart[] _pressParts;
+    [Header("Parts")]
+    [SerializeField] protected BodyPart[] _parts;
+
+    public void SetColor(Color color)
+    {
+        foreach (var part in _parts)
+        {
+            part.renderer.color = color; 
+        }
+    }
 
     public void UpdateSprites(int lvl)
     {
         //  онвертируем уровень в индекс (уровень 1 = индекс 0, уровень 5 = индекс 4)
         int spriteIndex = lvl - 1;
 
-        foreach (var part in _pressParts)
+        foreach (var part in _parts)
         {
             // ѕровер€ем что массив существует, renderer существует и индекс в пределах массива
             if (part.sprites != null && part.renderer != null && spriteIndex < part.sprites.Length && spriteIndex >= 0)

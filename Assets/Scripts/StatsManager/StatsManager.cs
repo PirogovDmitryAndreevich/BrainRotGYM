@@ -18,7 +18,11 @@ public class StatsManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             OnAddStat += AddingStat;
-            StartCoroutine(InitializeWhenReady());
+            WaitingLoad.Instance.WaitAndExecute
+            (
+                () => ShowManager.Instance != null,
+                () => ShowManager.Instance.OnCharacterInitialize += InitializeStats
+            );
         }
         else
         {
@@ -29,6 +33,9 @@ public class StatsManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (ShowManager.Instance != null)
+            ShowManager.Instance.OnCharacterInitialize -= InitializeStats;
+
         OnAddStat -= AddingStat;
     }
 
@@ -43,14 +50,6 @@ public class StatsManager : MonoBehaviour
         }
     }
 
-    private IEnumerator InitializeWhenReady()
-    {
-        // ∆дем Progress.Instance и PlayerInfo
-        yield return new WaitUntil(() => Progress.Instance?.PlayerInfo != null);
-
-        InitializeStats();
-    }
-
     private void AddingStat(Identificate stat, int value)
     {
         Stats statType;
@@ -58,19 +57,19 @@ public class StatsManager : MonoBehaviour
         switch (stat)
         {
             case Identificate.Balks:
-                Progress.Instance.PlayerInfo.Balk += value;
+                Progress.Instance.PlayerInfo.CurrentCharacter.Balk += value;
                 statType = Stats.Balks;
                 break;
             case Identificate.Bench:
-                Progress.Instance.PlayerInfo.Bench += value;
+                Progress.Instance.PlayerInfo.CurrentCharacter.Bench += value;
                 statType = Stats.Bench;
                 break;
             case Identificate.HorizontalBar:
-                Progress.Instance.PlayerInfo.HorizontalBars += value;
+                Progress.Instance.PlayerInfo.CurrentCharacter.HorizontalBars += value;
                 statType = Stats.HorizontalBar;
                 break;
             case Identificate.Foots:
-                Progress.Instance.PlayerInfo.Foots += value;
+                Progress.Instance.PlayerInfo.CurrentCharacter.Foots += value;
                 statType = Stats.Foots;
                 break;
             default:
@@ -84,14 +83,14 @@ public class StatsManager : MonoBehaviour
 
     private int GetCurrentStatValue(Stats statType)
     {
-        if (Progress.Instance?.PlayerInfo == null) return 0;
+        if (Progress.Instance?.PlayerInfo?.CurrentCharacter == null) return 0;
 
         return statType switch
         {
-            Stats.Balks => Progress.Instance.PlayerInfo.Balk,
-            Stats.Bench => Progress.Instance.PlayerInfo.Bench,
-            Stats.HorizontalBar => Progress.Instance.PlayerInfo.HorizontalBars,
-            Stats.Foots => Progress.Instance.PlayerInfo.Foots,
+            Stats.Balks => Progress.Instance.PlayerInfo.CurrentCharacter.Balk,
+            Stats.Bench => Progress.Instance.PlayerInfo.CurrentCharacter.Bench,
+            Stats.HorizontalBar => Progress.Instance.PlayerInfo.CurrentCharacter.HorizontalBars,
+            Stats.Foots => Progress.Instance.PlayerInfo.CurrentCharacter.Foots,
             _ => 0
         };
     }

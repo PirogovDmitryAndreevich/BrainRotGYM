@@ -6,16 +6,16 @@ public class TrainingButtonBehaviour : MonoBehaviour
 {
     protected Button _button;
     protected bool _isInitialized;
-    protected Identificate _identificate;
+    protected Identificate _identifier;
     protected ResistanceProgressBar _progressBar;
 
     protected virtual void OnEnable()
     {
         if (MyPrefabs.Instance != null)
-            MyPrefabs.Instance.SetValueInScorePrefab(GetCurrentLvlValue(_identificate));
+            MyPrefabs.Instance.SetValueInScorePrefab(GetCurrentLvlValue(_identifier));
 
         if (Progress.Instance != null && _progressBar != null)
-            _progressBar.Initialize(GetCurrentLvlValue(_identificate));
+            _progressBar.Initialize(GetCurrentLvlValue(_identifier));
     }
 
     protected virtual void OnDestroy()
@@ -24,16 +24,19 @@ public class TrainingButtonBehaviour : MonoBehaviour
         //_progressBar.OnProgressBarIsCompleted -=
     }
 
-    public virtual void Initialize(Identificate identificate)
+    public virtual void Initialize(Identificate identifier)
     {
         if (_isInitialized) return;
 
-        _identificate = identificate;
+        _identifier = identifier;
         _progressBar = GetComponent<ResistanceProgressBar>();
         _button = GetComponent<Button>();
 
-        if (Progress.Instance != null)        
-            _progressBar.Initialize(GetCurrentLvlValue(_identificate));
+        WaitingLoad.Instance.WaitAndExecute
+            (
+                () => Progress.Instance.PlayerInfo.CurrentCharacter != null,
+                () => _progressBar.Initialize(GetCurrentLvlValue(_identifier))
+            );
         
         //_progressBar.OnProgressBarIsCompleted +=
 
@@ -45,7 +48,7 @@ public class TrainingButtonBehaviour : MonoBehaviour
     protected virtual void OnClickButton()
     {
         if (StatsManager.Instance != null)
-            StatsManager.Instance.OnAddStat?.Invoke(_identificate, GetCurrentLvlValue(_identificate));
+            StatsManager.Instance.OnAddStat?.Invoke(_identifier, GetCurrentLvlValue(_identifier));
 
         _progressBar.OnButtonClick();
 
@@ -62,10 +65,10 @@ public class TrainingButtonBehaviour : MonoBehaviour
 
         return statType switch
         {
-            Identificate.Balks => Progress.Instance.PlayerInfo.LvlBalk,
-            Identificate.Bench => Progress.Instance.PlayerInfo.LvlBench,
-            Identificate.HorizontalBar => Progress.Instance.PlayerInfo.LvlHorizontalBars,
-            Identificate.Foots => Progress.Instance.PlayerInfo.LvlFoots,
+            Identificate.Balks => Progress.Instance.PlayerInfo.CurrentCharacter.LvlBalk,
+            Identificate.Bench => Progress.Instance.PlayerInfo.CurrentCharacter.LvlBench,
+            Identificate.HorizontalBar => Progress.Instance.PlayerInfo.CurrentCharacter.LvlHorizontalBars,
+            Identificate.Foots => Progress.Instance.PlayerInfo.CurrentCharacter.LvlFoots,
             _ => 0
         };
     }

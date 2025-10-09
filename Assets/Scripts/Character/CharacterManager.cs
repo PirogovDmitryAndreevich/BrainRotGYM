@@ -1,50 +1,67 @@
-using TMPro;
+using System;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 [RequireComponent(typeof(CharacterViewController), typeof(CharacterAnimation))]
 public class CharacterManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _text;
+    private CharacterType _currentCharacter;    
 
-    private int _lvl;
-    private const int MaxLvl = 5;
-    private const int MinLvl = 1;
     private CharacterViewController _viewController;
     private CharacterAnimation _animation;
     private Vector2 _gymPosition;
     private Vector2 _trainingPosition;
 
-    private Identificate _currentIdentifier;
+    private Identificate _currentSceneIdentifier;
 
     private void Awake()
-    {
-        _lvl = MinLvl;
+    {        
         _viewController = GetComponent<CharacterViewController>();
         _animation = GetComponent<CharacterAnimation>();
         _gymPosition = transform.localPosition;
         _trainingPosition = Vector2.zero;
+
+        WaitingLoad.Instance.WaitAndExecute
+        (
+            () => ShowManager.Instance != null,
+            () => ShowManager.Instance.OnCharacterInitialize += Initialize
+        );
     }
 
     private void OnEnable()
     {
-        _animation.Play(_currentIdentifier);
+        _animation.Play(_currentSceneIdentifier);
         SetPosition();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
-        
+       
     }
 
-    public void Showing(Identificate identifier)
+    public void ShowingOnScene(Identificate identifier)
     {
-        _currentIdentifier = identifier;
+        _currentSceneIdentifier = identifier;
     }
 
-    public void SetPosition()
+    private void Initialize()
     {
-        if (_currentIdentifier == Identificate.GYM)
+        _currentCharacter = Progress.Instance.PlayerInfo.CurrentCharacter;
+        UpdateView();
+    }
+
+    private void UpdateView()
+    {
+        _viewController.UpdateCharacterView(_currentCharacter);
+    }
+
+    private void UpdateLvlView()
+    {
+        _viewController.UpdateLvlView(_currentCharacter);
+    }
+
+    private void SetPosition()
+    {
+        if (_currentSceneIdentifier == Identificate.GYM)
             transform.localPosition = _gymPosition;
         else
             transform.localPosition = _trainingPosition;

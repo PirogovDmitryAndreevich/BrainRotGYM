@@ -26,9 +26,10 @@ public class GameManager : MonoBehaviour
 
         _maxScenes = Enum.GetValues(typeof(Identificate)).Length;
 
-        WaitingLoad.Instance.WaitAndExecute(
-                    () => ShowManager.Instance != null && ShowManager.Instance.Scenes.Count == _maxScenes,
-                    () => OnScenesIsReady?.Invoke()
-                    );
+        WaitingLoad.Instance.WaitAndExecute
+        (
+            () => ShowManager.Instance != null && ShowManager.Instance.Scenes.Count == _maxScenes,
+            () => OnScenesIsReady?.Invoke()            
+        );
     }
 }

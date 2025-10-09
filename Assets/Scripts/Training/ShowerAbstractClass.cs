@@ -20,8 +20,6 @@ public abstract class ShowerAbstractClass : MonoBehaviour
 
     public virtual void Initialize() 
     {
-        Debug.Log($"{transform.name} is initialized");
-
         if (_isInitialized) return;        
 
         _originalPosition = transform.position;

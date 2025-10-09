@@ -1,18 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 using YG;
 
 [System.Serializable]
 public class PlayerInfo
 {
-    public int Balk = 0;
-    public int Bench  = 0;
-    public int HorizontalBars = 0;
-    public int Foots = 0;
-
-    public int LvlBalk = 1;
-    public int LvlBench  = 1;
-    public int LvlHorizontalBars = 1;
-    public int LvlFoots = 1;
+    public List<CharacterType> OpenedCharacters = new();
+    public CharacterType CurrentCharacter;
 }
 
 public class Progress : MonoBehaviour
@@ -23,6 +17,8 @@ public class Progress : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Progress is awake");
+
         if (Instance == null)
         {
             transform.parent = null;
