@@ -7,7 +7,7 @@
         false,
         false
     ],
-    "idSave": 91,
+    "idSave": 39,
     "PlayerInfo": {
         "OpenedCharacters": [
             {
@@ -36,12 +36,12 @@
                 },
                 "Balk": 0,
                 "Bench": 0,
-                "HorizontalBars": 0,
+                "HorizontalBars": 12,
                 "Foots": 0,
-                "LvlBalk": 0,
-                "LvlBench": 0,
-                "LvlHorizontalBars": 0,
-                "LvlFoots": 0
+                "LvlBalk": 1,
+                "LvlBench": 1,
+                "LvlHorizontalBars": 1,
+                "LvlFoots": 1
             },
             {
                 "Name": "Trallallero Trallalla Red",
@@ -71,10 +71,10 @@
                 "Bench": 0,
                 "HorizontalBars": 0,
                 "Foots": 0,
-                "LvlBalk": 0,
-                "LvlBench": 0,
-                "LvlHorizontalBars": 0,
-                "LvlFoots": 0
+                "LvlBalk": 1,
+                "LvlBench": 1,
+                "LvlHorizontalBars": 1,
+                "LvlFoots": 1
             },
             {
                 "Name": "Trallallero Trallalla Green",
@@ -100,14 +100,14 @@
                 "FootSprite": {
                     "instanceID": 25962
                 },
-                "Balk": 0,
+                "Balk": 6,
                 "Bench": 0,
-                "HorizontalBars": 0,
+                "HorizontalBars": 4,
                 "Foots": 0,
-                "LvlBalk": 0,
-                "LvlBench": 0,
-                "LvlHorizontalBars": 0,
-                "LvlFoots": 0
+                "LvlBalk": 1,
+                "LvlBench": 1,
+                "LvlHorizontalBars": 1,
+                "LvlFoots": 1
             }
         ],
         "CurrentCharacter": {
@@ -134,14 +134,14 @@
             "FootSprite": {
                 "instanceID": 25962
             },
-            "Balk": 0,
+            "Balk": 6,
             "Bench": 0,
-            "HorizontalBars": 0,
+            "HorizontalBars": 4,
             "Foots": 0,
-            "LvlBalk": 0,
-            "LvlBench": 0,
-            "LvlHorizontalBars": 0,
-            "LvlFoots": 0
+            "LvlBalk": 1,
+            "LvlBench": 1,
+            "LvlHorizontalBars": 1,
+            "LvlFoots": 1
         }
     }
 }

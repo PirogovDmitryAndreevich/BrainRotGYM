@@ -10,12 +10,17 @@ public class TrainingButtonBehaviour : MonoBehaviour
     protected ResistanceProgressBar _progressBar;
 
     protected virtual void OnEnable()
-    {
-        if (MyPrefabs.Instance != null)
-            MyPrefabs.Instance.SetValueInScorePrefab(GetCurrentLvlValue(_identifier));
+    {        
+        WaitingLoad.Instance.WaitAndExecute(
+            () => Progress.Instance?.PlayerInfo?.CurrentCharacter != null,
+            () => {
+                if (MyPrefabs.Instance != null)
+                    MyPrefabs.Instance.SetValueInScorePrefab(GetCurrentLvlValue(_identifier));
 
-        if (Progress.Instance != null && _progressBar != null)
-            _progressBar.Initialize(GetCurrentLvlValue(_identifier));
+                if (_progressBar != null)
+                    _progressBar.Initialize(GetCurrentLvlValue(_identifier));
+            }
+        );
     }
 
     protected virtual void OnDestroy()
@@ -32,12 +37,18 @@ public class TrainingButtonBehaviour : MonoBehaviour
         _progressBar = GetComponent<ResistanceProgressBar>();
         _button = GetComponent<Button>();
 
-        WaitingLoad.Instance.WaitAndExecute
-            (
-                () => Progress.Instance.PlayerInfo.CurrentCharacter != null,
+        if (Progress.Instance?.PlayerInfo?.CurrentCharacter != null)
+        {
+            _progressBar.Initialize(GetCurrentLvlValue(_identifier));
+        }
+        else
+        {
+            WaitingLoad.Instance.WaitAndExecute(
+                () => Progress.Instance?.PlayerInfo?.CurrentCharacter != null,
                 () => _progressBar.Initialize(GetCurrentLvlValue(_identifier))
             );
-        
+        }
+
         //_progressBar.OnProgressBarIsCompleted +=
 
         _button.onClick.AddListener(OnClickButton);
@@ -47,8 +58,25 @@ public class TrainingButtonBehaviour : MonoBehaviour
 
     protected virtual void OnClickButton()
     {
+        // ѕ–ќ¬≈–я≈ћ что все компоненты готовы
+        if (Progress.Instance?.PlayerInfo?.CurrentCharacter == null)
+        {
+            Debug.LogWarning("CurrentCharacter is null, cannot add stats");
+            return;
+        }
+
+        if (_progressBar == null)
+        {
+            Debug.LogError("ProgressBar is not initialized!");
+            return;
+        }
+
+        int valueToAdd = GetCurrentLvlValue(_identifier);
+
         if (StatsManager.Instance != null)
-            StatsManager.Instance.OnAddStat?.Invoke(_identifier, GetCurrentLvlValue(_identifier));
+            StatsManager.Instance.OnAddStat?.Invoke(_identifier, valueToAdd);
+        else
+            Debug.LogError("StatsManager.Instance is null!");
 
         _progressBar.OnButtonClick();
 
@@ -61,7 +89,11 @@ public class TrainingButtonBehaviour : MonoBehaviour
 
     private int GetCurrentLvlValue(Identificate statType)
     {
-        if (Progress.Instance?.PlayerInfo == null) return 0;
+        if (Progress.Instance?.PlayerInfo?.CurrentCharacter == null)
+        {
+            Debug.LogWarning("CurrentCharacter is null in GetCurrentLvlValue");
+            return 1;
+        }
 
         return statType switch
         {

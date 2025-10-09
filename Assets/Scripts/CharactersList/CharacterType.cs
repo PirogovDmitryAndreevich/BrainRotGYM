@@ -34,14 +34,29 @@ public class CharacterType
         DecorationsSprite = other.DecorationsSprite;
         FootSprite = other.FootSprite;
 
-        //  опируем статистику (дл€ новых персонажей она будет начальной)
+        //  опируем статистику
         Balk = other.Balk;
         Bench = other.Bench;
         HorizontalBars = other.HorizontalBars;
         Foots = other.Foots;
-        LvlBalk = other.LvlBalk;
-        LvlBench = other.LvlBench;
-        LvlHorizontalBars = other.LvlHorizontalBars;
-        LvlFoots = other.LvlFoots;
+
+        //  опируем статистику (дл€ новых персонажей она будет начальной)
+        LvlBalk = other.LvlBalk > 0 ? other.LvlBalk : 1;
+        LvlBench = other.LvlBench > 0 ? other.LvlBench : 1;
+        LvlHorizontalBars = other.LvlHorizontalBars > 0 ? other.LvlHorizontalBars : 1;
+        LvlFoots = other.LvlFoots > 0 ? other.LvlFoots : 1;
+    }
+
+    public CharacterType()
+    {
+        InitializeDefaults();
+    }
+
+    private void InitializeDefaults()
+    {
+        LvlBalk = 1;
+        LvlBench = 1;
+        LvlHorizontalBars = 1;
+        LvlFoots = 1;
     }
 }

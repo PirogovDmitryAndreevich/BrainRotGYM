@@ -47,13 +47,12 @@ public class CharactersMenu : MonoBehaviour
     {
         if (!_openedCharacters.ContainsKey(id))
         {
-            Debug.Log($"{id} has not opened");
+            Debug.LogWarning($"{id} has not opened");
             return;
         }
 
         Progress.Instance.PlayerInfo.CurrentCharacter = _openedCharacters[id];
         Progress.Instance.Save();
-        Debug.Log($"CurrentCharacter = {id}");
         OnSelectedCharacter?.Invoke();
     }
 
@@ -75,8 +74,6 @@ public class CharactersMenu : MonoBehaviour
         Progress.Instance.PlayerInfo.OpenedCharacters.Add(newCharacter);
         Progress.Instance.Save();
         LoadOpenedDictionary();
-
-        Debug.Log($"New character opened: {id}");
     }
 
     private void CreateDictionary()
@@ -88,8 +85,6 @@ public class CharactersMenu : MonoBehaviour
                 _charactersDictionary[character.CharacterID] = character;
             }
         }
-
-        Debug.Log($"Characters dictionary created with {_charactersDictionary.Count} characters");
     }
 
     private void LoadOpenedDictionary()
@@ -104,7 +99,9 @@ public class CharactersMenu : MonoBehaviour
                 (
                     () => ShowManager.Instance != null,
                     () => SelectCharacter(CharactersEnum.TrallalleroTrallalla)
-                );            
+                );
+
+            return;
         }
 
         foreach (var character in Progress.Instance.PlayerInfo.OpenedCharacters)
@@ -115,7 +112,13 @@ public class CharactersMenu : MonoBehaviour
             }
         }
 
-        SelectCharacter(Progress.Instance.PlayerInfo.CurrentCharacter.CharacterID);
-        Debug.Log($"Opened characters loaded: {_openedCharacters.Count}");
+        if (Progress.Instance.PlayerInfo.CurrentCharacter != null)
+        {
+            SelectCharacter(Progress.Instance.PlayerInfo.CurrentCharacter.CharacterID);
+        }
+        else if (Progress.Instance.PlayerInfo.OpenedCharacters.Count > 0)
+        {
+            SelectCharacter(CharactersEnum.TrallalleroTrallalla);
+        }
     }
 }

@@ -27,12 +27,6 @@ public class ShowManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             _sceneSwitcher = GetComponent<SceneSwitcher>();
-
-            
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.OnScenesIsReady += InitializeScenes;
-            }
         }
         else
         {
@@ -90,7 +84,11 @@ public class ShowManager : MonoBehaviour
 
     private void InitializeCharacter()
     {
-        OnCharacterInitialize?.Invoke();
+        WaitingLoad.Instance.WaitAndExecute
+            (
+                () => StatsManager.Instance != null,
+                () => OnCharacterInitialize?.Invoke()
+            );        
     }
 
     private void Show(Identificate identifier)
@@ -104,6 +102,7 @@ public class ShowManager : MonoBehaviour
 
     private void SwitchScene(ShowerAbstractClass targetScene)
     {
+        Debug.Log($"ShowManager SwitchScene: {targetScene.Identifier}, targetScene: {targetScene.transform.name}");
         _characterManager.ShowingOnScene(targetScene.Identifier);
         _sceneSwitcher.Show(targetScene);
         _backButton.gameObject.SetActive(targetScene.Identifier != Identificate.GYM);

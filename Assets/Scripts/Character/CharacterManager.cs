@@ -40,6 +40,7 @@ public class CharacterManager : MonoBehaviour
 
     public void ShowingOnScene(Identificate identifier)
     {
+        Debug.Log($"CharacterManager ShowinOnScene: {identifier}");
         _currentSceneIdentifier = identifier;
     }
 

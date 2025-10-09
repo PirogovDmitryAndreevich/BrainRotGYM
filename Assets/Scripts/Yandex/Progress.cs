@@ -17,8 +17,6 @@ public class Progress : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Progress is awake");
-
         if (Instance == null)
         {
             transform.parent = null;
