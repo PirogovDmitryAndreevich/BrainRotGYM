@@ -70,8 +70,6 @@ public class ShowManager : MonoBehaviour
 
     private void InitializeScenes()
     {
-        Debug.Log($"ShowManager start initialize scenes");
-
         foreach (var scene in Scenes)
             scene.Initialize();
 
