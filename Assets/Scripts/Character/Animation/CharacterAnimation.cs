@@ -1,14 +1,15 @@
 using UnityEngine;
 
+[RequireComponent (typeof(Animator))]
 public class CharacterAnimation : MonoBehaviour
 {
     private const string DefaultStateName = "Default";
-    private Animator _animator;
-
+    [SerializeField] private Animator _animator;
+/*
     private void Awake()
     {
-        _animator = GetComponentInChildren<Animator>();
-    }
+        _animator = GetComponent<Animator>();
+    }*/
 
     public void Play(Identificate identifier)
     {

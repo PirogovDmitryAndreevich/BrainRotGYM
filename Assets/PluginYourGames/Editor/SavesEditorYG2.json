@@ -7,7 +7,7 @@
         false,
         false
     ],
-    "idSave": 43,
+    "idSave": 67,
     "PlayerInfo": {
         "OpenedCharacters": [
             {
@@ -26,84 +26,21 @@
                     "a": 1.0
                 },
                 "FaceSprite": {
-                    "instanceID": 25890
+                    "instanceID": 32948
                 },
                 "DecorationsSprite": {
-                    "instanceID": 25896
+                    "instanceID": 32954
                 },
                 "FootSprite": {
-                    "instanceID": 25962
+                    "instanceID": 32930
                 },
-                "Balk": 0,
-                "Bench": 0,
-                "HorizontalBars": 12,
-                "Foots": 0,
-                "LvlBalk": 1,
-                "LvlBench": 1,
-                "LvlHorizontalBars": 1,
-                "LvlFoots": 1
-            },
-            {
-                "Name": "Trallallero Trallalla Red",
-                "CharacterID": 2,
-                "MainColor": {
-                    "r": 0.8117647767066956,
-                    "g": 0.13333334028720857,
-                    "b": 0.13333334028720857,
-                    "a": 1.0
+                "HeadSprite": {
+                    "instanceID": 0
                 },
-                "SecondaryColor": {
-                    "r": 0.7647059559822083,
-                    "g": 0.9019608497619629,
-                    "b": 0.9686275124549866,
-                    "a": 1.0
-                },
-                "FaceSprite": {
-                    "instanceID": 25890
-                },
-                "DecorationsSprite": {
-                    "instanceID": 25896
-                },
-                "FootSprite": {
-                    "instanceID": 25962
-                },
-                "Balk": 0,
+                "Balk": 13,
                 "Bench": 0,
                 "HorizontalBars": 0,
-                "Foots": 0,
-                "LvlBalk": 1,
-                "LvlBench": 1,
-                "LvlHorizontalBars": 1,
-                "LvlFoots": 1
-            },
-            {
-                "Name": "Trallallero Trallalla Green",
-                "CharacterID": 1,
-                "MainColor": {
-                    "r": 0.25215333700180056,
-                    "g": 0.9622641801834106,
-                    "b": 0.027233727276325227,
-                    "a": 1.0
-                },
-                "SecondaryColor": {
-                    "r": 0.7647059559822083,
-                    "g": 0.9019608497619629,
-                    "b": 0.9686275124549866,
-                    "a": 1.0
-                },
-                "FaceSprite": {
-                    "instanceID": 25890
-                },
-                "DecorationsSprite": {
-                    "instanceID": 25896
-                },
-                "FootSprite": {
-                    "instanceID": 25962
-                },
-                "Balk": 6,
-                "Bench": 0,
-                "HorizontalBars": 4,
-                "Foots": 0,
+                "Foots": 44,
                 "LvlBalk": 1,
                 "LvlBench": 1,
                 "LvlHorizontalBars": 1,
@@ -111,12 +48,12 @@
             }
         ],
         "CurrentCharacter": {
-            "Name": "Trallallero Trallalla Green",
-            "CharacterID": 1,
+            "Name": "Trallallero Trallalla",
+            "CharacterID": 0,
             "MainColor": {
-                "r": 0.25215333700180056,
-                "g": 0.9622641801834106,
-                "b": 0.027233727276325227,
+                "r": 0.2352941334247589,
+                "g": 0.6039215922355652,
+                "b": 0.8392157554626465,
                 "a": 1.0
             },
             "SecondaryColor": {
@@ -126,18 +63,21 @@
                 "a": 1.0
             },
             "FaceSprite": {
-                "instanceID": 25890
+                "instanceID": 32948
             },
             "DecorationsSprite": {
-                "instanceID": 25896
+                "instanceID": 32954
             },
             "FootSprite": {
-                "instanceID": 25962
+                "instanceID": 32930
             },
-            "Balk": 6,
+            "HeadSprite": {
+                "instanceID": 0
+            },
+            "Balk": 13,
             "Bench": 0,
-            "HorizontalBars": 4,
-            "Foots": 0,
+            "HorizontalBars": 0,
+            "Foots": 44,
             "LvlBalk": 1,
             "LvlBench": 1,
             "LvlHorizontalBars": 1,

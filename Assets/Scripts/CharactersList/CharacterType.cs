@@ -10,6 +10,7 @@ public class CharacterType
     public Sprite FaceSprite;
     public Sprite DecorationsSprite;
     public Sprite FootSprite;
+    public Sprite HeadSprite;
 
     [HideInInspector] public int Balk = 0;
     [HideInInspector] public int Bench = 0;
