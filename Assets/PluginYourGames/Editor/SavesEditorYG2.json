@@ -7,7 +7,7 @@
         false,
         false
     ],
-    "idSave": 67,
+    "idSave": 233,
     "PlayerInfo": {
         "OpenedCharacters": [
             {
@@ -38,8 +38,8 @@
                     "instanceID": 0
                 },
                 "Balk": 13,
-                "Bench": 0,
-                "HorizontalBars": 0,
+                "Bench": 25,
+                "HorizontalBars": 124,
                 "Foots": 44,
                 "LvlBalk": 1,
                 "LvlBench": 1,
@@ -75,8 +75,8 @@
                 "instanceID": 0
             },
             "Balk": 13,
-            "Bench": 0,
-            "HorizontalBars": 0,
+            "Bench": 25,
+            "HorizontalBars": 124,
             "Foots": 44,
             "LvlBalk": 1,
             "LvlBench": 1,

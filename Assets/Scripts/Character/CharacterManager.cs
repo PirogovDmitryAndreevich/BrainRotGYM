@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterViewController), typeof(CharacterAnimation))]
 public class CharacterManager : MonoBehaviour
 {
+    [SerializeField] private float _upward;
+
     private CharacterType _currentCharacter;    
 
     private CharacterViewController _viewController;
@@ -42,6 +44,14 @@ public class CharacterManager : MonoBehaviour
     {
         Debug.Log($"CharacterManager ShowinOnScene: {identifier}");
         _currentSceneIdentifier = identifier;
+    }
+
+    public void AddScore()
+    {
+        Vector2 fixedScreenPosition = new Vector2(Screen.width / 2, Screen.height / 2);
+
+        FlyingUpScoreEffect.Instance.CreateClickUIEffect(fixedScreenPosition + Vector2.up* _upward, 1); /////////////////////////
+        StatsManager.Instance.OnAddStat.Invoke(_currentSceneIdentifier, 1); /////////////////////////////
     }
 
     private void Initialize()

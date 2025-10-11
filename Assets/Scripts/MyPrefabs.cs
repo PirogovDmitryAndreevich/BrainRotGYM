@@ -7,27 +7,21 @@ public class MyPrefabs : MonoBehaviour
     public static MyPrefabs Instance;
 
     [SerializeField] public GameObject ScorePrefab;
-    private Text _scoreText;
 
     [SerializeField] public GameObject ClickEffect;
 
     private void Awake()
     {
+        // Проверяем, существует ли уже экземпляр
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
-
-            _scoreText = ScorePrefab.GetComponentInChildren<Text>();
+            DontDestroyOnLoad(gameObject); // Опционально, если нужно сохранять между сценами
         }
         else
         {
+            // Если уже существует другой экземпляр, уничтожаем этот
             Destroy(gameObject);
         }
-    }
-
-    public void SetValueInScorePrefab(int value)
-    {
-        _scoreText.text = $"+{value}";
     }
 }

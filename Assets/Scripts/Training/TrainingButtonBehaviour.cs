@@ -14,9 +14,6 @@ public class TrainingButtonBehaviour : MonoBehaviour
         WaitingLoad.Instance.WaitAndExecute(
             () => Progress.Instance?.PlayerInfo?.CurrentCharacter != null,
             () => {
-                if (MyPrefabs.Instance != null)
-                    MyPrefabs.Instance.SetValueInScorePrefab(GetCurrentLvlValue(_identifier));
-
                 if (_progressBar != null)
                     _progressBar.Initialize(GetCurrentLvlValue(_identifier));
             }
@@ -83,7 +80,7 @@ public class TrainingButtonBehaviour : MonoBehaviour
         if (ShakeAreaEffect.Instance != null) ShakeAreaEffect.Instance.Shake();
         else  Debug.LogWarning("ShakeAreaEffect.Instance is null");
 
-        if (FlyingUpScoreEffect.Instance != null)  FlyingUpScoreEffect.Instance.CreateClickUIEffect(Input.mousePosition);
+        if (FlyingUpScoreEffect.Instance != null)  FlyingUpScoreEffect.Instance.CreateClickUIEffect(Input.mousePosition, 1); /////////////////
         else  Debug.LogWarning("FlyingUpScoreEffect.Instance is null");
     }
 

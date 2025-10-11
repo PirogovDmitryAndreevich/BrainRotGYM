@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FlyingUpScoreEffect : MonoBehaviour
 {
@@ -12,7 +13,6 @@ public class FlyingUpScoreEffect : MonoBehaviour
     [SerializeField] private float _flyDistance = 100f;
     [SerializeField] private float _flyDuration = 1.5f;
     [SerializeField] private float _clickEffectDuration = 0.5f;
-
 
     private void Awake()
     {
@@ -27,26 +27,72 @@ public class FlyingUpScoreEffect : MonoBehaviour
         }
     }
 
-    public void CreateClickUIEffect(Vector2 clickMousePos)
+    public void CreateClickUIEffect(Vector2 clickMousePos, int score)
     {
-        if (_parentObject == null) return;
-        if (MyPrefabs.Instance == null) return;
+        Debug.Log($"CreateClickUIEffect called at {clickMousePos} with score {score}");
+
+        if (_parentObject == null)
+        {
+            Debug.LogError("_parentObject is null!");
+            return;
+        }
+
+        if (MyPrefabs.Instance == null)
+        {
+            Debug.LogError("MyPrefabs.Instance is null!");
+            return;
+        }
 
         // Получаем локальную позицию на канвасе
         Vector2 localPosition = GetCanvasLocalPosition(clickMousePos);
+        Debug.Log($"Canvas local position: {localPosition}");
 
         // Создаем эффекты
-        CreateFlyingText(localPosition);
+        CreateFlyingText(localPosition, score);
         CreateClickEffect(localPosition);
     }
 
-    private void CreateFlyingText(Vector2 localPosition)
+    private void CreateFlyingText(Vector2 localPosition, int score)
     {
-        if (MyPrefabs.Instance.ScorePrefab == null) return;
+        if (MyPrefabs.Instance.ScorePrefab == null)
+        {
+            Debug.LogError("ScorePrefab is null!");
+            return;
+        }
 
         GameObject flyingText = Instantiate(MyPrefabs.Instance.ScorePrefab, _parentObject);
 
+        // АКТИВИРУЕМ объект после создания
+        flyingText.SetActive(true);
+
+        Debug.Log($"Flying text instantiated: {flyingText != null}");
+
+        // Ищем Text компонент (включая неактивные)
+        Text text = flyingText.GetComponentInChildren<Text>(true);
+        if (text == null)
+        {
+            Debug.LogError("Text component not found in children! Available components:");
+            Component[] components = flyingText.GetComponentsInChildren<Component>(true);
+            foreach (Component comp in components)
+            {
+                Debug.Log($"Found: {comp.GetType()} in {comp.gameObject.name}");
+            }
+            Destroy(flyingText);
+            return;
+        }
+
+        // Активируем родительский объект текста если нужно
+        text.gameObject.SetActive(true);
+        text.text = score.ToString();
+        Debug.Log($"Text set to: {score}");
+
         RectTransform rectTransform = SetupRectTransform(flyingText, localPosition);
+        if (rectTransform == null)
+        {
+            Debug.LogError("Failed to setup RectTransform!");
+            Destroy(flyingText);
+            return;
+        }
 
         // Запускаем анимацию
         StartCoroutine(AnimateFlyingText(rectTransform));
@@ -54,16 +100,23 @@ public class FlyingUpScoreEffect : MonoBehaviour
 
     private void CreateClickEffect(Vector2 localPosition)
     {
-        if (MyPrefabs.Instance.ClickEffect == null) return;
+        if (MyPrefabs.Instance.ClickEffect == null)
+        {
+            Debug.LogError("ClickEffect is null!");
+            return;
+        }
 
         // Создаем эффект клика из префаба
         GameObject clickEffect = Instantiate(MyPrefabs.Instance.ClickEffect, _parentObject);
+        clickEffect.SetActive(true); // Активируем
 
         // Настраиваем RectTransform
         RectTransform rectTransform = SetupRectTransform(clickEffect, localPosition);
-
-        // Запускаем анимацию эффекта клика
-        StartCoroutine(AnimateClickEffect(rectTransform));
+        if (rectTransform != null)
+        {
+            // Запускаем анимацию эффекта клика
+            StartCoroutine(AnimateClickEffect(rectTransform));
+        }
     }
 
     private IEnumerator AnimateClickEffect(RectTransform rectTransform)
@@ -94,6 +147,8 @@ public class FlyingUpScoreEffect : MonoBehaviour
 
     private IEnumerator AnimateFlyingText(RectTransform rectTransform)
     {
+        Debug.Log("Starting flying text animation");
+
         Vector2 startPosition = rectTransform.anchoredPosition;
         Vector2 targetPosition = startPosition + Vector2.up * _flyDistance;
 
@@ -159,6 +214,8 @@ public class FlyingUpScoreEffect : MonoBehaviour
             yield return null;
         }
 
+        Debug.Log("Flying text animation completed");
+
         // Уничтожаем объект после анимации
         Destroy(rectTransform.gameObject);
     }
@@ -167,6 +224,12 @@ public class FlyingUpScoreEffect : MonoBehaviour
     {
         Vector2 localPoint;
         RectTransform canvasRect = _canvas.GetComponent<RectTransform>();
+
+        if (_canvas == null)
+        {
+            Debug.LogError("Canvas is null!");
+            return Vector2.zero;
+        }
 
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvasRect,
@@ -186,7 +249,11 @@ public class FlyingUpScoreEffect : MonoBehaviour
     private RectTransform SetupRectTransform(GameObject uiObject, Vector2 localPosition)
     {
         RectTransform rectTransform = uiObject.GetComponent<RectTransform>();
-        if (rectTransform == null) return null;
+        if (rectTransform == null)
+        {
+            Debug.LogError("RectTransform not found on object!");
+            return null;
+        }
 
         // Устанавливаем базовые параметры RectTransform
         rectTransform.anchoredPosition = localPosition;
@@ -227,4 +294,3 @@ public class FlyingUpScoreEffect : MonoBehaviour
         return t < 0.5f ? 4f * t * t * t : 1f - Mathf.Pow(-2f * t + 2f, 3f) / 2f;
     }
 }
-
