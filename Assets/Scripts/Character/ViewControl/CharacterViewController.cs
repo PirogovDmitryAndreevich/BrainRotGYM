@@ -29,7 +29,7 @@ public class CharacterViewController : MonoBehaviour
         _shortsViewer = GetComponent<ShortsViewController>();
     }
 
-    public void UpdateCharacterView(CharacterType character)
+    public void UpdateCharacterView(CharacterData character)
     {
         _faceViewer.SetSprite(character.FaceSprite);
         _decorationViewer.SetSprite(character.DecorationsSprite);
@@ -42,7 +42,7 @@ public class CharacterViewController : MonoBehaviour
 
     }
 
-    public void UpdateLvlView(CharacterType character)
+    public void UpdateLvlView(CharacterProgressData character)
     {
         if (_pressViewer != null)
             _pressViewer.UpdateSprites(character.LvlBench);

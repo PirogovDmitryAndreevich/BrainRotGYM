@@ -11,10 +11,10 @@ public class CharacterInfoPanel : MonoBehaviour
     {
         WaitingLoad.Instance.WaitAndExecute
             (   
-                () => CharactersMenu.Instance != null,
+                () => CharactersDataManager.Instance != null,
                 () =>
                 {
-                    CharactersMenu.Instance.OnSelectedCharacter += SetInform;
+                    CharactersDataManager.Instance.OnSelectedCharacter += SetInform;
                     SetInform();
                 }
             );
@@ -22,15 +22,22 @@ public class CharacterInfoPanel : MonoBehaviour
 
     private void OnDestroy()
     {
-        CharactersMenu.Instance.OnSelectedCharacter -= SetInform;
+        CharactersDataManager.Instance.OnSelectedCharacter -= SetInform;
     }
 
     private void SetInform()
     {
-        if (Progress.Instance.PlayerInfo.CurrentCharacter != null)
+        if (CharactersDataManager.Instance != null)
         {
-            _name.text = Progress.Instance.PlayerInfo.CurrentCharacter.Name;
-            _icon.sprite = Progress.Instance.PlayerInfo.CurrentCharacter.Icon;
+            WaitingLoad.Instance.WaitAndExecute
+                (
+                    () => CharactersDataManager.Instance.CurrentCharacterView != null,
+                    () =>
+                    {
+                        _name.text = CharactersDataManager.Instance.CurrentCharacterView.Name;
+                        _icon.sprite = CharactersDataManager.Instance.CurrentCharacterView.Icon;
+                    }
+                );
         }
         else
         {

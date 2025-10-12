@@ -46,8 +46,8 @@ public class ShowManager : MonoBehaviour
        
         WaitingLoad.Instance.WaitAndExecute
         (
-            () => Progress.Instance != null && CharactersMenu.Instance != null,
-            () => CharactersMenu.Instance.OnSelectedCharacter += InitializeCharacter
+            () => Progress.Instance != null && CharactersDataManager.Instance != null,
+            () => CharactersDataManager.Instance.OnSelectedCharacter += InitializeCharacter
         );
 
         _backButton.gameObject.SetActive(false);
@@ -60,9 +60,9 @@ public class ShowManager : MonoBehaviour
             GameManager.Instance.OnScenesIsReady -= InitializeScenes;
         }
 
-        if (CharactersMenu.Instance != null)
+        if (CharactersDataManager.Instance != null)
         {
-            CharactersMenu.Instance.OnSelectedCharacter -= InitializeCharacter;
+            CharactersDataManager.Instance.OnSelectedCharacter -= InitializeCharacter;
         }
 
         OnShowOnScreen -= Show;

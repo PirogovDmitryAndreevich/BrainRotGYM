@@ -5,8 +5,8 @@ using YG;
 [System.Serializable]
 public class PlayerInfo
 {
-    public List<CharacterType> OpenedCharacters = new();
-    public CharacterType CurrentCharacter;
+    public List<CharacterProgressData> OpenedCharacters = new();
+    public CharacterProgressData CurrentCharacter;
 }
 
 public class Progress : MonoBehaviour

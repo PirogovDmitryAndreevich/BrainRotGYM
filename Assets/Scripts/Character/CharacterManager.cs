@@ -6,7 +6,8 @@ public class CharacterManager : MonoBehaviour
 {
     [SerializeField] private float _upward;
 
-    private CharacterType _currentCharacter;    
+    private CharacterProgressData _currentProgressCharacter;
+    private CharacterData _currentViewCharacter;
 
     private CharacterViewController _viewController;
     private CharacterAnimation _animation;
@@ -56,18 +57,19 @@ public class CharacterManager : MonoBehaviour
 
     private void Initialize()
     {
-        _currentCharacter = Progress.Instance.PlayerInfo.CurrentCharacter;
-        UpdateView();
+        _currentProgressCharacter = Progress.Instance.PlayerInfo.CurrentCharacter;
+        _currentViewCharacter = CharactersDataManager.Instance.CurrentCharacterView;
+        UpdateView();        
     }
 
     private void UpdateView()
     {
-        _viewController.UpdateCharacterView(_currentCharacter);
+        _viewController.UpdateCharacterView(_currentViewCharacter);
     }
 
     private void UpdateLvlView()
     {
-        _viewController.UpdateLvlView(_currentCharacter);
+        _viewController.UpdateLvlView(_currentProgressCharacter);
     }
 
     private void SetPosition()

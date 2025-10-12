@@ -21,7 +21,7 @@ public class SwitchCharacterButton : MonoBehaviour
 
     private void OnClick()
     {
-        if (CharactersMenu.Instance != null)
-            CharactersMenu.Instance.OnSelectCharacter(character);
+        if (CharactersDataManager.Instance != null)
+            CharactersDataManager.Instance.OnSelectCharacter(character);
     }
 }

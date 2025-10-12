@@ -7,44 +7,24 @@
         false,
         false
     ],
-    "idSave": 4,
+    "idSave": 44,
     "PlayerInfo": {
         "OpenedCharacters": [
             {
-                "Name": "Trallallero Trallalla",
                 "CharacterID": 0,
-                "MainColor": {
-                    "r": 0.2352941334247589,
-                    "g": 0.6039215922355652,
-                    "b": 0.8392157554626465,
-                    "a": 1.0
-                },
-                "SecondaryColor": {
-                    "r": 0.7647059559822083,
-                    "g": 0.9019608497619629,
-                    "b": 0.9686275124549866,
-                    "a": 1.0
-                },
-                "FaceSprite": {
-                    "instanceID": 25678
-                },
-                "DecorationsSprite": {
-                    "instanceID": 25674
-                },
-                "FootSprite": {
-                    "instanceID": 25670
-                },
-                "HeadSprite": {
-                    "instanceID": 25672
-                },
-                "Icon": {
-                    "instanceID": 25680
-                },
-                "Shorts": {
-                    "instanceID": 25676
-                },
                 "Balk": 0,
                 "Bench": 0,
+                "HorizontalBars": 12,
+                "Foots": 0,
+                "LvlBalk": 1,
+                "LvlBench": 1,
+                "LvlHorizontalBars": 1,
+                "LvlFoots": 1
+            },
+            {
+                "CharacterID": 1,
+                "Balk": 0,
+                "Bench": 19,
                 "HorizontalBars": 0,
                 "Foots": 0,
                 "LvlBalk": 1,
@@ -54,40 +34,9 @@
             }
         ],
         "CurrentCharacter": {
-            "Name": "Trallallero Trallalla",
-            "CharacterID": 0,
-            "MainColor": {
-                "r": 0.2352941334247589,
-                "g": 0.6039215922355652,
-                "b": 0.8392157554626465,
-                "a": 1.0
-            },
-            "SecondaryColor": {
-                "r": 0.7647059559822083,
-                "g": 0.9019608497619629,
-                "b": 0.9686275124549866,
-                "a": 1.0
-            },
-            "FaceSprite": {
-                "instanceID": 25678
-            },
-            "DecorationsSprite": {
-                "instanceID": 25674
-            },
-            "FootSprite": {
-                "instanceID": 25670
-            },
-            "HeadSprite": {
-                "instanceID": 25672
-            },
-            "Icon": {
-                "instanceID": 25680
-            },
-            "Shorts": {
-                "instanceID": 25676
-            },
+            "CharacterID": 1,
             "Balk": 0,
-            "Bench": 0,
+            "Bench": 19,
             "HorizontalBars": 0,
             "Foots": 0,
             "LvlBalk": 1,

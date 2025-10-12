@@ -16,6 +16,6 @@ public class TestSelectCharacter : MonoBehaviour
 
     private void OnClick()
     {
-        CharactersMenu.Instance.OnSelectCharacter( _characterType );
+        CharactersDataManager.Instance.OnSelectCharacter?.Invoke( _characterType );
     }
 }

@@ -31,6 +31,8 @@ public class StatsType : MonoBehaviour
 
     protected virtual void UpdateUI(Stats stat, int value)
     {
+
+
         if (stat == _statsType)
         {
             _text.text = value.ToString();

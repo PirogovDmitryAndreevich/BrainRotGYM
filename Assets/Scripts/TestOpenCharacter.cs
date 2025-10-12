@@ -16,6 +16,6 @@ public class TestOpenCharacter : MonoBehaviour
 
     private void OnClick()
     {
-        CharactersMenu.Instance.OnOpenNewCharacter(_character);
+        CharactersDataManager.Instance.OnOpenNewCharacter?.Invoke(_character);
     }
 }
