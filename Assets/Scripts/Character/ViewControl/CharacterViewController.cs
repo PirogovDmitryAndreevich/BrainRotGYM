@@ -1,9 +1,9 @@
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 [RequireComponent (typeof(ArmsViewController), typeof(LegsViewController), typeof(PressViewController))]
 [RequireComponent (typeof(TorsViewController), typeof(PressViewController), typeof(FaceViewController))]
 [RequireComponent (typeof(HeadViewController), typeof(DecorationViewController), typeof(FootViewController))]
+[RequireComponent (typeof(ShortsViewController))]
 public class CharacterViewController : MonoBehaviour
 {
     private LegsViewController _legsViewer;
@@ -14,6 +14,7 @@ public class CharacterViewController : MonoBehaviour
     private HeadViewController _headViewer;
     private DecorationViewController _decorationViewer;
     private FootViewController _footViewer;
+    private ShortsViewController _shortsViewer;
 
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class CharacterViewController : MonoBehaviour
         _headViewer = GetComponent<HeadViewController>();
         _decorationViewer = GetComponent<DecorationViewController>();
         _footViewer = GetComponent<FootViewController>();
+        _shortsViewer = GetComponent<ShortsViewController>();
     }
 
     public void UpdateCharacterView(CharacterType character)
@@ -32,6 +34,8 @@ public class CharacterViewController : MonoBehaviour
         _faceViewer.SetSprite(character.FaceSprite);
         _decorationViewer.SetSprite(character.DecorationsSprite);
         _footViewer.SetSprite(character.FootSprite);
+        _headViewer.SetSprite(character.HeadSprite);
+        _shortsViewer.SetSprite(character.Shorts);
 
         SetMainColor(character.MainColor);
         _pressViewer.SetColor(character.SecondaryColor);
@@ -54,8 +58,7 @@ public class CharacterViewController : MonoBehaviour
     }
 
     private void SetMainColor(Color color)
-    {
-        _headViewer.SetColor(color);
+    {       
         _torsViewer.SetColor(color);
         _legsViewer.SetColor(color);
         _armViewer.SetColor(color);

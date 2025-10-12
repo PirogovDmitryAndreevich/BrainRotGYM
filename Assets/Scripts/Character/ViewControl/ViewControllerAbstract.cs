@@ -9,7 +9,18 @@ public class ViewControllerAbstract : MonoBehaviour
     {
         foreach (var part in _parts)
         {
-            part.renderer.color = color; 
+            part.renderer.color = color;
+        }
+    }
+
+    public void SetSprite(Sprite sprite)
+    {
+        foreach (var part in _parts)
+        {
+            if (sprite != null)
+                part.renderer.sprite = sprite;
+            else
+                part.renderer.sprite = null;
         }
     }
 

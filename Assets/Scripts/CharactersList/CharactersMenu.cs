@@ -71,6 +71,7 @@ public class CharactersMenu : MonoBehaviour
         }
 
         var newCharacter = new CharacterType(_charactersDictionary[id]);
+
         Progress.Instance.PlayerInfo.OpenedCharacters.Add(newCharacter);
         Progress.Instance.Save();
         LoadOpenedDictionary();
@@ -78,6 +79,8 @@ public class CharactersMenu : MonoBehaviour
 
     private void CreateDictionary()
     {
+        _charactersDictionary.Clear();
+
         foreach (var character in _characters)
         {
             if (!_charactersDictionary.ContainsKey(character.CharacterID))

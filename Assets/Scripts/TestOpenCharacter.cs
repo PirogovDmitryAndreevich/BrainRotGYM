@@ -2,8 +2,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent (typeof(Button))]
-public class TestOpenCharactersButton : MonoBehaviour
+public class TestOpenCharacter : MonoBehaviour
 {
+    [SerializeField] private CharactersEnum _character;
+
     private Button _button;
 
     private void Awake()
@@ -14,7 +16,6 @@ public class TestOpenCharactersButton : MonoBehaviour
 
     private void OnClick()
     {
-        CharactersMenu.Instance.OnOpenNewCharacter?.Invoke(CharactersEnum.TrallalleroTrallallaRed);
-        CharactersMenu.Instance.OnOpenNewCharacter?.Invoke(CharactersEnum.TrallalleroTrallallaGreen);
+        CharactersMenu.Instance.OnOpenNewCharacter(_character);
     }
 }

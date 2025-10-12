@@ -9,13 +9,20 @@ public class TrainingButtonBehaviour : MonoBehaviour
     protected Identificate _identifier;
     protected ResistanceProgressBar _progressBar;
 
+    private const int DefaultValueToAddStat = 1;
+    protected int _valueToAddStat = 1;
+
     protected virtual void OnEnable()
     {        
         WaitingLoad.Instance.WaitAndExecute(
             () => Progress.Instance?.PlayerInfo?.CurrentCharacter != null,
             () => {
                 if (_progressBar != null)
+                {
                     _progressBar.Initialize(GetCurrentLvlValue(_identifier));
+                    _progressBar.OnProgressBarIsCompleted += MultiplierForValueToAddStat;
+                    _progressBar.OnProgressBarIsReset += ResetMultiplier;
+                }
             }
         );
     }
@@ -54,8 +61,7 @@ public class TrainingButtonBehaviour : MonoBehaviour
     }
 
     protected virtual void OnClickButton()
-    {
-        // ÏÐÎÂÅÐßÅÌ ÷òî âñå êîìïîíåíòû ãîòîâû
+    {        
         if (Progress.Instance?.PlayerInfo?.CurrentCharacter == null)
         {
             Debug.LogWarning("CurrentCharacter is null, cannot add stats");
@@ -66,12 +72,10 @@ public class TrainingButtonBehaviour : MonoBehaviour
         {
             Debug.LogError("ProgressBar is not initialized!");
             return;
-        }
-
-        int valueToAdd = GetCurrentLvlValue(_identifier);
+        }        
 
         if (StatsManager.Instance != null)
-            StatsManager.Instance.OnAddStat?.Invoke(_identifier, valueToAdd);
+            StatsManager.Instance.OnAddStat?.Invoke(_identifier, _valueToAddStat);
         else
             Debug.LogError("StatsManager.Instance is null!");
 
@@ -80,8 +84,20 @@ public class TrainingButtonBehaviour : MonoBehaviour
         if (ShakeAreaEffect.Instance != null) ShakeAreaEffect.Instance.Shake();
         else  Debug.LogWarning("ShakeAreaEffect.Instance is null");
 
-        if (FlyingUpScoreEffect.Instance != null)  FlyingUpScoreEffect.Instance.CreateClickUIEffect(Input.mousePosition, 1); /////////////////
+        if (FlyingUpScoreEffect.Instance != null)  FlyingUpScoreEffect.Instance.CreateClickUIEffect(Input.mousePosition, _valueToAddStat);
         else  Debug.LogWarning("FlyingUpScoreEffect.Instance is null");
+    }
+
+    private void MultiplierForValueToAddStat()
+    {
+        int multiplier = 2;
+
+        _valueToAddStat *= multiplier;
+    }
+
+    private void ResetMultiplier()
+    {
+        _valueToAddStat = DefaultValueToAddStat;
     }
 
     private int GetCurrentLvlValue(Identificate statType)
@@ -98,7 +114,7 @@ public class TrainingButtonBehaviour : MonoBehaviour
             Identificate.Bench => Progress.Instance.PlayerInfo.CurrentCharacter.LvlBench,
             Identificate.HorizontalBar => Progress.Instance.PlayerInfo.CurrentCharacter.LvlHorizontalBars,
             Identificate.Foots => Progress.Instance.PlayerInfo.CurrentCharacter.LvlFoots,
-            _ => 0
+            _ => 150
         };
     }
 }

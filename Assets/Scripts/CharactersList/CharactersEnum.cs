@@ -2,6 +2,5 @@
 public enum CharactersEnum 
 {
     TrallalleroTrallalla,
-    TrallalleroTrallallaGreen,
-    TrallalleroTrallallaRed,
+    Garamaraman,
 }

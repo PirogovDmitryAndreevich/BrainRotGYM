@@ -11,7 +11,9 @@ public class CharacterType
     public Sprite DecorationsSprite;
     public Sprite FootSprite;
     public Sprite HeadSprite;
-
+    public Sprite Icon;
+    public Sprite Shorts;
+    
     [HideInInspector] public int Balk = 0;
     [HideInInspector] public int Bench = 0;
     [HideInInspector] public int HorizontalBars = 0;
@@ -22,42 +24,29 @@ public class CharacterType
     [HideInInspector] public int LvlHorizontalBars = 1;
     [HideInInspector] public int LvlFoots = 1;
 
-    public CharacterType(CharacterType other)
+    public CharacterType(CharacterType character)
     {
-        if (other == null) return;
+        this.Name = character.Name;
+        this.CharacterID = character.CharacterID;
+        this.MainColor = character.MainColor;
+        this.SecondaryColor = character.SecondaryColor;
+        this.FaceSprite = character.FaceSprite;
+        this.DecorationsSprite = character.DecorationsSprite;
+        this.FootSprite = character.FootSprite;
+        this.HeadSprite = character.HeadSprite;
+        this.Icon = character.Icon;
+        this.Shorts = character.Shorts;
 
-        //  опируем базовые данные
-        Name = other.Name;
-        CharacterID = other.CharacterID;
-        MainColor = other.MainColor;
-        SecondaryColor = other.SecondaryColor;
-        FaceSprite = other.FaceSprite;
-        DecorationsSprite = other.DecorationsSprite;
-        FootSprite = other.FootSprite;
+        this.Balk = 0;
+        this.Bench = 0;
+        this.HorizontalBars = 0;
+        this.Foots = 0;
 
-        //  опируем статистику
-        Balk = other.Balk;
-        Bench = other.Bench;
-        HorizontalBars = other.HorizontalBars;
-        Foots = other.Foots;
-
-        //  опируем статистику (дл€ новых персонажей она будет начальной)
-        LvlBalk = other.LvlBalk > 0 ? other.LvlBalk : 1;
-        LvlBench = other.LvlBench > 0 ? other.LvlBench : 1;
-        LvlHorizontalBars = other.LvlHorizontalBars > 0 ? other.LvlHorizontalBars : 1;
-        LvlFoots = other.LvlFoots > 0 ? other.LvlFoots : 1;
+        this.LvlBalk = 1;
+        this.LvlBench = 1;
+        this.LvlHorizontalBars = 1;
+        this.LvlFoots = 1;
     }
 
-    public CharacterType()
-    {
-        InitializeDefaults();
-    }
-
-    private void InitializeDefaults()
-    {
-        LvlBalk = 1;
-        LvlBench = 1;
-        LvlHorizontalBars = 1;
-        LvlFoots = 1;
-    }
+    public CharacterType() { }
 }

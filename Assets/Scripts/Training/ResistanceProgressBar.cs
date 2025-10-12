@@ -6,9 +6,8 @@ using UnityEngine.UI;
 public class ResistanceProgressBar : MonoBehaviour
 {
     private const float MinFillValue = 0f;
-    private const float BaseFillPerClick = 0.15f;
-    private const float BaseMaxFill = 1f;
-    private const float BaseResistance = 0.1f;
+    private const float BaseMaxFill = 100f;
+    private const float BaseFillPerClick = 10f;
 
     [SerializeField] private Image _progressFill;
 
@@ -18,10 +17,13 @@ public class ResistanceProgressBar : MonoBehaviour
     private bool _isCompleted = false;
     private bool _isFilling = false;
 
-    private float _resistance;
-    private float _fillAmountPerClick;
+    private float _currentFill = 0f;
+    private int _playerLevel = 1;
+    private int _completedCycles = 0; // Сколько раз полностью заполнялся
+    private float _currentResistance;
 
     public Action OnProgressBarIsCompleted;
+    public Action OnProgressBarIsReset;
 
     private void OnEnable()
     {
@@ -55,14 +57,11 @@ public class ResistanceProgressBar : MonoBehaviour
     {
         playerLevel = Mathf.Max(1, playerLevel);
 
-        _resistance = BaseResistance + (0.015f * (playerLevel - 1));
-        _fillAmountPerClick = Mathf.Max(0.04f, BaseFillPerClick - (0.02f * (playerLevel - 1)));
-        _progressFill.fillAmount = MinFillValue;
+        _currentFill = MinFillValue;
+        _completedCycles = 0;
 
-        if (_resistanceCoroutine == null && gameObject.activeSelf)
-        {
-            _resistanceCoroutine = StartCoroutine(ResistanceRoutine());
-        }
+        UpdateResistance();
+        UpdateVisualFill();
     }
 
     public void OnButtonClick()
@@ -76,19 +75,55 @@ public class ResistanceProgressBar : MonoBehaviour
             StopCoroutine(_fillCoroutine);
         }
 
-        // Запускаем плавное заполнение
+        // Добавляем +1 к заполнению
+        _currentFill += BaseFillPerClick;
+        _currentFill = Mathf.Clamp(_currentFill, MinFillValue, BaseMaxFill);
+
+        // Запускаем плавную анимацию
         _fillCoroutine = StartCoroutine(SmoothFill());
+
+        // Проверяем завершение
+        if (_currentFill >= BaseMaxFill && !_isCompleted)
+        {
+            _isCompleted = true;
+            OnProgressBarIsCompleted?.Invoke();
+        }
+    }
+
+    private void UpdateResistance()
+    {
+        // Формула сопротивления:
+        // Базовое сопротивление + за уровень + за количество заполнений
+
+        float baseResistance = 3f;
+        float levelMultiplier = 4f * _playerLevel; // +0.02 за каждый уровень
+        float cyclesMultiplier = 7f * _completedCycles; // +0.015 за каждое заполнение
+
+        _currentResistance = baseResistance + levelMultiplier + cyclesMultiplier;
+
+        Debug.Log($"Resistance updated: Level={_playerLevel}, Cycles={_completedCycles}, Resistance={_currentResistance:F3}");
+    }
+
+    private void FillAmountIsCompleted()
+    {
+        _completedCycles++;
+        _currentFill /= 2; // Сбрасываем до половины после заполнения
+        _isCompleted = false;
+
+        // Обновляем сопротивление после каждого заполнения
+        UpdateResistance();
+
+        Debug.Log($"Cycle completed! Total cycles: {_completedCycles}");
     }
 
     private IEnumerator SmoothFill()
     {
         _isFilling = true;
 
-        float startFill = _progressFill.fillAmount;
-        float targetFill = startFill + _fillAmountPerClick;
-        targetFill = Mathf.Clamp(targetFill, MinFillValue, BaseMaxFill);
+        float startVisualFill = _progressFill.fillAmount;
+        float targetVisualFill = _currentFill / BaseMaxFill; // Конвертируем в 0-1 для Image
 
-        float duration = 0.2f; // Длительность анимации заполнения
+        float duration = 0.15f;
         float elapsed = 0f;
 
         while (elapsed < duration)
@@ -96,23 +131,32 @@ public class ResistanceProgressBar : MonoBehaviour
             elapsed += Time.deltaTime;
             float progress = elapsed / duration;
 
-            // Плавная интерполяция с easing
             float easedProgress = EaseOutCubic(progress);
-            _progressFill.fillAmount = Mathf.Lerp(startFill, targetFill, easedProgress);
+            _progressFill.fillAmount = Mathf.Lerp(startVisualFill, targetVisualFill, easedProgress);
 
             yield return null;
         }
 
-        // Гарантируем точное значение
-        _progressFill.fillAmount = targetFill;
+        _progressFill.fillAmount = targetVisualFill;
         _isFilling = false;
         _fillCoroutine = null;
+
+        if (_currentFill <= MinFillValue)
+            OnProgressBarIsReset?.Invoke();
 
         // Проверяем завершение после анимации
         if (_progressFill.fillAmount >= BaseMaxFill && !_isCompleted)
         {
             _isCompleted = true;
             OnProgressBarIsCompleted?.Invoke();
+        }
+    }
+
+    private void UpdateVisualFill()
+    {
+        if (_progressFill != null)
+        {
+            _progressFill.fillAmount = _currentFill / BaseMaxFill;
         }
     }
 
@@ -128,11 +172,16 @@ public class ResistanceProgressBar : MonoBehaviour
             if (!_isCompleted && !_isFilling) 
             {
                 // Постоянное уменьшение из-за сопротивления
-                _progressFill.fillAmount -= _resistance * Time.deltaTime;
-                _progressFill.fillAmount = Mathf.Clamp(_progressFill.fillAmount, MinFillValue, BaseMaxFill);
+                _currentFill -= _currentResistance * Time.deltaTime;
+                _currentFill = Mathf.Clamp(_currentFill, MinFillValue, BaseMaxFill);
+
+                UpdateVisualFill();
+
+                if(_currentFill <= MinFillValue)
+                    OnProgressBarIsReset?.Invoke();
 
                 // Проверяем завершение
-                if (_progressFill.fillAmount >= BaseMaxFill && !_isCompleted)
+                if (_currentFill >= BaseMaxFill && !_isCompleted)
                 {
                     _isCompleted = true;
                     OnProgressBarIsCompleted?.Invoke();
@@ -141,11 +190,5 @@ public class ResistanceProgressBar : MonoBehaviour
 
             yield return null;
         }
-    }
-
-    private void FillAmountIsCompleted()
-    {
-        _progressFill.fillAmount = MinFillValue;
-        _isCompleted = false;
     }
 }

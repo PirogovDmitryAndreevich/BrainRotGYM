@@ -7,7 +7,7 @@
         false,
         false
     ],
-    "idSave": 233,
+    "idSave": 4,
     "PlayerInfo": {
         "OpenedCharacters": [
             {
@@ -26,21 +26,27 @@
                     "a": 1.0
                 },
                 "FaceSprite": {
-                    "instanceID": 32948
+                    "instanceID": 25678
                 },
                 "DecorationsSprite": {
-                    "instanceID": 32954
+                    "instanceID": 25674
                 },
                 "FootSprite": {
-                    "instanceID": 32930
+                    "instanceID": 25670
                 },
                 "HeadSprite": {
-                    "instanceID": 0
+                    "instanceID": 25672
                 },
-                "Balk": 13,
-                "Bench": 25,
-                "HorizontalBars": 124,
-                "Foots": 44,
+                "Icon": {
+                    "instanceID": 25680
+                },
+                "Shorts": {
+                    "instanceID": 25676
+                },
+                "Balk": 0,
+                "Bench": 0,
+                "HorizontalBars": 0,
+                "Foots": 0,
                 "LvlBalk": 1,
                 "LvlBench": 1,
                 "LvlHorizontalBars": 1,
@@ -63,21 +69,27 @@
                 "a": 1.0
             },
             "FaceSprite": {
-                "instanceID": 32948
+                "instanceID": 25678
             },
             "DecorationsSprite": {
-                "instanceID": 32954
+                "instanceID": 25674
             },
             "FootSprite": {
-                "instanceID": 32930
+                "instanceID": 25670
             },
             "HeadSprite": {
-                "instanceID": 0
+                "instanceID": 25672
             },
-            "Balk": 13,
-            "Bench": 25,
-            "HorizontalBars": 124,
-            "Foots": 44,
+            "Icon": {
+                "instanceID": 25680
+            },
+            "Shorts": {
+                "instanceID": 25676
+            },
+            "Balk": 0,
+            "Bench": 0,
+            "HorizontalBars": 0,
+            "Foots": 0,
             "LvlBalk": 1,
             "LvlBench": 1,
             "LvlHorizontalBars": 1,

@@ -51,7 +51,7 @@ public class CharacterManager : MonoBehaviour
         Vector2 fixedScreenPosition = new Vector2(Screen.width / 2, Screen.height / 2);
 
         FlyingUpScoreEffect.Instance.CreateClickUIEffect(fixedScreenPosition + Vector2.up* _upward, 1); /////////////////////////
-        StatsManager.Instance.OnAddStat.Invoke(_currentSceneIdentifier, 1); /////////////////////////////
+        StatsManager.Instance.OnAddStat?.Invoke(_currentSceneIdentifier, 1); /////////////////////////////
     }
 
     private void Initialize()

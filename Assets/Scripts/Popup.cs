@@ -7,17 +7,22 @@ public class Popup : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private CanvasGroup _popupCanvasGroup;
     [SerializeField] private RectTransform _popupPanel;
-    [SerializeField] private Button _closeButton;
     [SerializeField] private Button _openButton;
+    [SerializeField] private Button[] _closeButtons;
 
     [Header("Animation Settings")]
-    [SerializeField] private float _fadeDuration = 0.3f;
     [SerializeField] private float _scaleDuration = 0.2f;
+    [SerializeField] private float _fadeDuration = 0.3f;
+
+    private bool _isOpen = false;
 
     private void Awake()
     {
         _openButton.onClick.AddListener(ShowPopup);
-        _closeButton.onClick.AddListener(HidePopup);
+
+        foreach (Button button in _closeButtons)
+            button.onClick.AddListener(HidePopup);
+
         // Скрыть попап сразу
         _popupCanvasGroup.alpha = 0f;
         _popupCanvasGroup.blocksRaycasts = false;
@@ -25,8 +30,11 @@ public class Popup : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (_closeButton != null)
-            _closeButton.onClick.RemoveAllListeners();
+        foreach (Button button in _closeButtons)
+        {
+            if (button != null)
+                button.onClick.RemoveAllListeners();
+        }
 
         if (_openButton != null)
             _openButton.onClick.RemoveAllListeners();
@@ -34,12 +42,18 @@ public class Popup : MonoBehaviour
 
     private void ShowPopup()
     {
+        if (_isOpen == true) return;
+
+        _isOpen = true;
         StopAllCoroutines();
         StartCoroutine(ShowPopupCoroutine());
     }
 
     private void HidePopup()
     {
+        if (_isOpen == false) return;
+
+        _isOpen = false;
         StopAllCoroutines();
         StartCoroutine(HidePopupCoroutine());
     }
