@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterDatabase), typeof(CharacterProgressManager))]
@@ -11,6 +12,7 @@ public class CharactersDataManager : MonoBehaviour
     [SerializeField] private CharacterData[] _characterDataArray;
 
     [HideInInspector] public CharacterData CurrentCharacterView;
+    public CharacterProgressData CurrentCharacterProgress => Progress.Instance.PlayerInfo.CurrentCharacter;
 
     public Action<CharactersEnum> OnSelectCharacter;
     public Action<CharactersEnum> OnOpenNewCharacter;
@@ -71,11 +73,9 @@ public class CharactersDataManager : MonoBehaviour
             }
             else 
             {
-                foreach (var character in _progressManager.OpenedCharacters.Values)
-                {
-                    SelectCharacter(character.CharacterID);
-                    break;
-                }
+                var currentCharacter = Progress.Instance.PlayerInfo.CurrentCharacter;
+                var characterID = currentCharacter?.CharacterID ?? _progressManager.OpenedCharacters.Keys.First();
+                SelectCharacter(characterID);
             }
         }
 
@@ -118,8 +118,8 @@ public class CharactersDataManager : MonoBehaviour
 
         Progress.Instance.PlayerInfo.OpenedCharacters.Add(characterProgress);
 
-        Progress.Instance?.Save();
-        _progressManager?.LoadProgress();
+        Progress.Instance.Save();
+        _progressManager.LoadProgress();
         OnOpenNewCharacter?.Invoke(characterID);
     }    
 }

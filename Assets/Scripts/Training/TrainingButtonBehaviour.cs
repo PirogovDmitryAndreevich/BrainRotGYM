@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button), typeof(ResistanceProgressBar))]
 public class TrainingButtonBehaviour : MonoBehaviour
 {
+    [SerializeField] private Text _textForProgressBar;
+
     protected Button _button;
     protected bool _isInitialized;
     protected Identificate _identifier;
@@ -13,14 +16,16 @@ public class TrainingButtonBehaviour : MonoBehaviour
     protected int _valueToAddStat = 1;
 
     protected virtual void OnEnable()
-    {        
+    {
         WaitingLoad.Instance.WaitAndExecute(
             () => Progress.Instance?.PlayerInfo?.CurrentCharacter != null,
-            () => {
+            () =>
+            {
                 if (_progressBar != null)
                 {
                     _progressBar.Initialize(GetCurrentLvlValue(_identifier));
-                    _progressBar.OnProgressBarIsCompleted += MultiplierForValueToAddStat;
+                    _textForProgressBar.text = $"+{_valueToAddStat}";
+                    _progressBar.OnProgressBarIsCompleted += CoefficientForValueToAddStat;
                     _progressBar.OnProgressBarIsReset += ResetMultiplier;
                 }
             }
@@ -28,9 +33,8 @@ public class TrainingButtonBehaviour : MonoBehaviour
     }
 
     protected virtual void OnDestroy()
-    {        
+    {
         _button.onClick.RemoveAllListeners();
-        //_progressBar.OnProgressBarIsCompleted -=
     }
 
     public virtual void Initialize(Identificate identifier)
@@ -44,16 +48,19 @@ public class TrainingButtonBehaviour : MonoBehaviour
         if (Progress.Instance?.PlayerInfo?.CurrentCharacter != null)
         {
             _progressBar.Initialize(GetCurrentLvlValue(_identifier));
+            _textForProgressBar.text = $"+{_valueToAddStat}";
         }
         else
         {
             WaitingLoad.Instance.WaitAndExecute(
                 () => Progress.Instance?.PlayerInfo?.CurrentCharacter != null,
-                () => _progressBar.Initialize(GetCurrentLvlValue(_identifier))
+                () =>
+                {
+                    _progressBar.Initialize(GetCurrentLvlValue(_identifier));
+                    _textForProgressBar.text = $"+{_valueToAddStat}";
+                }
             );
         }
-
-        //_progressBar.OnProgressBarIsCompleted +=
 
         _button.onClick.AddListener(OnClickButton);
 
@@ -61,7 +68,7 @@ public class TrainingButtonBehaviour : MonoBehaviour
     }
 
     protected virtual void OnClickButton()
-    {        
+    {
         if (Progress.Instance?.PlayerInfo?.CurrentCharacter == null)
         {
             Debug.LogWarning("CurrentCharacter is null, cannot add stats");
@@ -72,7 +79,7 @@ public class TrainingButtonBehaviour : MonoBehaviour
         {
             Debug.LogError("ProgressBar is not initialized!");
             return;
-        }        
+        }
 
         if (StatsManager.Instance != null)
             StatsManager.Instance.OnAddStat?.Invoke(_identifier, _valueToAddStat);
@@ -81,23 +88,32 @@ public class TrainingButtonBehaviour : MonoBehaviour
 
         _progressBar.OnButtonClick();
 
-        if (ShakeAreaEffect.Instance != null) ShakeAreaEffect.Instance.Shake();
-        else  Debug.LogWarning("ShakeAreaEffect.Instance is null");
+        if (ShakeAreaEffect.Instance != null)
+            ShakeAreaEffect.Instance.Shake();
+        else
+            Debug.LogWarning("ShakeAreaEffect.Instance is null");
 
-        if (FlyingUpScoreEffect.Instance != null)  FlyingUpScoreEffect.Instance.CreateClickUIEffect(Input.mousePosition, _valueToAddStat);
-        else  Debug.LogWarning("FlyingUpScoreEffect.Instance is null");
+        if (FlyingUpScoreEffect.Instance != null)
+            FlyingUpScoreEffect.Instance.CreateClickUIEffect(Input.mousePosition, _valueToAddStat);
+        else
+            Debug.LogWarning("FlyingUpScoreEffect.Instance is null");
     }
 
-    private void MultiplierForValueToAddStat()
+    private void CoefficientForValueToAddStat()
     {
-        int multiplier = 2;
+        int valueToUI;
 
-        _valueToAddStat *= multiplier;
+        _valueToAddStat++;
+        valueToUI = _valueToAddStat;
+        valueToUI++;
+
+        _textForProgressBar.text = $"+{valueToUI}";
     }
 
     private void ResetMultiplier()
     {
         _valueToAddStat = DefaultValueToAddStat;
+        _textForProgressBar.text = $"+{_valueToAddStat}";
     }
 
     private int GetCurrentLvlValue(Identificate statType)

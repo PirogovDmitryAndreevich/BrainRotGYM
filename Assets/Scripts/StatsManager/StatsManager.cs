@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class StatsManager : MonoBehaviour
@@ -10,27 +11,101 @@ public class StatsManager : MonoBehaviour
     public Action<Identificate, int> OnAddStat;
     public Action<Stats, int> OnUpdateUIStats;
 
+    private CharacterProgressData _currentCharacter;
+    private Dictionary<Identificate, Stats> _statMapping;
+    private Dictionary<Stats, Func<int>> _valueGetters;
+
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            OnAddStat += AddingStat;
-            WaitingLoad.Instance.WaitAndExecute
-            (
-                () => ShowManager.Instance != null,
-                () => ShowManager.Instance.OnCharacterInitialize += InitializeStats
-            );
-        }
-        else
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;
         }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        InitializeStatMappings();
+        OnAddStat += AddingStat;
+
+        SubscribeToShowManager();
     }
 
     private void OnDestroy()
+    {
+        UnsubscribeFromEvents();
+    }
+
+    private void InitializeStats()
+    {
+        CacheCurrentCharacter(() =>
+        {
+            foreach (var stat in _statsUI)
+            {
+                stat.Initialize();
+            }
+            UpdateAllStatsUI();
+        });
+    }
+
+    private void InitializeStatMappings()
+    {
+        // Создаем маппинг для быстрого доступа
+        _statMapping = new Dictionary<Identificate, Stats>
+        {
+            { Identificate.Balks, Stats.Balks },
+            { Identificate.Bench, Stats.Bench },
+            { Identificate.HorizontalBar, Stats.HorizontalBar },
+            { Identificate.Foots, Stats.Foots }
+        };
+
+        // Создаем геттеры для значений
+        _valueGetters = new Dictionary<Stats, Func<int>>
+        {
+            { Stats.Balks, () => _currentCharacter?.Balk ?? 0 },
+            { Stats.Bench, () => _currentCharacter?.Bench ?? 0 },
+            { Stats.HorizontalBar, () => _currentCharacter ?.HorizontalBars ?? 0 },
+            { Stats.Foots, () => _currentCharacter ?.Foots ?? 0 }
+        };
+    }
+
+    private void CacheCurrentCharacter(Action onComplete = null)
+    {
+        if (Progress.Instance?.PlayerInfo?.CurrentCharacter != null)
+        {
+            _currentCharacter = Progress.Instance.PlayerInfo.CurrentCharacter;
+            onComplete?.Invoke();
+        }
+        else
+        {
+            WaitingLoad.Instance.WaitAndExecute(
+                () => Progress.Instance?.PlayerInfo?.CurrentCharacter != null,
+                () =>
+                {
+                    _currentCharacter = Progress.Instance.PlayerInfo.CurrentCharacter;
+                    onComplete?.Invoke();
+                }
+            );
+        }
+    }
+
+    private void SubscribeToShowManager()
+    {
+        if (ShowManager.Instance != null)
+        {
+            ShowManager.Instance.OnCharacterInitialize += InitializeStats;
+        }
+        else
+        {
+            WaitingLoad.Instance.WaitAndExecute(
+                () => ShowManager.Instance != null,
+                () => ShowManager.Instance.OnCharacterInitialize += InitializeStats
+            );
+        }
+    }
+
+    private void UnsubscribeFromEvents()
     {
         if (ShowManager.Instance != null)
             ShowManager.Instance.OnCharacterInitialize -= InitializeStats;
@@ -38,59 +113,70 @@ public class StatsManager : MonoBehaviour
         OnAddStat -= AddingStat;
     }
 
-    private void InitializeStats()
+    private void AddingStat(Identificate stat, int value)
     {
-        foreach (var stat in _statsUI)
+        if (_currentCharacter == null)
         {
-            stat.Initialize();
+            Debug.LogWarning("Current character is null, cannot add stat");
+            return;
+        }
 
-            int currentValue = GetCurrentStatValue(stat.StatType);
-            OnUpdateUIStats?.Invoke(stat.StatType, currentValue);
+        // Быстрая проверка через маппинг
+        if (!_statMapping.TryGetValue(stat, out var statType))
+        {
+            Debug.LogWarning($"Unknown stat type: {stat}");
+            return;
+        }
+
+        // Обновляем значение
+        UpdateStatValue(statType, value);
+
+        // Сохраняем и обновляем UI
+        Progress.Instance?.Save();
+        UpdateStatUI(statType);
+    }
+
+    private void UpdateStatValue(Stats statType, int value)
+    {
+        
+        if (_currentCharacter == null) return;
+
+        switch (statType)
+        {
+            case Stats.Balks:
+                _currentCharacter.Balk += value;
+                break;
+            case Stats.Bench:
+                _currentCharacter.Bench += value;
+                break;
+            case Stats.HorizontalBar:
+                _currentCharacter.HorizontalBars += value;
+                break;
+            case Stats.Foots:
+                _currentCharacter.Foots += value;
+                break;
         }
     }
 
-    private void AddingStat(Identificate stat, int value)
+    private void UpdateStatUI(Stats statType)
     {
-        Stats statType;
-
-        switch (stat)
-        {
-            case Identificate.Balks:
-                Progress.Instance.PlayerInfo.CurrentCharacter.Balk += value;
-                statType = Stats.Balks;
-                break;
-            case Identificate.Bench:
-                Progress.Instance.PlayerInfo.CurrentCharacter.Bench += value;
-                statType = Stats.Bench;
-                break;
-            case Identificate.HorizontalBar:
-                Progress.Instance.PlayerInfo.CurrentCharacter.HorizontalBars += value;
-                statType = Stats.HorizontalBar;
-                break;
-            case Identificate.Foots:
-                Progress.Instance.PlayerInfo.CurrentCharacter.Foots += value;
-                statType = Stats.Foots;
-                break;
-            default:
-                Debug.LogWarning($"Unknown stat type: {stat}");
-                return;
-        }
-
-        Progress.Instance.Save();
-        OnUpdateUIStats?.Invoke(statType, GetCurrentStatValue(statType));
+        int currentValue = GetCurrentStatValue(statType);
+        OnUpdateUIStats?.Invoke(statType, currentValue);
     }
 
     private int GetCurrentStatValue(Stats statType)
     {
-        if (Progress.Instance?.PlayerInfo?.CurrentCharacter == null) return 0;
+        // Быстрый доступ через заранее созданные геттеры
+        return _valueGetters.TryGetValue(statType, out var getter) ? getter() : 0;
+    }
 
-        return statType switch
+    public void UpdateAllStatsUI()
+    {
+        if (_statsUI == null) return;
+
+        foreach (var stat in _statsUI)
         {
-            Stats.Balks => Progress.Instance.PlayerInfo.CurrentCharacter.Balk,
-            Stats.Bench => Progress.Instance.PlayerInfo.CurrentCharacter.Bench,
-            Stats.HorizontalBar => Progress.Instance.PlayerInfo.CurrentCharacter.HorizontalBars,
-            Stats.Foots => Progress.Instance.PlayerInfo.CurrentCharacter.Foots,
-            _ => 0
-        };
+            UpdateStatUI(stat.StatType);
+        }
     }
 }

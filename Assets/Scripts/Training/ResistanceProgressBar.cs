@@ -33,6 +33,8 @@ public class ResistanceProgressBar : MonoBehaviour
         }
 
         OnProgressBarIsCompleted += FillAmountIsCompleted;
+        OnProgressBarIsReset += ResetResistance;
+
     }
 
     private void OnDisable()
@@ -51,6 +53,7 @@ public class ResistanceProgressBar : MonoBehaviour
         }
 
         OnProgressBarIsCompleted -= FillAmountIsCompleted;
+        OnProgressBarIsReset -= ResetResistance;
     }
 
     public void Initialize(int playerLevel)
@@ -114,6 +117,11 @@ public class ResistanceProgressBar : MonoBehaviour
         UpdateResistance();
 
         Debug.Log($"Cycle completed! Total cycles: {_completedCycles}");
+    }
+
+    private void ResetResistance()
+    {
+        _completedCycles = 0;
     }
 
     private IEnumerator SmoothFill()
