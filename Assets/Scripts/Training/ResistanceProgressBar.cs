@@ -104,7 +104,6 @@ public class ResistanceProgressBar : MonoBehaviour
 
         _currentResistance = baseResistance + levelMultiplier + cyclesMultiplier;
 
-        Debug.Log($"Resistance updated: Level={_playerLevel}, Cycles={_completedCycles}, Resistance={_currentResistance:F3}");
     }
 
     private void FillAmountIsCompleted()
@@ -116,7 +115,6 @@ public class ResistanceProgressBar : MonoBehaviour
         // ќбновл€ем сопротивление после каждого заполнени€
         UpdateResistance();
 
-        Debug.Log($"Cycle completed! Total cycles: {_completedCycles}");
     }
 
     private void ResetResistance()

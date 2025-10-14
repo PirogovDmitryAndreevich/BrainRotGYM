@@ -10,6 +10,7 @@ public class StatsManager : MonoBehaviour
 
     public Action<Identificate, int> OnAddStat;
     public Action<Stats, int> OnUpdateUIStats;
+    public Action<Stats> OnAddUpdatePoint;
 
     private CharacterProgressData _currentCharacter;
     private Dictionary<Identificate, Stats> _statMapping;

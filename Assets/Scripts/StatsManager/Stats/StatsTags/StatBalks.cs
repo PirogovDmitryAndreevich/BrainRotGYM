@@ -1,8 +1,8 @@
-public class StatFoots : StatsType
+public class StatBalks : StatsType
 {
     public override void Initialize()
     {
+        _statsType = Stats.Balks;
         base.Initialize();
-        _statsType = Stats.Foots;
     }
 }

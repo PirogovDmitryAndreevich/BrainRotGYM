@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterViewController), typeof(CharacterAnimation))]
@@ -54,17 +53,8 @@ public class CharacterManager : MonoBehaviour
         SetPosition();
     }
 
-    private void OnDestroy()
-    {
-       
-    }
-
     public void ShowingOnScene(Identificate identifier)
     {
-#if UNITY_EDITOR
-        Debug.Log($"CharacterManager ShowingOnScene: {identifier}");
-#endif
-
         _currentSceneIdentifier = identifier;
     }
 

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 [System.Serializable]
 public class CharacterProgressData
 {
@@ -7,10 +9,26 @@ public class CharacterProgressData
     public int Bench = 0;
     public int HorizontalBars = 0;
     public int Foots = 0;
+
+    public int Level = 1;
+
     public int LvlBalk = 1;
+    public int BalksUpdatePoint = 0;
+
     public int LvlBench = 1;
+    public int BenchUpdatePoint = 0;
+
     public int LvlHorizontalBars = 1;
+    public int HorizontalBarsUpdatePoint = 0;
+
     public int LvlFoots = 1;
+    public int FootsUpdatePoint = 0;
+
+    public void UpdateLevel()
+    {
+        Level = Mathf.Min(LvlBalk, LvlBench, LvlHorizontalBars, LvlFoots);
+    }
+        
 
     public CharacterProgressData() { }
 

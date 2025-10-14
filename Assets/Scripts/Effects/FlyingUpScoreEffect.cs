@@ -29,8 +29,6 @@ public class FlyingUpScoreEffect : MonoBehaviour
 
     public void CreateClickUIEffect(Vector2 clickMousePos, int score)
     {
-        Debug.Log($"CreateClickUIEffect called at {clickMousePos} with score {score}");
-
         if (_parentObject == null)
         {
             Debug.LogError("_parentObject is null!");
@@ -45,7 +43,6 @@ public class FlyingUpScoreEffect : MonoBehaviour
 
         // Получаем локальную позицию на канвасе
         Vector2 localPosition = GetCanvasLocalPosition(clickMousePos);
-        Debug.Log($"Canvas local position: {localPosition}");
 
         // Создаем эффекты
         CreateFlyingText(localPosition, score);
@@ -65,18 +62,10 @@ public class FlyingUpScoreEffect : MonoBehaviour
         // АКТИВИРУЕМ объект после создания
         flyingText.SetActive(true);
 
-        Debug.Log($"Flying text instantiated: {flyingText != null}");
-
         // Ищем Text компонент (включая неактивные)
         Text text = flyingText.GetComponentInChildren<Text>(true);
         if (text == null)
         {
-            Debug.LogError("Text component not found in children! Available components:");
-            Component[] components = flyingText.GetComponentsInChildren<Component>(true);
-            foreach (Component comp in components)
-            {
-                Debug.Log($"Found: {comp.GetType()} in {comp.gameObject.name}");
-            }
             Destroy(flyingText);
             return;
         }
@@ -84,7 +73,6 @@ public class FlyingUpScoreEffect : MonoBehaviour
         // Активируем родительский объект текста если нужно
         text.gameObject.SetActive(true);
         text.text = score.ToString();
-        Debug.Log($"Text set to: {score}");
 
         RectTransform rectTransform = SetupRectTransform(flyingText, localPosition);
         if (rectTransform == null)
@@ -147,8 +135,6 @@ public class FlyingUpScoreEffect : MonoBehaviour
 
     private IEnumerator AnimateFlyingText(RectTransform rectTransform)
     {
-        Debug.Log("Starting flying text animation");
-
         Vector2 startPosition = rectTransform.anchoredPosition;
         Vector2 targetPosition = startPosition + Vector2.up * _flyDistance;
 
@@ -213,8 +199,6 @@ public class FlyingUpScoreEffect : MonoBehaviour
 
             yield return null;
         }
-
-        Debug.Log("Flying text animation completed");
 
         // Уничтожаем объект после анимации
         Destroy(rectTransform.gameObject);
@@ -287,10 +271,5 @@ public class FlyingUpScoreEffect : MonoBehaviour
     private float EaseOutSine(float t)
     {
         return Mathf.Sin((t * Mathf.PI) / 2f);
-    }
-
-    private float EaseInOutCubic(float t)
-    {
-        return t < 0.5f ? 4f * t * t * t : 1f - Mathf.Pow(-2f * t + 2f, 3f) / 2f;
     }
 }
