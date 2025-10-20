@@ -21,11 +21,14 @@ public class ButtonForCharacterInfoPanel : MonoBehaviour
         _button.interactable = false;
         _button.onClick.AddListener(OnClick);
 
-        WaitForUpdateManager();
+        GameManager.Instance.OnAllSystemsReady += Initialize;
     }
 
     private void OnDestroy()
     {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnAllSystemsReady -= Initialize;
+
         _button.onClick.RemoveAllListeners();
 
         if (_updateManager != null)
@@ -35,17 +38,11 @@ public class ButtonForCharacterInfoPanel : MonoBehaviour
         }
     }
 
-    private void WaitForUpdateManager()
+    private void Initialize()
     {
-        WaitingLoad.Instance.WaitAndExecute(
-            () => UpdateManager.Instance != null,
-            () =>
-            {
-                _updateManager = UpdateManager.Instance;
-                _updateManager.OnRequiresUpdateStatLvl += ShowRequiresUpdate;
-                _updateManager.OnStatsLvlUpdated += HideShowUpdate;
-            }
-        );
+        _updateManager = UpdateManager.Instance;
+        _updateManager.OnRequiresUpdateStatLvl += ShowRequiresUpdate;
+        _updateManager.OnStatsLvlUpdated += HideShowUpdate;
     }
 
     private void ShowRequiresUpdate(Stats stats)
@@ -70,6 +67,7 @@ public class ButtonForCharacterInfoPanel : MonoBehaviour
     private void OnClick()
     {
         Debug.Log($"[ButtonForCharacterInfoPanel] {_statType} button clicked - triggering update");
-        _updateManager.OnUpdatingStatLvl?.Invoke(_statType);
+
+        _updateManager.TryUpdateStatsLvl(_statType);
     }
 }

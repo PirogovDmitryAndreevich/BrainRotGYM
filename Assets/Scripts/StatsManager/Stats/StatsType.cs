@@ -1,64 +1,61 @@
+using System;
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(StatProgressBar), typeof(StatUpgradeController))]
+[RequireComponent(typeof(StatProgressBar))]
 public class StatsType : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
 
     protected Stats _statsType;
     private StatProgressBar _progressBar;
-    private StatUpgradeController _upgradeController;
-
+    private bool _isInitialized;
+    private bool _isMaxLevel;
     public Stats StatType => _statsType;
+    //public event Action<Stats> OnProgressIsFilled;
 
-    private void Awake()
-    {
-        _progressBar = GetComponent<StatProgressBar>();
-        _upgradeController = GetComponent<StatUpgradeController>();
-    }
+    private void Awake() => _progressBar = GetComponent<StatProgressBar>();
 
     private void OnDestroy()
     {
         if (StatsManager.Instance != null)
             StatsManager.Instance.OnUpdateUIStats -= UpdateUI;
+
+            _progressBar.OnProgressBarFilled -= StatsManager.Instance.ProgressIsFilled;
     }
 
     public virtual void Initialize()
     {
-        if (StatsManager.Instance != null)
-            StatsManager.Instance.OnUpdateUIStats += UpdateUI;
+        if (_isInitialized) return;
 
-        _upgradeController.Initialize(_statsType);
-        _progressBar.Initialize(_statsType);
+        StatsManager.Instance.OnUpdateUIStats += UpdateUI;
+        _progressBar.OnProgressBarFilled += StatsManager.Instance.ProgressIsFilled;
+        UpdateManager.Instance.OnAchievedMaxStatLvl += ShowMaxLevel;
 
-        UpdateUI(_statsType, GetCurrentStatValue());
+        InitializeProgressBar();
+        UpdateUI(_statsType);
+        _isInitialized = true;
     }
 
-    private void UpdateUI(Stats stat, int value)
+    public void InitializeProgressBar() => _progressBar.Initialize(_statsType);
+
+    private void UpdateUI(Stats stat)
     {
-        if (stat != _statsType) return;
+        if (stat != _statsType || _isMaxLevel) return;
 
-        if (_upgradeController.IsMaxLevelReached())
-        {
-            ShowMaxLevel();
-        }
-        else
-        {
-            _text.text = value.ToString();
-            _progressBar.UpdateProgressSmooth(value);
+        int currentValue = GetCurrentStatValue();
 
-            if (_upgradeController.CheckLevelUp(value))
-            {
-                _progressBar.LevelUp();
-            }
-        }
+        _text.text = currentValue.ToString();
+        _progressBar.UpdateProgressSmooth();
     }
 
-    private void ShowMaxLevel()
+    private void ShowMaxLevel(Stats stat)
     {
+        if (stat != _statsType || _isMaxLevel) return;
+
         _text.text = "MAX";
         _progressBar.SetMaxProgress();
+        _isMaxLevel = true;
     }
 
     private int GetCurrentStatValue()
@@ -70,7 +67,7 @@ public class StatsType : MonoBehaviour
             Stats.Bench => character.Bench,
             Stats.HorizontalBar => character.HorizontalBars,
             Stats.Foots => character.Foots,
-            _ => 0
+            _ => throw new ArgumentException($"Unknown stat type: {_statsType}")
         };
     }
 }

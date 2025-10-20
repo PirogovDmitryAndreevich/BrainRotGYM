@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterInfoPanel : MonoBehaviour
+public class CharacterInfoPanel : StatDataHelper
 {
     [Header("Text settings")]
     [SerializeField] private TextMeshProUGUI _levelTotal;
@@ -19,48 +19,46 @@ public class CharacterInfoPanel : MonoBehaviour
 
     private void Awake()
     {
-        _lvlUpButton.onClick.AddListener(LvlUpdateButtonOnClick);
         _lvlUpButton.gameObject.SetActive(false);
-        WaitForDependencies();
+
+        GameManager.Instance.OnAllSystemsReady += Initialize;
+        if (GameManager.Instance.IsAllSystemsReady)
+            Initialize();
+
+        _lvlUpButton.onClick.AddListener(LvlUpdateButtonOnClick);
     }
 
     private void OnDestroy()
     {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnAllSystemsReady -= Initialize;
+
         if (CharactersDataManager.Instance != null)
             CharactersDataManager.Instance.OnSelectedCharacter -= ChangeCharacter;
 
         if (UpdateManager.Instance != null)
         {
             UpdateManager.Instance.OnRequiresUpdateLevel -= ShowRequiresUpdateLevel;
-            UpdateManager.Instance.OnLevelUpdated -= HideUpdateLevel;
             UpdateManager.Instance.OnLevelUpdated -= SetLevel;
             UpdateManager.Instance.OnStatsLvlUpdated -= SetStats;
+            UpdateManager.Instance.OnLevelUpdated -= HideUpdateLevel;
         }
 
         _lvlUpButton.onClick.RemoveAllListeners();
     }
 
-    private void WaitForDependencies()
+    private void Initialize()
     {
-        WaitingLoad.Instance.WaitAndExecute(
-            () => CharactersDataManager.Instance != null && Progress.Instance?.PlayerInfo?.CurrentCharacter != null,
-            () =>
-            {
-                CharactersDataManager.Instance.OnSelectedCharacter += ChangeCharacter;
-                ChangeCharacter();
-            }
-        );
+        CharactersDataManager.Instance.OnSelectedCharacter += ChangeCharacter;
+        UpdateManager.Instance.OnRequiresUpdateLevel += ShowRequiresUpdateLevel;
+        UpdateManager.Instance.OnLevelUpdated += SetLevel;
+        UpdateManager.Instance.OnStatsLvlUpdated += SetStats;
+        UpdateManager.Instance.OnLevelUpdated += HideUpdateLevel;
 
-        WaitingLoad.Instance.WaitAndExecute(
-            () => UpdateManager.Instance != null,
-            () =>
-            {
-                UpdateManager.Instance.OnRequiresUpdateLevel += ShowRequiresUpdateLevel;
-                UpdateManager.Instance.OnLevelUpdated += HideUpdateLevel;
-                UpdateManager.Instance.OnLevelUpdated += SetLevel;
-                UpdateManager.Instance.OnStatsLvlUpdated += SetStats;
-            }
-        );
+        _currentCharacterView = CharactersDataManager.Instance.CurrentCharacterView;
+
+        if (_currentCharacterView != null)
+            ChangeCharacter();
     }
 
     private void ChangeCharacter()
@@ -80,7 +78,7 @@ public class CharacterInfoPanel : MonoBehaviour
 
     private void SetStats(Stats stats)
     {
-        string levelText = GetStatLevel(stats).ToString();
+        string levelText = GetCurrentStatLevel(stats).ToString();
         switch (stats)
         {
             case Stats.Balks: _lvlBalks.text = levelText; break;
@@ -100,17 +98,5 @@ public class CharacterInfoPanel : MonoBehaviour
 
     private void HideUpdateLevel() => _lvlUpButton.gameObject.SetActive(false);
 
-    private void LvlUpdateButtonOnClick() => UpdateManager.Instance.OnUpdatingLevel?.Invoke();
-
-    private int GetStatLevel(Stats stats)
-    {
-        return stats switch
-        {
-            Stats.Balks => _currentCharacterData.LvlBalk,
-            Stats.Bench => _currentCharacterData.LvlBench,
-            Stats.HorizontalBar => _currentCharacterData.LvlHorizontalBars,
-            Stats.Foots => _currentCharacterData.LvlFoots,
-            _ => 0
-        };
-    }
+    private void LvlUpdateButtonOnClick() => UpdateManager.Instance.TryUpdateLevel();
 }

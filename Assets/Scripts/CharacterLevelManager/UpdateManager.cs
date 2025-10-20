@@ -1,21 +1,30 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterLevelManager), typeof(StatsLevelManager))]
-public class UpdateManager : MonoBehaviour
+[RequireComponent(typeof(StatsLevelManager), typeof(LevelUpdateDemonstration), typeof(StatsUpdateDemonstration))]
+public class UpdateManager : StatDataHelper
 {
+    private const int MaxLevel = 5;
+    public int _AllUpdatePoints;
+
     public static UpdateManager Instance;
 
-    public Action OnCheckUpdateLevel;
-    public Action OnRequiresUpdateLevel;
-    public Action OnUpdatingLevel;
+    public Action UpdateBodyView;
+
+    public Action OnAchievedMaxLevel;
+    public Action<Stats> OnAchievedMaxStatLvl;
+
     public Action OnLevelUpdated;
-    public Action<Stats> OnCheckUpdateStatsLvl;
-    public Action<Stats> OnRequiresUpdateStatLvl;
-    public Action<Stats> OnUpdatingStatLvl;
     public Action<Stats> OnStatsLvlUpdated;
 
+    public Action OnRequiresUpdateLevel;
+    public Action<Stats> OnRequiresUpdateStatLvl;
+
     private CharacterProgressData _currentCharacter;
+    private StatsLevelManager _levelManager;
+    private LevelUpdateDemonstration _levelDemonstration;
+    private StatsUpdateDemonstration _statsDemonstration;
 
     private void Awake()
     {
@@ -27,28 +36,49 @@ public class UpdateManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        _levelManager = GetComponent<StatsLevelManager>();
+        _levelDemonstration = GetComponent<LevelUpdateDemonstration>();
+        _statsDemonstration = GetComponent<StatsUpdateDemonstration>();
 
-        OnCheckUpdateStatsLvl += CheckUpdateStats;
-        OnCheckUpdateLevel += CheckUpdateLevel;
-
-        WaitForCharacterManager();
+        GameManager.Instance.OnAllSystemsReady += Initialize;
     }
 
     private void OnDestroy()
     {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnAllSystemsReady -= Initialize;
+
         if (CharactersDataManager.Instance != null)
             CharactersDataManager.Instance.OnSelectedCharacter -= SetCurrentCharacter;
 
-        OnCheckUpdateStatsLvl -= CheckUpdateStats;
-        OnCheckUpdateLevel -= CheckUpdateLevel;
+    }
+    public void TryUpdateStatsLvl(Stats stat)
+    {
+        if (CheckUpdatePossibility(stat))
+        {
+            _levelManager.UpdateStatLevel(stat);
+            OnStatsLvlUpdated?.Invoke(stat);
+            CheckRequiresUpdateStats(stat);
+            CheckRequiresUpdateLevel();
+            _statsDemonstration.Demonstration();
+        }
     }
 
-    private void WaitForCharacterManager()
+    public void TryUpdateLevel()
     {
-        WaitingLoad.Instance.WaitAndExecute(
-            () => CharactersDataManager.Instance != null,
-            () => CharactersDataManager.Instance.OnSelectedCharacter += SetCurrentCharacter
-        );
+        if (CheckUpdateLevelPossibility())
+        {
+            _levelManager.UpdateLevel();
+            OnLevelUpdated?.Invoke();
+            CheckRequiresUpdateLevel();
+            _levelDemonstration.Demonstration();
+        }
+    }
+
+    private void Initialize()
+    {        
+        CharactersDataManager.Instance.OnSelectedCharacter += SetCurrentCharacter;
+        SetCurrentCharacter();
     }
 
     private void SetCurrentCharacter()
@@ -56,12 +86,17 @@ public class UpdateManager : MonoBehaviour
         if (Progress.Instance?.PlayerInfo?.CurrentCharacter != null)
         {
             SetCharacterData();
+            _levelManager.Initialize();
         }
         else
         {
             WaitingLoad.Instance.WaitAndExecute(
                 () => Progress.Instance?.PlayerInfo?.CurrentCharacter != null,
-                SetCharacterData
+                () =>
+                {
+                    SetCharacterData();
+                    _levelManager.Initialize();
+                }
             );
         }
     }
@@ -69,45 +104,92 @@ public class UpdateManager : MonoBehaviour
     private void SetCharacterData()
     {
         _currentCharacter = Progress.Instance.PlayerInfo.CurrentCharacter;
-        CheckUpdateAllStats();
-        CheckUpdateLevel();
+        CheckRequiresUpdateAllStats();
+        if (!CheckUpdateLevelPossibility())
+            CheckRequiresUpdateLevel();
     }
 
-    private void CheckUpdateAllStats()
+
+    public void TryAddUpgradePoint(Stats stat)
     {
-        foreach (Stats stat in Enum.GetValues(typeof(Stats)))
-            CheckUpdateStats(stat);
+        if (CheckUpdatePossibility(stat))
+        {
+            _levelManager.AddUpdatePoint(stat);            
+            CheckRequiresUpdateStats(stat);
+        }
+    }    
+
+    private bool CheckUpdatePossibility(Stats stat)
+    {
+        int currentLvl = GetCurrentStatLevel(stat);
+        if (currentLvl >= MaxLevel)
+        {
+            OnAchievedMaxStatLvl?.Invoke(stat);
+            return false;
+        }
+        return true;
     }
 
-    private void CheckUpdateStats(Stats stat)
+    private bool CheckUpdateLevelPossibility()
     {
-        int updatePoints = GetUpdatePoints(stat);
-        if (updatePoints > 0)
+        if (_currentCharacter.Level >= MaxLevel)
+        {
+            OnAchievedMaxLevel?.Invoke();
+            return false;
+        }
+        return true;
+    }
+
+    private void CheckRequiresUpdateAllStats()
+    {
+        foreach (Stats stat in Enum.GetValues(typeof(Stats)).Cast<Stats>())
+        {
+            CheckRequiresUpdateStats(stat);
+        }
+    }
+
+    private void CheckRequiresUpdateStats(Stats stat)
+    {
+        if (!CheckUpdatePossibility(stat))
+            return;
+
+        int changedPoints = GetCurrentUpdatePoints(stat);
+
+        if (changedPoints > 0)
             OnRequiresUpdateStatLvl?.Invoke(stat);
+
+        _currentCharacter.IsStatsRequiresUpdate = AnyStatRequiresUpdate();
     }
 
-    private void CheckUpdateLevel()
+    private bool AnyStatRequiresUpdate()
     {
-        int minLevel = Mathf.Min(
+        foreach (Stats stat in Enum.GetValues(typeof(Stats)).Cast<Stats>())
+        {
+            if (CheckUpdatePossibility(stat) && GetCurrentUpdatePoints(stat) > 0)
+                return true;
+        }
+        return false;
+    }
+
+    private void CheckRequiresUpdateLevel()
+    {
+        if (!CheckUpdateLevelPossibility()) return;
+
+        int minStatLevel = Mathf.Min(
             _currentCharacter.LvlBalk,
             _currentCharacter.LvlBench,
             _currentCharacter.LvlHorizontalBars,
             _currentCharacter.LvlFoots
         );
 
-        if (_currentCharacter.Level < minLevel)
-            OnRequiresUpdateLevel?.Invoke();
-    }
-
-    private int GetUpdatePoints(Stats stat)
-    {
-        return stat switch
+        if (_currentCharacter.Level < minStatLevel)
         {
-            Stats.Balks => _currentCharacter.BalksUpdatePoint,
-            Stats.Bench => _currentCharacter.BenchUpdatePoint,
-            Stats.HorizontalBar => _currentCharacter.HorizontalBarsUpdatePoint,
-            Stats.Foots => _currentCharacter.FootsUpdatePoint,
-            _ => 0
-        };
+            _currentCharacter.IsLevelRequiresUpdate = true;
+            OnRequiresUpdateLevel?.Invoke();
+        }
+        else
+        {
+            _currentCharacter.IsLevelRequiresUpdate = false;
+        }
     }
 }

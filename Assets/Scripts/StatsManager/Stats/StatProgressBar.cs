@@ -1,53 +1,69 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class StatProgressBar : StatDataHelper
 {
     [SerializeField] private Image _progressBar;
-
+    
+    public event Action<Stats> OnProgressBarFilled;
+    
     private Stats _statType;
     private int _currentLevel;
+    private int _currentValue;
+    private float _totalRequiredForNextLevel;
+    private bool _isFilled;
 
     public void Initialize(Stats statType)
     {
         _statType = statType;
-        _currentLevel = GetCurrentLevel(statType);
+        _isFilled = false;
 
-        if (IsMaxLevel(_currentLevel))
+        UpdateProgressSmooth();
+    }
+
+    public void UpdateProgressSmooth()
+    {
+        if (_isFilled) return;
+
+        int currentValue = GetCurrentStatValue(_statType);
+        float requiredForNextLevel = GetCurrentTotalValueForNextLevel();
+
+        if (currentValue >= requiredForNextLevel)
+        {
+            _isFilled = true;
             SetMaxProgress();
+            OnProgressBarFilled?.Invoke(_statType);
+        }
         else
-            UpdateProgressImmediate(GetCurrentStatValue(_statType));
+        {
+            UpdateProgressBarView(currentValue, requiredForNextLevel);
+        }
     }
 
-    public void UpdateProgressSmooth(int value)
+    private float GetCurrentTotalValueForNextLevel()
     {
-        if (IsMaxLevel(_currentLevel)) return;
-        _progressBar.fillAmount = CalculateFillAmount(value);
+        int currentLevel = GetCurrentStatLevel(_statType);
+        int availableUpdatePoints = GetCurrentUpdatePoints(_statType);
+        int effectiveLevel = currentLevel + availableUpdatePoints;
+        return 500 * (effectiveLevel + 1) * (effectiveLevel + 2);
     }
 
-    public void UpdateProgressImmediate(int value)
+    private void UpdateProgressBarView(int currentValue, float requiredForNextLevel)
     {
-        if (IsMaxLevel(_currentLevel)) return;
-        _progressBar.fillAmount = CalculateFillAmount(value);
+        float fillAmount = CalculateFillAmount(currentValue, requiredForNextLevel);
+        _progressBar.fillAmount = fillAmount;
     }
 
-    public void SetMaxProgress() => _progressBar.fillAmount = 1f;
-
-    public void LevelUp()
+    public void SetMaxProgress()
     {
-        _currentLevel++;
-        if (IsMaxLevel(_currentLevel))
-            SetMaxProgress();
+        _progressBar.fillAmount = 1f;
     }
 
-    private float CalculateFillAmount(int value)
+    private float CalculateFillAmount(int value, float requiredValue)
     {
-        int currentThreshold = LEVEL_THRESHOLDS[_currentLevel - 1];
-        int previousThreshold = _currentLevel > 1 ? LEVEL_THRESHOLDS[_currentLevel - 2] : 0;
-
-        float progress = value - previousThreshold;
-        float range = currentThreshold - previousThreshold;
-
-        return Mathf.Clamp01(progress / range);
+        if (requiredValue <= 0) return 0f;
+        float clampedValue = Mathf.Min(value, requiredValue);
+        return clampedValue / requiredValue;
     }
 }

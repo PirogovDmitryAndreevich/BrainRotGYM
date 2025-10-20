@@ -1,82 +1,47 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent (typeof(ShowerMover))]
 public class SceneSwitcher : MonoBehaviour
 {
-    [SerializeField] private Transform _trainingArea;
+    private SceneElementBase _currentScene;
+    private SceneElementBase _targetScene;
 
-    public Action OnSceneIsSwitched;
+    public Action<Identificate> OnSwitchIsComplete;
 
-    private ShowerMover _mover;
-    private ShowerAbstractClass _targetScene;
-    private ShowerAbstractClass _currentScene;
-    private Vector2 _trainingAreaOriginPosition;
-
-    private void Awake()
+    public void ShowScene(SceneElementBase targetScene, SceneElementBase currentScene)
     {
-        _mover = GetComponent<ShowerMover>();
-
-        if (_trainingArea != null)
-        {
-            _trainingArea.gameObject.SetActive(false);
-            _trainingAreaOriginPosition = _trainingArea.transform.position;
-        }
-    }
-
-    public void Show (ShowerAbstractClass targetScene)
-    {
-        if (targetScene == null) return;
-
+        _currentScene = currentScene;
         _targetScene = targetScene;
 
-        if (_currentScene != null)
+        if (currentScene != null)
         {
-            HideCurrentScene();
+            TrainingAreaController.Instance.OnAnimationIsComplete -= Show;
+            TrainingAreaController.Instance.OnAnimationIsComplete += Show;
+            Hide();
+            return;
         }
-        else
-        {
-            ShowTargetScene();
-        }
+
+        Show();        
     }
 
-    private void HideCurrentScene()
+    private void Show()
     {
-        _mover.MoveDown(_currentScene.OriginalPosition, _currentScene.transform);
-        _mover.MoveDown(_trainingAreaOriginPosition, _trainingArea);
+        Debug.Log($"Show {_targetScene.Identifier}");
 
-        _mover.OnHidingIsCompleted += OnCurrentSceneHidden;
-    }
-
-    private void ShowTargetScene()
-    {
+        TrainingAreaController.Instance.OnAnimationIsComplete -= Show;
         _targetScene.gameObject.SetActive(true);
-        _trainingArea.gameObject.SetActive(true);
+        TrainingAreaController.Instance.SetTrainingArea(TrainingArea.Show);
+        OnSwitchIsComplete?.Invoke(_targetScene.Identifier);
 
-        _mover.MoveUp(_targetScene.OriginalPosition, _targetScene.transform);
-        _mover.MoveUp(_trainingAreaOriginPosition, _trainingArea);
-
-        _mover.OnShowIsCompleted += OnTargetSceneShown;
-    }
-
-    private void OnCurrentSceneHidden()
-    {
-        _mover.OnHidingIsCompleted -= OnCurrentSceneHidden;
-
-        _currentScene.gameObject.SetActive(false);
-        _trainingArea.gameObject.SetActive(false);
-
-        ShowTargetScene();
-    }    
-
-    private void OnTargetSceneShown()
-    {
-        _mover.OnShowIsCompleted -= OnTargetSceneShown;
-
-        _currentScene = _targetScene;
+        _currentScene = null;
         _targetScene = null;
-
-        OnSceneIsSwitched?.Invoke();
     }
+
+    private void Hide()
+    {
+        Debug.Log($"Hide {_currentScene.Identifier}");
+        _currentScene.gameObject.SetActive(false);
+        TrainingAreaController.Instance.SetTrainingArea(TrainingArea.Hide);
+    }
+
 }

@@ -24,6 +24,9 @@ public class CharacterProgressData
     public int LvlFoots = 1;
     public int FootsUpdatePoint = 0;
 
+    public bool IsLevelRequiresUpdate = false;
+    public bool IsStatsRequiresUpdate = false;
+
     public void UpdateLevel()
     {
         Level = Mathf.Min(LvlBalk, LvlBench, LvlHorizontalBars, LvlFoots);

@@ -3,43 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterDatabase), typeof(CharacterProgressManager))]
 public class CharactersDataManager : MonoBehaviour
 {
     public static CharactersDataManager Instance;
 
-    [Header("Character Database")]
-    [SerializeField] private CharacterData[] _characterDataArray;
-
     [HideInInspector] public CharacterData CurrentCharacterView;
-    public CharacterProgressData CurrentCharacterProgress => Progress.Instance.PlayerInfo.CurrentCharacter;
 
     public Action<CharactersEnum> OnSelectCharacter;
     public Action<CharactersEnum> OnOpenNewCharacter;
+    public Action<CharactersEnum> OnNewCharacterIsOpened;
     public Action OnSelectedCharacter;
 
     private CharacterDatabase _database;
-    private CharacterProgressManager _progressManager;    
+    private OpenedCharactersManager _openedCharacters;
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            InitializeManagers();
-            OnOpenNewCharacter += OpenNewCharacter;
-            OnSelectCharacter += SelectCharacter;
-        }
-        else
+        if (Instance != null)
         {
             Destroy(gameObject);
+            return;
         }
 
-        WaitingLoad.Instance.WaitAndExecute(
-            () => Progress.Instance != null,
-            () => InitializeCharacters()
-        );
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        GameManager.Instance.OnAllSystemsReady += InitializeManagers;
+
+        OnOpenNewCharacter += OpenNewCharacter;
+        OnSelectCharacter += SelectCharacter;
+
+
     }
 
     private void OnDestroy()
@@ -50,17 +44,19 @@ public class CharactersDataManager : MonoBehaviour
 
     private void InitializeManagers()
     {
-        _database = GetComponent<CharacterDatabase>();
-        _database.CreateDictionary(_characterDataArray);
+        _database = CharacterDatabase.Instance;
+        _openedCharacters = OpenedCharactersManager.Instance;
 
-        _progressManager =GetComponent<CharacterProgressManager>();
+        WaitingLoad.Instance.WaitAndExecute
+            (
+                () => _openedCharacters.IsLoadIsComplete = true,
+                () => InitializeCharacters()
+            );
     }
 
     private void InitializeCharacters()
     {
-        _progressManager.LoadProgress();
-
-        if (_progressManager.OpenedCharacters.Count == 0)
+        if (Progress.Instance.PlayerInfo.OpenedCharacters.Count == 0)
         {
             OpenNewCharacter(CharactersEnum.TrallalleroTrallalla);
             SelectCharacter(CharactersEnum.TrallalleroTrallalla);
@@ -71,10 +67,10 @@ public class CharactersDataManager : MonoBehaviour
             {
                 SelectCharacter(Progress.Instance.PlayerInfo.CurrentCharacter.CharacterID);
             }
-            else 
+            else
             {
                 var currentCharacter = Progress.Instance.PlayerInfo.CurrentCharacter;
-                var characterID = currentCharacter?.CharacterID ?? _progressManager.OpenedCharacters.Keys.First();
+                var characterID = currentCharacter?.CharacterID ?? _openedCharacters.OpenedCharacters.Keys.First();
                 SelectCharacter(characterID);
             }
         }
@@ -83,15 +79,21 @@ public class CharactersDataManager : MonoBehaviour
 
     public void SelectCharacter(CharactersEnum characterID)
     {
-        if (!_progressManager.OpenedCharacters.ContainsKey(characterID))
+        if (!_openedCharacters.IsCharacterOpened(characterID))
         {
-            Debug.LogWarning($"Character {characterID} is not opened!");
+            Debug.LogWarning($"Character {characterID} is not opened!");            
             return;
         }
 
-        var characterProgress = _progressManager.OpenedCharacters[characterID];
-        CurrentCharacterView = _database.AllCharactersDictionary[characterID];
-        Progress.Instance.PlayerInfo.CurrentCharacter = characterProgress;
+        if (!_database.TryGetCharacterData(characterID, out var characterData))
+        {
+            Debug.LogError($"Character {characterID} not found in database!");
+            return;
+        }
+
+        var character = _openedCharacters.GetCharacterData(characterID);
+        CurrentCharacterView = characterData;
+        Progress.Instance.PlayerInfo.CurrentCharacter = character;
         Progress.Instance.Save();
 
         OnSelectedCharacter?.Invoke();
@@ -99,13 +101,13 @@ public class CharactersDataManager : MonoBehaviour
 
     public void OpenNewCharacter(CharactersEnum characterID)
     {
-        if (_progressManager.OpenedCharacters.ContainsKey(characterID))
+        if (_openedCharacters.IsCharacterOpened(characterID))
         {
             Debug.LogWarning($"Character {characterID} is already opened!");
             return;
         }
 
-        if (!_database.AllCharactersDictionary.ContainsKey(characterID))
+        if (!_database.ContainsCharacter(characterID))
         {
             Debug.LogError($"Character {characterID} not found in database!");
             return;
@@ -113,13 +115,8 @@ public class CharactersDataManager : MonoBehaviour
 
         var characterProgress = new CharacterProgressData(characterID);
 
-        if (Progress.Instance.PlayerInfo.OpenedCharacters == null)
-            Progress.Instance.PlayerInfo.OpenedCharacters = new List<CharacterProgressData>();
+        _openedCharacters.AddCharacter(characterProgress);
 
-        Progress.Instance.PlayerInfo.OpenedCharacters.Add(characterProgress);
-
-        Progress.Instance.Save();
-        _progressManager.LoadProgress();
-        OnOpenNewCharacter?.Invoke(characterID);
-    }    
+        OnNewCharacterIsOpened?.Invoke(characterID);
+    }
 }
