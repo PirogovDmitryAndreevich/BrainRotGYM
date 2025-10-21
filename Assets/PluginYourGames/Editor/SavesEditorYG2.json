@@ -7,7 +7,7 @@
         false,
         false
     ],
-    "idSave": 3779,
+    "idSave": 3799,
     "PlayerInfo": {
         "OpenedCharacters": [
             {
@@ -48,17 +48,17 @@
             }
         ],
         "CurrentCharacter": {
-            "CharacterID": 1,
-            "Balk": 1,
-            "Bench": 3505,
-            "HorizontalBars": 3164,
-            "Foots": 3931,
-            "Level": 1,
-            "LvlBalk": 1,
+            "CharacterID": 0,
+            "Balk": 3179,
+            "Bench": 3586,
+            "HorizontalBars": 3324,
+            "Foots": 3737,
+            "Level": 2,
+            "LvlBalk": 2,
             "BalksUpdatePoint": 0,
-            "LvlBench": 2,
+            "LvlBench": 3,
             "BenchUpdatePoint": 0,
-            "LvlHorizontalBars": 2,
+            "LvlHorizontalBars": 3,
             "HorizontalBarsUpdatePoint": 0,
             "LvlFoots": 2,
             "FootsUpdatePoint": 0,

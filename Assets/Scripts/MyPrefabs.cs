@@ -10,6 +10,8 @@ public class MyPrefabs : MonoBehaviour
 
     [SerializeField] public GameObject ClickEffect;
 
+    [SerializeField] public GameObject SelectCharacterButton;
+
     private void Awake()
     {
         // Проверяем, существует ли уже экземпляр
