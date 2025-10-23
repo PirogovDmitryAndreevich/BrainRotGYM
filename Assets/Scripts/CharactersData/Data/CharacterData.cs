@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Character", menuName = "Game/Character Data")]
@@ -16,7 +17,11 @@ public class CharacterData : ScriptableObject
     public Sprite HeadSprite;
     public Sprite Icon;
     public Sprite Shorts;
-   
+
+    [Header("Unlock list")]
+    [SerializeReference]
+    public List<UnlockCondition> unlockConditions = new();
+
     public CharacterData() {}
 
     public CharacterData (CharacterData other)

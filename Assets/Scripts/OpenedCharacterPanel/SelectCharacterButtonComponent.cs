@@ -49,6 +49,9 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
         });
 
         Deselect();
+
+        if (Progress.Instance.PlayerInfo.CurrentCharacter.CharacterID == _charactersID)
+            Select();
     }
 
     public void Deselect()

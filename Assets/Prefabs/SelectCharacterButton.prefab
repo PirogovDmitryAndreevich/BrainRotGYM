@@ -1042,7 +1042,7 @@ MonoBehaviour:
   _foots: {fileID: 1979475321012133032}
   _level: {fileID: 1845342709982175082}
   _icon: {fileID: 7757309613802204343}
-  _selectColor: {r: 1, g: 0.8000001, b: 0, a: 0}
+  _selectColor: {r: 1, g: 0.8000001, b: 0, a: 1}
 --- !u!114 &4806985561915823033
 MonoBehaviour:
   m_ObjectHideFlags: 0

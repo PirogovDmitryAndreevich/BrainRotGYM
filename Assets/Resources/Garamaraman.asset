@@ -22,3 +22,7 @@ MonoBehaviour:
   HeadSprite: {fileID: 21300000, guid: bf10fa17a6b77864396f46212e1ade7b, type: 3}
   Icon: {fileID: 21300000, guid: d21093545d56292459373f321ef6fc27, type: 3}
   Shorts: {fileID: 21300000, guid: e1ca2556cc87b5040bbcbf4a9f4d1438, type: 3}
+  unlockConditions: []
+  references:
+    version: 2
+    RefIds: []

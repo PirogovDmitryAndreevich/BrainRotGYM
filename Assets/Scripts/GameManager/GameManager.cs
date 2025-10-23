@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     private void InitializeSystems()
     {
-        var sceneCount = Enum.GetValues(typeof(Identificate)).Length;
+        int sceneCount = Enum.GetValues(typeof(Identificate)).Length;
         _initializationSystem.RegisterCondition(new ProgressCondition());
         _initializationSystem.RegisterCondition(new ShowManagerCondition(sceneCount));
         _initializationSystem.RegisterCondition(new TrainingAreaCondition());

@@ -5,6 +5,7 @@ using YG;
 [System.Serializable]
 public class PlayerInfo
 {
+    public int Score;
     public List<CharacterProgressData> OpenedCharacters = new();
     public CharacterProgressData CurrentCharacter;
 }
