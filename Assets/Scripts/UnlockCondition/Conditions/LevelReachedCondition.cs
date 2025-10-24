@@ -1,11 +1,15 @@
-[System.Serializable]
+using System;
+
+[Serializable]
 public class LevelReachedCondition : UnlockCondition
 {
-    public int requiredLevel;
-    public override bool IsSatisfied(CharacterProgressData characterProgress)
-    {
-        
+    public CharactersEnum TargetCharacterID;
+    public int RequiredLevel;
 
-        return true;
+    public override bool IsSatisfied(PlayerInfo player)
+    {
+        var targetProgress = player.OpenedCharacters.Find(c => c.CharacterID == TargetCharacterID);
+
+        return targetProgress != null && targetProgress.Level >= RequiredLevel;
     }
 }

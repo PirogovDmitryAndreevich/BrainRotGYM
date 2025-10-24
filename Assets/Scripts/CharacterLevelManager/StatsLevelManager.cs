@@ -45,9 +45,7 @@ public class StatsLevelManager : StatDataHelper
                  $"Balks: {_currentCharacter.LvlBalk}, " +
                  $"Bench: {_currentCharacter.LvlBench}, " +
                  $"HorizontalBar: {_currentCharacter.LvlHorizontalBars}, " +
-                 $"Foots: {_currentCharacter.LvlFoots}");
-        
-        Progress.Instance.Save();
+                 $"Foots: {_currentCharacter.LvlFoots}");        
     }
 
     public void AddUpdatePoint(Stats stat)

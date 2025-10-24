@@ -12,14 +12,22 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
     private bool _isSelected;
     private CharactersEnum _charactersID;
 
+    [Header("Common UI")]
+    [SerializeField] private Image _icon;
+
+    [Header("Stats UI")]
+    [SerializeField] private GameObject _unlockContainer;
     [SerializeField] private TextMeshProUGUI _balks;
     [SerializeField] private TextMeshProUGUI _bench;
     [SerializeField] private TextMeshProUGUI _horizontalBar;
     [SerializeField] private TextMeshProUGUI _foots;
     [SerializeField] private TextMeshProUGUI _level;
-
-    [SerializeField] private Image _icon;
     [SerializeField] private Color _selectColor;
+
+    [Header("Locked UI")]
+    [SerializeField] private GameObject _lockedContainer;
+    [SerializeField] private Image _lockImage;
+
     private Color _defaultColor;
 
     public CharactersEnum CharacterID => _charactersID;
@@ -28,30 +36,19 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
     {
         _charactersID = characterID;
         _character = OpenedCharactersManager.Instance.GetCharacterData(_charactersID);
-        _characterView = CharacterDatabase.Instance.GetCharacterData(_charactersID);
-
-        _balks.text = _character.LvlBalk.ToString();
-        _bench.text = _character.LvlBench.ToString();
-        _horizontalBar.text = _character.LvlHorizontalBars.ToString();
-        _foots.text = _character.LvlFoots.ToString();
-        _level.text = _character.Level.ToString();
+        _characterView = CharacterDatabase.Instance.GetCharacterData(_charactersID);        
 
         _icon.sprite = _characterView.Icon;
 
         _button = GetComponent<Button>();
+
         _outline = GetComponent<Outline>();
         _defaultColor = _outline.effectColor;
 
-        _button.onClick.RemoveAllListeners();
-        _button.onClick.AddListener(() =>
-        {
-            CharacterSelectionController.Instance.SelectCharacter(this);
-        });
-
-        Deselect();
-
-        if (Progress.Instance.PlayerInfo.CurrentCharacter.CharacterID == _charactersID)
-            Select();
+        if (OpenedCharactersManager.Instance.IsCharacterOpened(_charactersID))        
+            UnlockCharacter();        
+        else        
+            BlockCharacter();        
     }
 
     public void Deselect()
@@ -64,5 +61,34 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
     {
         _isSelected = true;
         _outline.effectColor = _selectColor;
+    }
+
+    private void BlockCharacter()
+    {
+        _button.onClick.RemoveAllListeners();        
+        _button.onClick.AddListener(() =>
+        {
+            CharacterSelectionController.Instance.SelectCharacter(this);
+        });
+    }
+
+    private void UnlockCharacter()
+    {
+        _balks.text = _character.LvlBalk.ToString();
+        _bench.text = _character.LvlBench.ToString();
+        _horizontalBar.text = _character.LvlHorizontalBars.ToString();
+        _foots.text = _character.LvlFoots.ToString();
+        _level.text = _character.Level.ToString();
+
+        _button.onClick.RemoveAllListeners();
+        _button.onClick.AddListener(() =>
+        {
+            CharacterSelectionController.Instance.SelectCharacter(this);
+        });
+
+        Deselect();
+
+        if (Progress.Instance.PlayerInfo.CurrentCharacter.CharacterID == _charactersID)
+            Select();
     }
 }

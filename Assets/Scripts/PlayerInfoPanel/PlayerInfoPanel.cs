@@ -8,45 +8,36 @@ public class PlayerInfoPanel : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
 
-    private int _score;
-
     public Action OnScoreChanged;
 
     private void Awake()
     {
         GameManager.Instance.OnAllSystemsReady += Initialize;
-        OnScoreChanged += UpdateScoreUI;
     }
 
     private void OnDestroy()
     {
-        GameManager.Instance.OnAllSystemsReady -= Initialize;
-        OnScoreChanged -= UpdateScoreUI;
-    }
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnAllSystemsReady -= Initialize;
 
-    public int Score
-    {
-        get => _score;
-        set
-        {
-            if (_score != value)
-            {
-                _score = value;
-                Progress.Instance.PlayerInfo.Score = _score;
-                Progress.Instance.Save();
-                OnScoreChanged?.Invoke();
-            }
-        }
-    }
-
-    public void UpdateScoreUI()
-    {
-        _text.text = _score.ToString();
+        Progress.Instance.PlayerInfo.OnScoreChanged -= UpdateScoreUI;
     }
 
     private void Initialize()
     {
-        _score = Progress.Instance.PlayerInfo.Score;
-        UpdateScoreUI();
+        if (Progress.Instance?.PlayerInfo != null)
+        {
+            Progress.Instance.PlayerInfo.OnScoreChanged += UpdateScoreUI;
+            UpdateScoreUI();
+        }
+        else
+        {
+            Debug.LogError($"[PlayerInfoPanel] PlayerInfo is null");
+        }
+    }
+
+    private void UpdateScoreUI()
+    {
+        _text.text = Progress.Instance.PlayerInfo.Score.ToString();
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using YG;
@@ -5,9 +6,25 @@ using YG;
 [System.Serializable]
 public class PlayerInfo
 {
-    public int Score;
+    public int _score;
     public List<CharacterProgressData> OpenedCharacters = new();
     public CharacterProgressData CurrentCharacter;
+
+    public Action OnScoreChanged;
+
+    public int Score
+    {
+        get => _score;
+        set
+        {
+            if (_score != value)
+            {
+                _score = value;
+                Progress.Instance?.Save();
+                OnScoreChanged?.Invoke();
+            }
+        }
+    }
 }
 
 public class Progress : MonoBehaviour

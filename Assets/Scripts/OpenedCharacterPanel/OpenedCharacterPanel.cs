@@ -29,12 +29,12 @@ public class OpenedCharacterPanel : MonoBehaviour
 
     private void FillContent()
     {
-        foreach (var character in OpenedCharactersManager.Instance.OpenedCharacters)
+        foreach (var character in CharacterDatabase.Instance.AllCharactersDictionary)
         {
             GameObject openedCharacter = Instantiate(MyPrefabs.Instance.SelectCharacterButton, _layoutGroup);
 
             SelectCharacterButtonComponent component = openedCharacter.GetComponent<SelectCharacterButtonComponent>();
-            component.InitializeCharacterButtonSelect(OpenedCharactersManager.Instance.OpenedCharacters[character.Key].CharacterID);
+            component.InitializeCharacterButtonSelect(CharacterDatabase.Instance.AllCharactersDictionary[character.Key].CharacterID);
         }
     }
 }
