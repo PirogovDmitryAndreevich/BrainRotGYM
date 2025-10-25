@@ -1,15 +1,32 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
-public class Condition_CharactersOpenedView : MonoBehaviour, IUnlockConditionView
+public class Condition_CharactersOpenedView : ConditionView
 {
     [SerializeField] private TextMeshProUGUI _targetNumberOfCharacters;
 
-    public void Initialize(UnlockCondition condition)
+    CharactersOpenedCondition _condition;
+    PlayerInfo _player;
+
+    public override void Initialize(UnlockCondition condition, PlayerInfo player)
     {
-        if (condition is CharactersOpenedCondition chars)
+        _condition = condition as CharactersOpenedCondition;
+        _player = player;
+
+        if (_condition == null)
         {
-            _targetNumberOfCharacters.text = chars.TargetNumberOfCharacters.ToString();
+            Debug.LogWarning($" Condition_CharactersOpenedView: ожидался тип CharactersOpenedCondition, получен {_condition.GetType().Name}");
+            return;
         }
+
+        _targetNumberOfCharacters.text = _condition.TargetNumberOfCharacters.ToString();
+
+        CharactersDataManager.Instance.OnNewCharacterIsOpened += OpenedNewCharacter;
+        CheckCondition(_condition, _player);
     }
+
+    private void OpenedNewCharacter(CharactersEnum character) => CheckCondition(_condition, _player);
+    private void OnDestroy() => CharactersDataManager.Instance.OnNewCharacterIsOpened -= OpenedNewCharacter;
+
 }

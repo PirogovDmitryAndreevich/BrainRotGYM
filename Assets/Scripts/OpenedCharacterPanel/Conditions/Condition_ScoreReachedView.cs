@@ -1,18 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class Condition_ScoreReachedView : MonoBehaviour, IUnlockConditionView
+public class Condition_ScoreReachedView : ConditionView
 {
     [SerializeField] private TextMeshProUGUI _targetScore;
 
-    public void Initialize(UnlockCondition condition)
+    ScoreReachedCondition _condition;
+    PlayerInfo _player;
+
+    public override void Initialize(UnlockCondition condition, PlayerInfo player)
     {
-        if (condition is ScoreReachedCondition score)
+        _condition = condition as ScoreReachedCondition;
+        _player = player;
+
+        if (_condition == null)
         {
-            _targetScore.text = score.TargetScore.ToString();
+            Debug.LogWarning($"Condition_ScoreReachedView: ожидался ScoreReachedCondition, получен {_condition.GetType().Name}");
+            return;
         }
+
+        _targetScore.text = _condition.TargetScore.ToString();
+
+        CheckCondition(_condition, _player);
+        _player.OnScoreChanged += OnPlayerScoreChanged;
     }
+
+    private void OnPlayerScoreChanged() => CheckCondition(_condition, _player);
+    private void OnDestroy() => _player.OnScoreChanged -= OnPlayerScoreChanged;
+    
 }

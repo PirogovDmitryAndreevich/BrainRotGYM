@@ -6,6 +6,6 @@ public class ScoreReachedCondition : UnlockCondition
 
     public override bool IsSatisfied(PlayerInfo player)
     {
-        return Progress.Instance.PlayerInfo.Score >= TargetScore;
+        return player.Score >= TargetScore;
     }
 }

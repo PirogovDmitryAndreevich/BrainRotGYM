@@ -24,11 +24,16 @@ MonoBehaviour:
   Shorts: {fileID: 21300000, guid: e1ca2556cc87b5040bbcbf4a9f4d1438, type: 3}
   unlockConditions:
   - rid: 5881261855200772097
+  - rid: 5881261882180894720
   references:
     version: 2
     RefIds:
     - rid: 5881261855200772097
       type: {class: LevelReachedCondition, ns: , asm: Assembly-CSharp}
       data:
-        CharactersID: 0
-        requiredLevel: 3
+        TargetCharacterID: 0
+        RequiredLevel: 2
+    - rid: 5881261882180894720
+      type: {class: ScoreReachedCondition, ns: , asm: Assembly-CSharp}
+      data:
+        TargetScore: 140

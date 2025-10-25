@@ -8,6 +8,9 @@ public class LevelReachedCondition : UnlockCondition
 
     public override bool IsSatisfied(PlayerInfo player)
     {
+        if (!OpenedCharactersManager.Instance.IsCharacterOpened(TargetCharacterID))        
+            return false;        
+
         var targetProgress = player.OpenedCharacters.Find(c => c.CharacterID == TargetCharacterID);
 
         return targetProgress != null && targetProgress.Level >= RequiredLevel;

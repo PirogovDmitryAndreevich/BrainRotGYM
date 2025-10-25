@@ -6,6 +6,6 @@ public class CharactersOpenedCondition : UnlockCondition
 
     public override bool IsSatisfied(PlayerInfo player)
     {
-        return Progress.Instance.PlayerInfo.OpenedCharacters.Count >= TargetNumberOfCharacters;
+        return player.OpenedCharacters.Count >= TargetNumberOfCharacters;
     }
 }
