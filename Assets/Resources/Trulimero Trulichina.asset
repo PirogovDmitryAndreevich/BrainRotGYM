@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcc14c2b0af7da5499c48ef3727dc4c1, type: 3}
+  m_Name: Trulimero Trulichina
+  m_EditorClassIdentifier: 
+  Name: Trulimero Trulichina
+  CharacterID: 9
+  MainColor: {r: 0.6, g: 0.5254902, b: 0.4156863, a: 1}
+  SecondaryColor: {r: 0.9176471, g: 0.5254902, b: 0.38823533, a: 1}
+  FaceSprite: {fileID: 21300000, guid: bffeaee8822f0294591f7afd04219a54, type: 3}
+  DecorationsSprite: {fileID: 21300000, guid: e6cacabd25f7a3041a9fd98c8f15808f, type: 3}
+  FootSprite: {fileID: 21300000, guid: 6d023aab448430148ae869b9e9d36a8b, type: 3}
+  HeadSprite: {fileID: 21300000, guid: 693d4bbdf340f3d40b3a4e4516f4bb92, type: 3}
+  Icon: {fileID: 21300000, guid: fd63b6f21e5d4dc4ba3d18211a1b738e, type: 3}
+  Shorts: {fileID: 21300000, guid: f901a6162802ea14b96a607410784003, type: 3}
+  unlockConditions: []
+  references:
+    version: 2
+    RefIds: []

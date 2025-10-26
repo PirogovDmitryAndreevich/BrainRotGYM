@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcc14c2b0af7da5499c48ef3727dc4c1, type: 3}
+  m_Name: Orangutini Ananassini
+  m_EditorClassIdentifier: 
+  Name: Orangutini Ananassini
+  CharacterID: 7
+  MainColor: {r: 0.83921576, g: 0.5176471, b: 0, a: 1}
+  SecondaryColor: {r: 0.8470589, g: 0.7294118, b: 0.5764706, a: 1}
+  FaceSprite: {fileID: 21300000, guid: d15e61216b949a94b8353cf5d84950f1, type: 3}
+  DecorationsSprite: {fileID: 0}
+  FootSprite: {fileID: 21300000, guid: 93ee0aea44bdd49468d0ed78fcba0e43, type: 3}
+  HeadSprite: {fileID: 21300000, guid: 177091ef199ec654ead22370c774cf00, type: 3}
+  Icon: {fileID: 21300000, guid: 982ef0b85fe5ba04ca999219aae448d2, type: 3}
+  Shorts: {fileID: 21300000, guid: 36e54ff61c41b4b4fb4cc05e9fbb3c84, type: 3}
+  unlockConditions: []
+  references:
+    version: 2
+    RefIds: []

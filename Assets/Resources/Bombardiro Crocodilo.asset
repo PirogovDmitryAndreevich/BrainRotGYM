@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcc14c2b0af7da5499c48ef3727dc4c1, type: 3}
+  m_Name: Bombardiro Crocodilo
+  m_EditorClassIdentifier: 
+  Name: Bombardiro Crocodilo
+  CharacterID: 2
+  MainColor: {r: 0.47450984, g: 0.64705884, b: 0.6, a: 1}
+  SecondaryColor: {r: 0.6431373, g: 0.86666673, b: 0.8000001, a: 1}
+  FaceSprite: {fileID: 21300000, guid: ad0b5c48500924b4e86041e07376e261, type: 3}
+  DecorationsSprite: {fileID: 21300000, guid: 8b3cfd2424ce8294589135bcef32d880, type: 3}
+  FootSprite: {fileID: 21300000, guid: 1a2e6cfad629f4f499b643035a849528, type: 3}
+  HeadSprite: {fileID: 21300000, guid: 3e4a2d035c3eae94d9e462691f836ddb, type: 3}
+  Icon: {fileID: 21300000, guid: 477dd6e671b3c2247b69282b5913ae8a, type: 3}
+  Shorts: {fileID: 21300000, guid: 92550b411d96f7e4484babdb629cd30a, type: 3}
+  unlockConditions: []
+  references:
+    version: 2
+    RefIds: []

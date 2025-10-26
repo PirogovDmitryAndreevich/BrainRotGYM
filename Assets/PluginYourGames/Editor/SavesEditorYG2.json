@@ -7,12 +7,29 @@
         false,
         false
     ],
-    "idSave": 9,
+    "idSave": 1919,
     "PlayerInfo": {
-        "_score": 0,
+        "_score": 550,
         "OpenedCharacters": [
             {
                 "CharacterID": 0,
+                "_balk": 10222,
+                "_bench": 3080,
+                "_horizontalBars": 3064,
+                "_foots": 3227,
+                "_lvlBalk": 4,
+                "_lvlBench": 2,
+                "_lvlHorizontalBars": 2,
+                "_lvlFoots": 2,
+                "_balksUpdatePoint": 0,
+                "_benchUpdatePoint": 0,
+                "_horizontalBarsUpdatePoint": 0,
+                "_footsUpdatePoint": 0,
+                "IsLevelRequiresUpdate": false,
+                "IsStatsRequiresUpdate": false
+            },
+            {
+                "CharacterID": 1,
                 "_balk": 0,
                 "_bench": 0,
                 "_horizontalBars": 0,
@@ -30,7 +47,7 @@
             }
         ],
         "CurrentCharacter": {
-            "CharacterID": 0,
+            "CharacterID": 1,
             "_balk": 0,
             "_bench": 0,
             "_horizontalBars": 0,

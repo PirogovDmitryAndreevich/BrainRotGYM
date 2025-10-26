@@ -1174,6 +1174,7 @@ MonoBehaviour:
   _icon: {fileID: 7757309613802204343}
   _background: {fileID: 7364750138732592306}
   _outline: {fileID: 4492350985733797314}
+  _backgroundIcon: {fileID: 6418739119393324319}
   _unlockContainer: {fileID: 5308801344311372979}
   _balks: {fileID: 3243241284575282386}
   _bench: {fileID: 2925341560708467811}
@@ -1184,6 +1185,7 @@ MonoBehaviour:
   _lockedContainer: {fileID: 766624111636635850}
   _conditionViewFactory: {fileID: 11400000, guid: c61bef48236e56040a80758aaca9692a, type: 2}
   _conditionsGridContainer: {fileID: 8785852864029782243}
+  _lockColorBG: {r: 0.13725491, g: 0.13725491, b: 0.1764706, a: 1}
 --- !u!114 &4806985561915823033
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,6 +19,7 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
     [SerializeField] private Image _icon;
     [SerializeField] private Image _background;
     [SerializeField] private Outline _outline;
+    [SerializeField] private Image _backgroundIcon;
     private Color _defaultBackgroundColor;
 
     [Header("Stats UI")]
@@ -34,6 +35,7 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
     [SerializeField] private GameObject _lockedContainer;
     [SerializeField] private ConditionViewFactory _conditionViewFactory;
     [SerializeField] private Transform _conditionsGridContainer;
+    [SerializeField] private Color _lockColorBG;
 
     private int _conditionsCount;
     private int _conditionsCompletedCount;
@@ -65,6 +67,7 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
         _button = GetComponent<Button>();
         _outline = GetComponent<Outline>();
 
+        _backgroundIcon.color = _characterView.SecondaryColor;
         _icon.sprite = _characterView.Icon;
         _defaultBackgroundColor = _background.color;
         _defaultColor = _outline.effectColor;
@@ -127,7 +130,7 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
         _unlockContainer.SetActive(false);
         _lockedContainer.SetActive(true);
 
-        _background.color = _defaultBackgroundColor;
+        _background.color = _lockColorBG;
         _button.interactable = false;
 
         foreach (Transform child in _conditionsGridContainer)
@@ -177,6 +180,7 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
         _button.onClick.AddListener(() =>
         {
             _charactersDataManager.OnOpenNewCharacter?.Invoke(CharacterID);
+            UnlockCharacter();
         });
         _button.interactable = true;
     }   
