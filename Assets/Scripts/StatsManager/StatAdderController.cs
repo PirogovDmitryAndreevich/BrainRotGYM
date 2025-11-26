@@ -9,7 +9,6 @@ public class StatAdderController : StatDataHelper
     public void Initialize()
     {
         _currentCharacter = Progress.Instance.PlayerInfo.CurrentCharacter;
-        Debug.Log($"[StatsAdder] select character {_currentCharacter.CharacterID}");
     }
 
     public void AddingStat(Stats stat, int value)

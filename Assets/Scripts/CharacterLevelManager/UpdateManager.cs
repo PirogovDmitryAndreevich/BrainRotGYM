@@ -2,11 +2,10 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(StatsLevelManager), typeof(LevelUpdateDemonstration), typeof(StatsUpdateDemonstration))]
+[RequireComponent(typeof(StatsLevelManager))]
 public class UpdateManager : StatDataHelper
 {
     private const int MaxLevel = 5;
-    public int _AllUpdatePoints;
 
     public static UpdateManager Instance;
 
@@ -23,8 +22,6 @@ public class UpdateManager : StatDataHelper
 
     private CharacterProgressData _currentCharacter;
     private StatsLevelManager _levelManager;
-    private LevelUpdateDemonstration _levelDemonstration;
-    private StatsUpdateDemonstration _statsDemonstration;
 
     private void Awake()
     {
@@ -37,8 +34,6 @@ public class UpdateManager : StatDataHelper
         Instance = this;
         DontDestroyOnLoad(gameObject);
         _levelManager = GetComponent<StatsLevelManager>();
-        _levelDemonstration = GetComponent<LevelUpdateDemonstration>();
-        _statsDemonstration = GetComponent<StatsUpdateDemonstration>();
 
         GameManager.Instance.OnAllSystemsReady += Initialize;
     }
@@ -60,7 +55,6 @@ public class UpdateManager : StatDataHelper
             OnStatsLvlUpdated?.Invoke(stat);
             CheckRequiresUpdateStats(stat);
             CheckRequiresUpdateLevel();
-            _statsDemonstration.Demonstration();
         }
     }
 
@@ -71,8 +65,20 @@ public class UpdateManager : StatDataHelper
             _levelManager.UpdateLevel();
             OnLevelUpdated?.Invoke();
             CheckRequiresUpdateLevel();
-            _levelDemonstration.Demonstration();
         }
+    }
+
+    public void CheckRequiresUpdateStats(Stats stat)
+    {
+        if (!CheckUpdatePossibility(stat))
+            return;
+
+        int changedPoints = GetCurrentUpdatePoints(stat);
+
+        if (changedPoints > 0)
+            OnRequiresUpdateStatLvl?.Invoke(stat);
+
+        _currentCharacter._isStatsRequiresUpdate = AnyStatRequiresUpdate();
     }
 
     private void Initialize()
@@ -146,20 +152,7 @@ public class UpdateManager : StatDataHelper
         {
             CheckRequiresUpdateStats(stat);
         }
-    }
-
-    private void CheckRequiresUpdateStats(Stats stat)
-    {
-        if (!CheckUpdatePossibility(stat))
-            return;
-
-        int changedPoints = GetCurrentUpdatePoints(stat);
-
-        if (changedPoints > 0)
-            OnRequiresUpdateStatLvl?.Invoke(stat);
-
-        _currentCharacter.IsStatsRequiresUpdate = AnyStatRequiresUpdate();
-    }
+    }   
 
     private bool AnyStatRequiresUpdate()
     {
@@ -184,12 +177,12 @@ public class UpdateManager : StatDataHelper
 
         if (_currentCharacter.Level < minStatLevel)
         {
-            _currentCharacter.IsLevelRequiresUpdate = true;
+            _currentCharacter._isLevelRequiresUpdate = true;
             OnRequiresUpdateLevel?.Invoke();
         }
         else
         {
-            _currentCharacter.IsLevelRequiresUpdate = false;
+            _currentCharacter._isLevelRequiresUpdate = false;
         }
     }
 }

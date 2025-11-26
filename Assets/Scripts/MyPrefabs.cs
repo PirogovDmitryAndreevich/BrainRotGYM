@@ -12,6 +12,12 @@ public class MyPrefabs : MonoBehaviour
 
     [SerializeField] public GameObject SelectCharacterButton;
 
+    [SerializeField] public GameObject CharacterIcon;
+
+    [SerializeField] public GameObject ScoreEffect;
+
+    [SerializeField] public GameObject Circle;
+
     private void Awake()
     {
         // Проверяем, существует ли уже экземпляр

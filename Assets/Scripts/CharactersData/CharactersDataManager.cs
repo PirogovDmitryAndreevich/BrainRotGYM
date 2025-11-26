@@ -32,8 +32,6 @@ public class CharactersDataManager : MonoBehaviour
 
         OnOpenNewCharacter += OpenNewCharacter;
         OnSelectCharacter += SelectCharacter;
-
-
     }
 
     private void OnDestroy()
@@ -74,7 +72,6 @@ public class CharactersDataManager : MonoBehaviour
                 SelectCharacter(characterID);
             }
         }
-
     }
 
     public void SelectCharacter(CharactersEnum characterID)

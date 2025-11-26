@@ -41,8 +41,9 @@ public class GameManager : MonoBehaviour
         _initializationSystem.RegisterCondition(new StatsManagerCondition()); 
         _initializationSystem.RegisterCondition(new OpenedCharacterManagerCondition()); 
         _initializationSystem.RegisterCondition(new CharacterDatabaseCondition()); 
-        _initializationSystem.RegisterCondition(new CharacterDataManagerCondition());
+        _initializationSystem.RegisterCondition(new CharacterDataManagerCondition()); 
         _initializationSystem.RegisterCondition(new UpdateManagerCondition());
+        _initializationSystem.RegisterCondition(new MiniGamesCondition());
 
         _initializationSystem.OnAllConditionsMet += OnAllConditionsMet;
 

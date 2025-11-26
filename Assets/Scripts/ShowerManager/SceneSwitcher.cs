@@ -26,8 +26,6 @@ public class SceneSwitcher : MonoBehaviour
 
     private void Show()
     {
-        Debug.Log($"Show {_targetScene.Identifier}");
-
         TrainingAreaController.Instance.OnAnimationIsComplete -= Show;
         _targetScene.gameObject.SetActive(true);
         TrainingAreaController.Instance.SetTrainingArea(TrainingArea.Show);
@@ -39,7 +37,6 @@ public class SceneSwitcher : MonoBehaviour
 
     private void Hide()
     {
-        Debug.Log($"Hide {_currentScene.Identifier}");
         _currentScene.gameObject.SetActive(false);
         TrainingAreaController.Instance.SetTrainingArea(TrainingArea.Hide);
     }

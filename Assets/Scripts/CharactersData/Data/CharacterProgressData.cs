@@ -29,6 +29,9 @@ public class CharacterProgressData
 
     public Action OnLevelChanged;
 
+    public Action<bool> OnLevelRequiredUpdate;
+    public Action<bool> OnStatRequiredUpdate;
+
     public int Balk
     {
         get => _balk;
@@ -145,7 +148,7 @@ public class CharacterProgressData
         get => _balksUpdatePoint;
         set
         {
-            if (_lvlFoots != value)
+            if (_balksUpdatePoint != value)
             {
                 _balksUpdatePoint = value;
                 OnAnyStatsAddedUpdatePoint?.Invoke(Stats.Balks);
@@ -189,14 +192,25 @@ public class CharacterProgressData
         }
     }
 
-    public bool IsLevelRequiresUpdate = false;
-    public bool IsStatsRequiresUpdate = false;
+    public bool _isLevelRequiresUpdate = false;
+    public bool _isStatsRequiresUpdate = false;
 
     public void UpdateLevel()
     {
         Level = Mathf.Min(LvlBalk, LvlBench, LvlHorizontalBars, LvlFoots);
     }
 
+    public int GetStatsLvl(Stats stats)
+    {
+        return stats switch
+        {
+            Stats.Balks => LvlBalk,
+            Stats.Bench => LvlBench,
+            Stats.HorizontalBar => LvlHorizontalBars,
+            Stats.Foots => LvlFoots,
+            _ => throw new ArgumentException($"Unknown stat type: {stats}")
+        };
+    }
 
     public CharacterProgressData() { }
 
@@ -204,4 +218,5 @@ public class CharacterProgressData
     {
         CharacterID = id;
     }
+
 }

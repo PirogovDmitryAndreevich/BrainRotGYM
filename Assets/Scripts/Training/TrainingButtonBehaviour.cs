@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 public class TrainingButtonBehaviour : MonoBehaviour
 {
     [SerializeField] private Text _textForProgressBar;
+    [SerializeField] private CharactersEnum enumChar;
 
     protected Button _button;
     protected bool _isInitialized;
@@ -15,26 +17,55 @@ public class TrainingButtonBehaviour : MonoBehaviour
     private const int DefaultValueToAddStat = 1;
     protected int _valueToAddStat = 1;
 
+    private bool _subscribedToProgressBar = false;
+
     protected virtual void OnEnable()
     {
         WaitingLoad.Instance.WaitAndExecute(
             () => Progress.Instance?.PlayerInfo?.CurrentCharacter != null,
             () =>
             {
+                if (_progressBar == null)
+                    _progressBar = GetComponent<ResistanceProgressBar>();
+
+                if (_progressBar != null && !_subscribedToProgressBar)
+                {
+                    _progressBar.OnProgressBarIsCompleted += CoefficientForValueToAddStat;
+                    _progressBar.OnProgressBarIsReset += ResetMultiplier;
+                    _subscribedToProgressBar = true;
+                }
+
                 if (_progressBar != null)
                 {
                     _progressBar.Initialize(GetCurrentLvlValue(_identifier));
                     _textForProgressBar.text = $"+{_valueToAddStat}";
-                    _progressBar.OnProgressBarIsCompleted += CoefficientForValueToAddStat;
-                    _progressBar.OnProgressBarIsReset += ResetMultiplier;
                 }
             }
         );
     }
 
+    private void OnDisable()
+    {
+        // отписка при выключении, чтобы избежать дублирующих подписок
+        if (_progressBar != null && _subscribedToProgressBar)
+        {
+            _progressBar.OnProgressBarIsCompleted -= CoefficientForValueToAddStat;
+            _progressBar.OnProgressBarIsReset -= ResetMultiplier;
+            _subscribedToProgressBar = false;
+        }
+    }
+
     protected virtual void OnDestroy()
     {
-        _button.onClick.RemoveAllListeners();
+        if (_progressBar != null && _subscribedToProgressBar)
+        {
+            _progressBar.OnProgressBarIsCompleted -= CoefficientForValueToAddStat;
+            _progressBar.OnProgressBarIsReset -= ResetMultiplier;
+            _subscribedToProgressBar = false;
+        }
+
+        if (_button != null)
+            _button.onClick.RemoveAllListeners();
     }
 
     public virtual void Initialize(Identificate identifier)
@@ -45,30 +76,14 @@ public class TrainingButtonBehaviour : MonoBehaviour
         _progressBar = GetComponent<ResistanceProgressBar>();
         _button = GetComponent<Button>();
 
-        if (Progress.Instance?.PlayerInfo?.CurrentCharacter != null)
-        {
-            _progressBar.Initialize(GetCurrentLvlValue(_identifier));
-            _textForProgressBar.text = $"+{_valueToAddStat}";
-        }
-        else
-        {
-            WaitingLoad.Instance.WaitAndExecute(
-                () => Progress.Instance?.PlayerInfo?.CurrentCharacter != null,
-                () =>
-                {
-                    _progressBar.Initialize(GetCurrentLvlValue(_identifier));
-                    _textForProgressBar.text = $"+{_valueToAddStat}";
-                }
-            );
-        }
-
         _button.onClick.AddListener(OnClickButton);
 
         _isInitialized = true;
     }
 
     protected virtual void OnClickButton()
-    {
+    { 
+
         if (Progress.Instance?.PlayerInfo?.CurrentCharacter == null)
         {
             Debug.LogWarning("CurrentCharacter is null, cannot add stats");
@@ -81,10 +96,7 @@ public class TrainingButtonBehaviour : MonoBehaviour
             return;
         }
 
-        if (StatsManager.Instance != null)
-            StatsManager.Instance.OnAddStat?.Invoke(_identifier, _valueToAddStat);
-        else
-            Debug.LogError("StatsManager.Instance is null!");
+        StatsManager.Instance?.OnAddStat?.Invoke(_identifier, _valueToAddStat);
 
         _progressBar.OnButtonClick();
 
@@ -101,10 +113,8 @@ public class TrainingButtonBehaviour : MonoBehaviour
 
     private void CoefficientForValueToAddStat()
     {
-        int valueToUI;
-
         _valueToAddStat++;
-        valueToUI = _valueToAddStat;
+        int valueToUI = _valueToAddStat;
         valueToUI++;
 
         _textForProgressBar.text = $"+{valueToUI}";
@@ -130,7 +140,8 @@ public class TrainingButtonBehaviour : MonoBehaviour
             Identificate.Bench => Progress.Instance.PlayerInfo.CurrentCharacter.LvlBench,
             Identificate.HorizontalBar => Progress.Instance.PlayerInfo.CurrentCharacter.LvlHorizontalBars,
             Identificate.Foots => Progress.Instance.PlayerInfo.CurrentCharacter.LvlFoots,
-            _ => 150
+            Identificate.GYM => throw new WarningException($"GYM"),
+            _ => throw new ArgumentException($"Unknown stat type: {statType}")
         };
     }
 }

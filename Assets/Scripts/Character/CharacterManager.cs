@@ -50,8 +50,6 @@ public class CharacterManager : MonoBehaviour
 
     private void Initialize()
     {
-        Debug.Log("[CharacterManager] Initialize");
-
         ShowScenesManager.Instance.SwitchScene += SetCurrentScene;
         CharactersDataManager.Instance.OnSelectedCharacter += InitializeNewCharacter;
         UpdateManager.Instance.UpdateBodyView += UpdateBodyView;

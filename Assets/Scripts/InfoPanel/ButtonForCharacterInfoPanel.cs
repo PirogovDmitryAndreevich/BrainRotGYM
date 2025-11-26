@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,6 +30,9 @@ public class ButtonForCharacterInfoPanel : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.OnAllSystemsReady -= Initialize;
 
+        if(CharactersDataManager.Instance != null)
+            CharactersDataManager.Instance.OnSelectedCharacter -= ResetButton;
+
         _button.onClick.RemoveAllListeners();
 
         if (_updateManager != null)
@@ -43,6 +47,13 @@ public class ButtonForCharacterInfoPanel : MonoBehaviour
         _updateManager = UpdateManager.Instance;
         _updateManager.OnRequiresUpdateStatLvl += ShowRequiresUpdate;
         _updateManager.OnStatsLvlUpdated += HideShowUpdate;
+        CharactersDataManager.Instance.OnSelectedCharacter += ResetButton;
+    }
+
+    private void ResetButton()
+    {
+        HideShowUpdate(_statType);
+        UpdateManager.Instance.CheckRequiresUpdateStats(_statType);
     }
 
     private void ShowRequiresUpdate(Stats stats)

@@ -67,7 +67,6 @@ public class StatsManager : MonoBehaviour
     {
         _adderStats.Initialize();
 
-
         foreach (var stat in _statsUI)
         {
             stat?.Initialize();

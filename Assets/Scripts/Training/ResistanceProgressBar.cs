@@ -25,16 +25,12 @@ public class ResistanceProgressBar : MonoBehaviour
     public Action OnProgressBarIsCompleted;
     public Action OnProgressBarIsReset;
 
+    private bool _wasAtMin = false;
+
     private void OnEnable()
     {
         if (_resistanceCoroutine == null && _progressFill != null)
-        {
             _resistanceCoroutine = StartCoroutine(ResistanceRoutine());
-        }
-
-        OnProgressBarIsCompleted += FillAmountIsCompleted;
-        OnProgressBarIsReset += ResetResistance;
-
     }
 
     private void OnDisable()
@@ -51,9 +47,6 @@ public class ResistanceProgressBar : MonoBehaviour
             _fillCoroutine = null;
             _isFilling = false;
         }
-
-        OnProgressBarIsCompleted -= FillAmountIsCompleted;
-        OnProgressBarIsReset -= ResetResistance;
     }
 
     public void Initialize(int playerLevel)
@@ -62,6 +55,8 @@ public class ResistanceProgressBar : MonoBehaviour
 
         _currentFill = MinFillValue;
         _completedCycles = 0;
+        _isCompleted = false;
+        _wasAtMin = true;
 
         UpdateResistance();
         UpdateVisualFill();
@@ -76,6 +71,7 @@ public class ResistanceProgressBar : MonoBehaviour
         if (_fillCoroutine != null)
         {
             StopCoroutine(_fillCoroutine);
+            _fillCoroutine = null;
         }
 
         // Добавляем +1 к заполнению
@@ -84,13 +80,6 @@ public class ResistanceProgressBar : MonoBehaviour
 
         // Запускаем плавную анимацию
         _fillCoroutine = StartCoroutine(SmoothFill());
-
-        // Проверяем завершение
-        if (_currentFill >= BaseMaxFill && !_isCompleted)
-        {
-            _isCompleted = true;
-            OnProgressBarIsCompleted?.Invoke();
-        }
     }
 
     private void UpdateResistance()
@@ -111,15 +100,21 @@ public class ResistanceProgressBar : MonoBehaviour
         _completedCycles++;
         _currentFill /= 2; // Сбрасываем до половины после заполнения
         _isCompleted = false;
+        _wasAtMin = _currentFill <= MinFillValue;
 
-        // Обновляем сопротивление после каждого заполнения
         UpdateResistance();
-
+        UpdateVisualFill();
     }
 
     private void ResetResistance()
     {
         _completedCycles = 0;
+        _currentFill = MinFillValue;
+        _isCompleted = false;
+        _wasAtMin = true;
+
+        UpdateResistance();
+        UpdateVisualFill();
     }
 
     private IEnumerator SmoothFill()
@@ -147,13 +142,22 @@ public class ResistanceProgressBar : MonoBehaviour
         _isFilling = false;
         _fillCoroutine = null;
 
-        if (_currentFill <= MinFillValue)
+        if (_currentFill <= MinFillValue && !_wasAtMin)
+        {
+            _wasAtMin = true;
+            ResetResistance();
             OnProgressBarIsReset?.Invoke();
+        }
+        else if (_currentFill > MinFillValue)
+        {
+            _wasAtMin = false;
+        }
 
         // Проверяем завершение после анимации
-        if (_progressFill.fillAmount >= BaseMaxFill && !_isCompleted)
+        if (_currentFill >= BaseMaxFill && !_isCompleted)
         {
             _isCompleted = true;
+            FillAmountIsCompleted();
             OnProgressBarIsCompleted?.Invoke();
         }
     }
@@ -166,10 +170,7 @@ public class ResistanceProgressBar : MonoBehaviour
         }
     }
 
-    private float EaseOutCubic(float t)
-    {
-        return 1f - Mathf.Pow(1f - t, 3f);
-    }
+    private float EaseOutCubic(float t) => 1f - Mathf.Pow(1f - t, 3f);
 
     private IEnumerator ResistanceRoutine()
     {
@@ -183,13 +184,25 @@ public class ResistanceProgressBar : MonoBehaviour
 
                 UpdateVisualFill();
 
-                if(_currentFill <= MinFillValue)
-                    OnProgressBarIsReset?.Invoke();
+                if (_currentFill <= MinFillValue)
+                {
+                    if (!_wasAtMin)
+                    {
+                        _wasAtMin = true;
+                        ResetResistance();
+                        OnProgressBarIsReset?.Invoke();
+                    }
+                }
+                else
+                {
+                    _wasAtMin = false;
+                }
 
                 // Проверяем завершение
                 if (_currentFill >= BaseMaxFill && !_isCompleted)
                 {
                     _isCompleted = true;
+                    FillAmountIsCompleted();
                     OnProgressBarIsCompleted?.Invoke();
                 }
             }

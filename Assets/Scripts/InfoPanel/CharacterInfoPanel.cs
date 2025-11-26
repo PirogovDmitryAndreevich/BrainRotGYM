@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class CharacterInfoPanel : StatDataHelper
 {
+    [Header("Update Level Popup")]
+    [SerializeField] private UpdateLevelPopup _updateLevelPopup;
+
     [Header("Text settings")]
     [SerializeField] private TextMeshProUGUI _levelTotal;
     [SerializeField] private TextMeshProUGUI _lvlBalks;
@@ -86,17 +89,10 @@ public class CharacterInfoPanel : StatDataHelper
             case Stats.HorizontalBar: _lvlHorizontalBar.text = levelText; break;
             case Stats.Foots: _lvlFoot.text = levelText; break;
         }
-    }
+    }    
 
     private void SetLevel() => _levelTotal.text = _currentCharacterData.Level.ToString();
-
-    private void ShowRequiresUpdateLevel()
-    {
-        _lvlUpButton.gameObject.SetActive(true);
-        Debug.Log("[CharacterInfoPanel] Level up button shown - requires update");
-    }
-
-    private void HideUpdateLevel() => _lvlUpButton.gameObject.SetActive(false);
-
+    private void ShowRequiresUpdateLevel() => _lvlUpButton.gameObject.SetActive(true);
     private void LvlUpdateButtonOnClick() => UpdateManager.Instance.TryUpdateLevel();
+    private void HideUpdateLevel() => _lvlUpButton.gameObject.SetActive(false);
 }

@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button), typeof(Outline))]
+[RequireComponent(typeof(Button))]
 public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacter
 {
     private CharacterProgressData _character;
@@ -12,15 +13,17 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
     private PlayerInfo _playerInfo;
 
     private Button _button;
-    private bool _isSelected;
     private CharactersEnum _charactersID;
 
     [Header("Common UI")]
     [SerializeField] private Image _icon;
     [SerializeField] private Image _background;
-    [SerializeField] private Outline _outline;
-    [SerializeField] private Image _backgroundIcon;
-    private Color _defaultBackgroundColor;
+    [SerializeField] private Image _selectFrame;
+
+    [Header("Front ground")]
+    [SerializeField] private Image _frontground;
+    [SerializeField] private Image _ground;
+    [SerializeField] private Image _gradient;
 
     [Header("Stats UI")]
     [SerializeField] private GameObject _unlockContainer;
@@ -35,15 +38,19 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
     [SerializeField] private GameObject _lockedContainer;
     [SerializeField] private ConditionViewFactory _conditionViewFactory;
     [SerializeField] private Transform _conditionsGridContainer;
-    [SerializeField] private Color _lockColorBG;
 
     private int _conditionsCount;
     private int _conditionsCompletedCount;
-    private Color _defaultColor;
 
     public CharactersEnum CharacterID => _charactersID;
 
     private readonly List<IUnlockConditionView> _spawnedViews = new();
+
+    private void Awake()
+    {
+        _button = GetComponent<Button>();
+        _selectFrame.gameObject.SetActive(false);
+    }
 
     private void OnDestroy()
     {
@@ -56,24 +63,26 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
         _spawnedViews.Clear();
     }
 
-    public void InitializeCharacterButtonSelect(CharactersEnum characterID)
+    public void InitializeCharacterButtonSelect(CharactersEnum characterID, Action<ISelectableCharacter> onSelectAction)
     {
         _charactersID = characterID;
         _character = OpenedCharactersManager.Instance.GetCharacterData(_charactersID);
         _characterView = CharacterDatabase.Instance.GetCharacterData(_charactersID);
         _charactersDataManager = CharactersDataManager.Instance;
         _playerInfo = Progress.Instance.PlayerInfo;
-
-        _button = GetComponent<Button>();
-        _outline = GetComponent<Outline>();
-
-        _backgroundIcon.color = _characterView.SecondaryColor;
         _icon.sprite = _characterView.Icon;
-        _defaultBackgroundColor = _background.color;
-        _defaultColor = _outline.effectColor;
+        _background.color = _characterView.MainColor;
+
+        _ground.color = _characterView.MainColor;
+        _gradient.color = _characterView.MainColor;
+        _frontground.color = new Color(1f, 1f, 1f, 0f);
 
         _conditionsCount = _characterView.unlockConditions.Count;
         _conditionsCompletedCount = 0;
+
+        _button.onClick.RemoveAllListeners();
+        _button.onClick.AddListener(() => onSelectAction.Invoke(this));
+
 
         if (OpenedCharactersManager.Instance.IsCharacterOpened(_charactersID))
             UnlockCharacter();
@@ -83,17 +92,8 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
 
     // ------------------------ Selection ------------------------
 
-    public void Deselect()
-    {
-        _isSelected = false;
-        _outline.effectColor = _defaultColor;
-    }
-
-    public void Select()
-    {
-        _isSelected = true;
-        _outline.effectColor = _selectColor;
-    }
+    public void Deselect() => _selectFrame.gameObject.SetActive(false);
+    public void Select() => _selectFrame.gameObject.SetActive(true);
 
     // ------------------------ Unlocked State ------------------------
 
@@ -102,7 +102,11 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
         _lockedContainer.SetActive(false);
         _unlockContainer.SetActive(true);
 
-        _background.color = _defaultBackgroundColor;
+        _background.color = _characterView.MainColor;
+
+        _ground.color = _characterView.MainColor;
+        _gradient.color = _characterView.MainColor;
+        _frontground.color = new Color(1f, 1f, 1f, 0f);
 
         _balks.text = _character.LvlBalk.ToString();
         _bench.text = _character.LvlBench.ToString();
@@ -110,17 +114,9 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
         _foots.text = _character.LvlFoots.ToString();
         _level.text = _character.Level.ToString();
 
-        _button.onClick.RemoveAllListeners();
-        _button.onClick.AddListener(() =>
-        {
-            CharacterSelectionController.Instance.SelectCharacter(this);
-        });
         _button.interactable = true;
 
-        Deselect();
-
-        if (Progress.Instance.PlayerInfo.CurrentCharacter.CharacterID == _charactersID)
-            Select();
+        Deselect();        
     }
 
     // ------------------------ Locked State ------------------------
@@ -130,7 +126,12 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
         _unlockContainer.SetActive(false);
         _lockedContainer.SetActive(true);
 
-        _background.color = _lockColorBG;
+        _background.color = _characterView.MainColor;
+
+        _ground.color = _characterView.MainColor;
+        _gradient.color = _characterView.MainColor;
+        _frontground.color = new Color(0f, 0f, 0f, 0.5f);
+
         _button.interactable = false;
 
         foreach (Transform child in _conditionsGridContainer)
@@ -160,10 +161,10 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
             }
         }
 
-        TryUnlockCharacter();
-
         _button.onClick.RemoveAllListeners();
         _button.interactable = false;
+
+        TryUnlockCharacter();
     }
 
     private void HandleConditionCompleted(IUnlockConditionView view)
@@ -176,6 +177,10 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
     {
         _background.color = _selectColor;
 
+        _ground.color = _selectColor;
+        _gradient.color = _selectColor;
+        _frontground.color = new Color(0f, 0f, 0f, 0f);
+
         _button.onClick.RemoveAllListeners();
         _button.onClick.AddListener(() =>
         {
@@ -183,14 +188,12 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
             UnlockCharacter();
         });
         _button.interactable = true;
-    }   
+    }
 
     private void TryUnlockCharacter()
     {
         if (_conditionsCompletedCount >= _conditionsCount)
-        {
-            Debug.Log($" Все условия для {_charactersID} выполнены!");
             CanOpenNewCharacter();
-        }
+
     }
 }
