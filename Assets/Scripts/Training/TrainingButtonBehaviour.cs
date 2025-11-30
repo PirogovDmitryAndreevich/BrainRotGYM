@@ -83,7 +83,6 @@ public class TrainingButtonBehaviour : MonoBehaviour
 
     protected virtual void OnClickButton()
     { 
-
         if (Progress.Instance?.PlayerInfo?.CurrentCharacter == null)
         {
             Debug.LogWarning("CurrentCharacter is null, cannot add stats");
@@ -96,6 +95,7 @@ public class TrainingButtonBehaviour : MonoBehaviour
             return;
         }
 
+        SoundEffects.Instance.PlayClickTrainingButton();
         StatsManager.Instance?.OnAddStat?.Invoke(_identifier, _valueToAddStat);
 
         _progressBar.OnButtonClick();

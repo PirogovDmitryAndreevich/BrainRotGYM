@@ -7,26 +7,26 @@
         false,
         false
     ],
-    "idSave": 1367,
+    "idSave": 3209,
     "PlayerInfo": {
-        "_score": 1211,
+        "_score": 3054,
         "OpenedCharacters": [
             {
                 "CharacterID": 0,
-                "_balk": 258,
-                "_bench": 29,
-                "_horizontalBars": 3666,
-                "_foots": 7,
-                "_lvlBalk": 1,
-                "_lvlBench": 1,
+                "_balk": 10143,
+                "_bench": 4223,
+                "_horizontalBars": 4101,
+                "_foots": 3014,
+                "_lvlBalk": 3,
+                "_lvlBench": 2,
                 "_lvlHorizontalBars": 5,
-                "_lvlFoots": 1,
-                "_balksUpdatePoint": 0,
+                "_lvlFoots": 2,
+                "_balksUpdatePoint": 1,
                 "_benchUpdatePoint": 0,
                 "_horizontalBarsUpdatePoint": 0,
                 "_footsUpdatePoint": 0,
                 "_isLevelRequiresUpdate": false,
-                "_isStatsRequiresUpdate": false
+                "_isStatsRequiresUpdate": true
             },
             {
                 "CharacterID": 2,
@@ -60,7 +60,7 @@
                 "_horizontalBarsUpdatePoint": 0,
                 "_footsUpdatePoint": 0,
                 "_isLevelRequiresUpdate": false,
-                "_isStatsRequiresUpdate": true
+                "_isStatsRequiresUpdate": false
             },
             {
                 "CharacterID": 4,
@@ -78,24 +78,43 @@
                 "_footsUpdatePoint": 0,
                 "_isLevelRequiresUpdate": false,
                 "_isStatsRequiresUpdate": false
+            },
+            {
+                "CharacterID": 1,
+                "_balk": 23,
+                "_bench": 0,
+                "_horizontalBars": 0,
+                "_foots": 0,
+                "_lvlBalk": 1,
+                "_lvlBench": 1,
+                "_lvlHorizontalBars": 1,
+                "_lvlFoots": 1,
+                "_balksUpdatePoint": 0,
+                "_benchUpdatePoint": 0,
+                "_horizontalBarsUpdatePoint": 0,
+                "_footsUpdatePoint": 0,
+                "_isLevelRequiresUpdate": false,
+                "_isStatsRequiresUpdate": false
             }
         ],
         "CurrentCharacter": {
             "CharacterID": 0,
-            "_balk": 258,
-            "_bench": 29,
-            "_horizontalBars": 3666,
-            "_foots": 7,
-            "_lvlBalk": 1,
-            "_lvlBench": 1,
+            "_balk": 10143,
+            "_bench": 4223,
+            "_horizontalBars": 4101,
+            "_foots": 3014,
+            "_lvlBalk": 3,
+            "_lvlBench": 2,
             "_lvlHorizontalBars": 5,
-            "_lvlFoots": 1,
-            "_balksUpdatePoint": 0,
+            "_lvlFoots": 2,
+            "_balksUpdatePoint": 1,
             "_benchUpdatePoint": 0,
             "_horizontalBarsUpdatePoint": 0,
             "_footsUpdatePoint": 0,
             "_isLevelRequiresUpdate": false,
-            "_isStatsRequiresUpdate": false
-        }
+            "_isStatsRequiresUpdate": true
+        },
+        "VolumeEffect": 0.0,
+        "VolumeMusic": 0.0
     }
 }

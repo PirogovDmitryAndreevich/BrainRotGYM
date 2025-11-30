@@ -54,7 +54,8 @@ public class ArmBattleGame : MonoBehaviour, IMiniGames
     }
 
     public void StartGame(List<CharacterProgressData> character)
-    {
+    {        
+        AudioManager.Instance.PlayArmWrestlingMusic();
         _gamePanel.SetActive(true);
         _prize.gameObject.SetActive(false);
         _timer = _gameDuration;
@@ -88,11 +89,16 @@ public class ArmBattleGame : MonoBehaviour, IMiniGames
 
     private IEnumerator UpdateGame()
     {
+        Color defaultColor = Color.white;
+        bool isTimerRunningOut = false;
+        bool hasPlayedTimerSound = false;
+
         while (_gameActive)
         {
             // обновление таймера
             _timer -= Time.deltaTime;
             _timerText.text = Mathf.Clamp(_timer,0, _gameDuration).ToString("0.0");
+            isTimerRunningOut = _timer < 3f && _timer > 2f;
 
             _pressButton.interactable = _isPressed;
 
@@ -102,10 +108,14 @@ public class ArmBattleGame : MonoBehaviour, IMiniGames
                 yield break;
             }
 
-            if (IsPointerInGreenZone())
-                _timerText.color = Color.green;
-            else
-                _timerText.color = Color.white;
+            _timerText.color = IsPointerInGreenZone() ? Color.green : defaultColor;
+
+            if (isTimerRunningOut && !hasPlayedTimerSound)
+            {
+                hasPlayedTimerSound = true;    
+                defaultColor = Color.red;
+                SoundEffects.Instance.PlayTimer();
+            }
 
             _slider.value += _sliderMoveSpeed * Time.deltaTime * _sliderDirection;
 
@@ -134,9 +144,15 @@ public class ArmBattleGame : MonoBehaviour, IMiniGames
         if (!_gameActive) return;
 
         if (IsPointerInGreenZone())
+        {
+            SoundEffects.Instance.PlayPositiveAction();
             _spinAngle += _moveStep;
+        }
         else
+        {
+            SoundEffects.Instance.PlayNegativeAction();
             _spinAngle -= _moveStep;
+        }
 
         _isPressed = false;
         UpdateResultPointer();
@@ -187,6 +203,8 @@ public class ArmBattleGame : MonoBehaviour, IMiniGames
 
     private void Exit()
     {
+        SoundEffects.Instance.PlayOpenPopupSelected();
+        AudioManager.Instance.PlayGYMMusic();
         _gamePanel.SetActive(false);
     }
 

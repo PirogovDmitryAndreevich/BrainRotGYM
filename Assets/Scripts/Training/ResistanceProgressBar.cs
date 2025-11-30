@@ -146,7 +146,7 @@ public class ResistanceProgressBar : MonoBehaviour
         {
             _wasAtMin = true;
             ResetResistance();
-            OnProgressBarIsReset?.Invoke();
+            OnProgressBarIsReset?.Invoke();            
         }
         else if (_currentFill > MinFillValue)
         {
@@ -159,6 +159,7 @@ public class ResistanceProgressBar : MonoBehaviour
             _isCompleted = true;
             FillAmountIsCompleted();
             OnProgressBarIsCompleted?.Invoke();
+            SoundEffects.Instance.PlayTrainingPBFull();
         }
     }
 
@@ -190,7 +191,7 @@ public class ResistanceProgressBar : MonoBehaviour
                     {
                         _wasAtMin = true;
                         ResetResistance();
-                        OnProgressBarIsReset?.Invoke();
+                        OnProgressBarIsReset?.Invoke();                        
                     }
                 }
                 else
@@ -204,6 +205,7 @@ public class ResistanceProgressBar : MonoBehaviour
                     _isCompleted = true;
                     FillAmountIsCompleted();
                     OnProgressBarIsCompleted?.Invoke();
+                    SoundEffects.Instance.PlayTrainingPBFull();
                 }
             }
 

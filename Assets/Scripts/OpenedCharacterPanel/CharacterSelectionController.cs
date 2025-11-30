@@ -50,7 +50,7 @@ public class CharacterSelectionController : MonoBehaviour
     {
         if (_currentSelection == null) return;
 
-        // подтверждаем выбор
+        SoundEffects.Instance.PlayOpenPopupSelected();
         CharactersDataManager.Instance.OnSelectCharacter?.Invoke(_currentSelection.CharacterID);
 
         // опционально Ч сбрасываем выделение

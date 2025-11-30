@@ -37,6 +37,15 @@ public class Condition_LevelReachedView : ConditionView
     }
 
     private void OnLevelTargetCharacterChanged() => CheckCondition(_condition, _player);
-    private void OnDestroy() => OpenedCharactersManager.Instance.GetCharacterData(_condition.TargetCharacterID).OnLevelChanged
-                -= OnLevelTargetCharacterChanged;
+
+    private void OnDestroy()
+    {
+        if (OpenedCharactersManager.Instance == null) return;
+
+        var characterData = OpenedCharactersManager.Instance.GetCharacterData(_condition.TargetCharacterID);
+        if (characterData != null)
+        {
+            characterData.OnLevelChanged -= OnLevelTargetCharacterChanged;
+        }
+    }
 }

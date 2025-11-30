@@ -34,6 +34,7 @@ public class StatProgressBar : StatDataHelper
             _isFilled = true;
             SetMaxProgress();
             OnProgressBarFilled?.Invoke(_statType);
+            SoundEffects.Instance.PlayStatsPBFull();
         }
         else
         {

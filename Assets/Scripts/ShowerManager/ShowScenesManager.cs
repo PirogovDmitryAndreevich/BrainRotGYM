@@ -79,7 +79,16 @@ public class ShowScenesManager : MonoBehaviour
 
     private void ShowScene(Identificate identifier)
     {
+        InterstitialAdv.Instance.ShowAdv();
+        SoundEffects.Instance.PlayTrainingButton();
         _sceneSwitcher.ShowScene(_scenesDict[identifier], CurrentScene);
+
+        if (identifier != Identificate.GYM)
+            AudioManager.Instance.PlayTrainingMusic();
+        else if (identifier == Identificate.GYM)
+            AudioManager.Instance.PlayGYMMusic();
+        else
+            AudioManager.Instance.MuteMusic();
     }
 
     private void OnSwitchComplete(Identificate identifier)

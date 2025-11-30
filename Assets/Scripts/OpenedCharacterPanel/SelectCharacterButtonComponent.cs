@@ -21,7 +21,7 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
     [SerializeField] private Image _selectFrame;
 
     [Header("Front ground")]
-    [SerializeField] private Image _frontground;
+    [SerializeField] private Image _frontGround;
     [SerializeField] private Image _ground;
     [SerializeField] private Image _gradient;
 
@@ -75,7 +75,7 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
 
         _ground.color = _characterView.MainColor;
         _gradient.color = _characterView.MainColor;
-        _frontground.color = new Color(1f, 1f, 1f, 0f);
+        _frontGround.color = new Color(1f, 1f, 1f, 0f);
 
         _conditionsCount = _characterView.unlockConditions.Count;
         _conditionsCompletedCount = 0;
@@ -92,8 +92,16 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
 
     // ------------------------ Selection ------------------------
 
-    public void Deselect() => _selectFrame.gameObject.SetActive(false);
-    public void Select() => _selectFrame.gameObject.SetActive(true);
+    public void Deselect()
+    {
+        SoundEffects.Instance.PlaySelectCharacter();
+        _selectFrame.gameObject.SetActive(false);
+    }
+    public void Select()
+    {
+        SoundEffects.Instance.PlaySelectCharacter();
+        _selectFrame.gameObject.SetActive(true);
+    }
 
     // ------------------------ Unlocked State ------------------------
 
@@ -106,7 +114,7 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
 
         _ground.color = _characterView.MainColor;
         _gradient.color = _characterView.MainColor;
-        _frontground.color = new Color(1f, 1f, 1f, 0f);
+        _frontGround.color = new Color(1f, 1f, 1f, 0f);
 
         _balks.text = _character.LvlBalk.ToString();
         _bench.text = _character.LvlBench.ToString();
@@ -116,7 +124,7 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
 
         _button.interactable = true;
 
-        Deselect();        
+       // Deselect();
     }
 
     // ------------------------ Locked State ------------------------
@@ -130,7 +138,7 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
 
         _ground.color = _characterView.MainColor;
         _gradient.color = _characterView.MainColor;
-        _frontground.color = new Color(0f, 0f, 0f, 0.5f);
+        _frontGround.color = new Color(0f, 0f, 0f, 0.5f);
 
         _button.interactable = false;
 
@@ -179,7 +187,7 @@ public class SelectCharacterButtonComponent : MonoBehaviour, ISelectableCharacte
 
         _ground.color = _selectColor;
         _gradient.color = _selectColor;
-        _frontground.color = new Color(0f, 0f, 0f, 0f);
+        _frontGround.color = new Color(0f, 0f, 0f, 0f);
 
         _button.onClick.RemoveAllListeners();
         _button.onClick.AddListener(() =>

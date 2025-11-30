@@ -38,15 +38,20 @@ public class PrizePopup : MonoBehaviour
     {
         if (_isOpen == true) return;
 
+        SoundEffects.Instance.PlayApplause();
+
         _score.text = score.ToString();
         _finalScore = score;
         _isOpen = true;
+        _rewardButton.interactable = true;
         StopAllCoroutines();
         StartCoroutine(ShowPopupCoroutine());
     }
 
     private void OnCLickRewardButton()
     {
+        SoundEffects.Instance.PlayOpenPopupSelected();
+
         string id = "X2";
         YG2.RewardedAdvShow(id, GiveReward);
     }
@@ -62,7 +67,7 @@ public class PrizePopup : MonoBehaviour
     {
         if (_isOpen == false) return;
 
-        //////////
+        SoundEffects.Instance.PlayOpenPopupSelected();
         Debug.Log($"Игрок получил {_finalScore} очков!");
         StopAllCoroutines();
         StartCoroutine(HidePopupCoroutine());

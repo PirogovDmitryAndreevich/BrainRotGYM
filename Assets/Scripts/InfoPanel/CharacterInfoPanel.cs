@@ -14,7 +14,7 @@ public class CharacterInfoPanel : StatDataHelper
     [SerializeField] private TextMeshProUGUI _lvlBench;
     [SerializeField] private TextMeshProUGUI _lvlHorizontalBar;
     [SerializeField] private TextMeshProUGUI _lvlFoot;
-    [SerializeField] private Button _lvlUpButton;
+    [SerializeField] private Button[] _lvlUpButtons;
     [SerializeField] private Image _icon;
 
     private CharacterData _currentCharacterView;
@@ -22,13 +22,17 @@ public class CharacterInfoPanel : StatDataHelper
 
     private void Awake()
     {
-        _lvlUpButton.gameObject.SetActive(false);
+        foreach (var button in _lvlUpButtons)
+        {
+            button.onClick.AddListener(LvlUpdateButtonOnClick);
+            button.gameObject.SetActive(false);
+        }
+
 
         GameManager.Instance.OnAllSystemsReady += Initialize;
         if (GameManager.Instance.IsAllSystemsReady)
             Initialize();
 
-        _lvlUpButton.onClick.AddListener(LvlUpdateButtonOnClick);
     }
 
     private void OnDestroy()
@@ -47,7 +51,8 @@ public class CharacterInfoPanel : StatDataHelper
             UpdateManager.Instance.OnLevelUpdated -= HideUpdateLevel;
         }
 
-        _lvlUpButton.onClick.RemoveAllListeners();
+        foreach (var button in _lvlUpButtons)
+            button.onClick.RemoveAllListeners();
     }
 
     private void Initialize()
@@ -89,10 +94,18 @@ public class CharacterInfoPanel : StatDataHelper
             case Stats.HorizontalBar: _lvlHorizontalBar.text = levelText; break;
             case Stats.Foots: _lvlFoot.text = levelText; break;
         }
-    }    
+    }
 
     private void SetLevel() => _levelTotal.text = _currentCharacterData.Level.ToString();
-    private void ShowRequiresUpdateLevel() => _lvlUpButton.gameObject.SetActive(true);
+    private void ShowRequiresUpdateLevel()
+    {
+        foreach (var button in _lvlUpButtons)
+            button.gameObject.SetActive(true);
+    }
     private void LvlUpdateButtonOnClick() => UpdateManager.Instance.TryUpdateLevel();
-    private void HideUpdateLevel() => _lvlUpButton.gameObject.SetActive(false);
+    private void HideUpdateLevel()
+    {
+        foreach (var button in _lvlUpButtons)
+            button.gameObject.SetActive(false);
+    }
 }

@@ -22,7 +22,24 @@ MonoBehaviour:
   HeadSprite: {fileID: 21300000, guid: 3c803244d8042304dad8b0fd1680033b, type: 3}
   Icon: {fileID: 21300000, guid: 4fcbd999e69d0274c9a206e01dc0b201, type: 3}
   Shorts: {fileID: 21300000, guid: 5adad0ce31bf48a418c46b1cc3c8083e, type: 3}
-  unlockConditions: []
+  unlockConditions:
+  - rid: 9054323861805072390
+  - rid: 9054323861805072391
+  - rid: 9054323861805072392
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 9054323861805072390
+      type: {class: LevelReachedCondition, ns: , asm: Assembly-CSharp}
+      data:
+        TargetCharacterID: 1
+        RequiredLevel: 4
+    - rid: 9054323861805072391
+      type: {class: LevelReachedCondition, ns: , asm: Assembly-CSharp}
+      data:
+        TargetCharacterID: 8
+        RequiredLevel: 3
+    - rid: 9054323861805072392
+      type: {class: ScoreReachedCondition, ns: , asm: Assembly-CSharp}
+      data:
+        TargetScore: 4000

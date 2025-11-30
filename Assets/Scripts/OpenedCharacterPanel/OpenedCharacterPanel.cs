@@ -61,6 +61,7 @@ public class OpenedCharacterPanel : MonoBehaviour
             return;
         }
 
+        CharactersEnum currentCharacter = Progress.Instance.PlayerInfo.CurrentCharacter.CharacterID;
         _isContentFilled = true;
 
         foreach (var kvp in CharacterDatabase.Instance.AllCharactersDictionary)
@@ -75,6 +76,9 @@ public class OpenedCharacterPanel : MonoBehaviour
             GameObject go = Instantiate(prefab, parent);
             var component = go.GetComponent<SelectCharacterButtonComponent>();
             component.InitializeCharacterButtonSelect(characterID, CharacterSelectionController.Instance.SelectCharacter);
+
+            /*if (characterID == currentCharacter)
+                CharacterSelectionController.Instance.SelectCharacter(component);*/
         }
 
         ResetScrollPositionNextFrame();

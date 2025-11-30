@@ -1612,7 +1612,7 @@ MonoBehaviour:
   _icon: {fileID: 7757309613802204343}
   _background: {fileID: 1935343818697555164}
   _selectFrame: {fileID: 793611916028189900}
-  _frontground: {fileID: 7364750138732592306}
+  _frontGround: {fileID: 7364750138732592306}
   _ground: {fileID: 6256318413397268839}
   _gradient: {fileID: 2090457521232947201}
   _unlockContainer: {fileID: 5308801344311372979}

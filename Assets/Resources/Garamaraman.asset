@@ -36,4 +36,4 @@ MonoBehaviour:
     - rid: 5881261882180894720
       type: {class: ScoreReachedCondition, ns: , asm: Assembly-CSharp}
       data:
-        TargetScore: 140
+        TargetScore: 240

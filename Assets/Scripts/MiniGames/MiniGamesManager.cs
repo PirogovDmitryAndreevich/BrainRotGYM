@@ -133,7 +133,7 @@ public class MiniGamesManager : MonoBehaviour
             OpenedCharactersManager.Instance.OpenedCharacters[characterButton.CharacterID];
             characterButton.Select();
         }
-        else
+        else if (_selectedCharacters.ContainsKey(characterButton.CharacterID))
         {
             _selectedCharacters.Remove(characterButton.CharacterID);
             characterButton.Deselect();
@@ -149,11 +149,38 @@ public class MiniGamesManager : MonoBehaviour
             _startButtonImage.color = Color.white;
             _startMiniGameButton.interactable = false;
         }
-    }    
+    } 
 
     private void StartMiniGame()
     {
+        SoundEffects.Instance.PlayStartTournament();
         var selectedCharacters = new List<CharacterProgressData>(_selectedCharacters.Values);
         _currentMiniGame.StartGame(selectedCharacters);
+        ResetSelects();
+    }
+
+    private void ResetSelects()
+    {
+        _currentMiniGameButton.Deselect();       
+        DeselectCharacters();
+        UpdateStartButtonState();
+    }
+
+    private void DeselectCharacters()
+    {
+        foreach (Transform child in _gridForCharacters)
+        {
+            if (child.TryGetComponent<ISelectableCharacter>(out var charButton))
+                charButton.Deselect();
+        }
+
+        _selectedCharacters.Clear();
+    }
+
+    private void UpdateStartButtonState()
+    {
+        bool hasCharacters = _selectedCharacters.Count > 0;
+        _startMiniGameButton.interactable = hasCharacters;
+        _startButtonImage.color = hasCharacters ? Color.green : Color.white;
     }
 }

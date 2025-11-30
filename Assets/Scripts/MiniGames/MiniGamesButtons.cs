@@ -18,6 +18,7 @@ public class MiniGamesButtons : MonoBehaviour, IMiniGamesButton
 
     public void Select()
     {
+        SoundEffects.Instance.PlaySelectTournament();
         Debug.Log($"Выбрана мини игра: {type}");
     }
 

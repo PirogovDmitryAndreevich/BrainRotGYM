@@ -35,6 +35,9 @@ public class UpdateLevelPopup : MonoBehaviour
 
     public void OpenPopup(int lvl, int newLel, int score)
     {
+        SoundEffects.Instance.PlayFanfare();
+        SoundEffects.Instance.PlayApplause();
+
         _lvlText.text = lvl.ToString();
         _scoreText.text = score.ToString();
 
@@ -111,6 +114,7 @@ public class UpdateLevelPopup : MonoBehaviour
 
     private void Accept()
     {
+        SoundEffects.Instance.PlayOpenPopupSelected();
         _popup.SetActive(false);
         OnAcceptClick?.Invoke(_score);
     }

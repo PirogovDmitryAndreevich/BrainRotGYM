@@ -131,6 +131,8 @@ public class FootMiniGame : MonoBehaviour, IMiniGames
     private void EndGame()
     {
         _isPlaying = false;
+        _prize.ShowPopup(_winScore);
+        _prize.OnClickAcceptButton += GivePrize;
         ClearParent();
     }
 
@@ -143,9 +145,14 @@ public class FootMiniGame : MonoBehaviour, IMiniGames
 
     private void ClearParent()
     {
-        foreach (Transform child in _parentForCircles)
-        {
-            Destroy(child.gameObject);
-        }
+        foreach (Transform child in _parentForCircles)        
+            Destroy(child.gameObject);        
+    }
+
+    private void GivePrize(int score)
+    {
+        _prize.OnClickAcceptButton -= GivePrize;
+        Progress.Instance.PlayerInfo.Score += score;
+        Exit();
     }
 }

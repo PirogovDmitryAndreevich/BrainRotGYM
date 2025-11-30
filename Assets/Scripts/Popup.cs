@@ -44,6 +44,8 @@ public class Popup : MonoBehaviour
     {
         if (_isOpen == true) return;
 
+        InterstitialAdv.Instance.ShowAdv();
+        SoundEffects.Instance.PlayOpenPopupSelected();
         _isOpen = true;
         StopAllCoroutines();
         StartCoroutine(ShowPopupCoroutine());
@@ -53,6 +55,8 @@ public class Popup : MonoBehaviour
     {
         if (_isOpen == false) return;
 
+        InterstitialAdv.Instance.ShowAdv();
+        SoundEffects.Instance.PlayOpenPopupSelected();
         _isOpen = false;
         StopAllCoroutines();
         StartCoroutine(HidePopupCoroutine());

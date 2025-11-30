@@ -76,6 +76,7 @@ public class TeamDeadliftGame : MonoBehaviour, IMiniGames
 
     public void StartGame(List<CharacterProgressData> characters)
     {
+        AudioManager.Instance.PlayTeamDeadliftMusic();
         _gamePanel.SetActive(true);
         _totalHorizontalLvl = 0f;
         _totalBenchLvl = 0f;
@@ -101,7 +102,7 @@ public class TeamDeadliftGame : MonoBehaviour, IMiniGames
         _scoreBonus = Mathf.Max((int)(_totalBenchLvl + _totalHorizontalLvl), MinScoreBonus);
         _tiltSpeed = Mathf.Lerp(MaxTiltSpeed, MinTiltSpeed, Mathf.InverseLerp(MinBenchLvl, MaxBenchLvl, _totalBenchLvl));
         _currentScore.text = _scoreBonus.ToString();
-        _nextScoreTimeForText = _nextScoreTime;       
+        _nextScoreTimeForText = _nextScoreTime;
 
         _gameActive = true;
         StopAllCoroutines();
@@ -110,9 +111,6 @@ public class TeamDeadliftGame : MonoBehaviour, IMiniGames
 
     private IEnumerator UpdateGame()
     {
-        /*_rightButton.interactable = _gameActive;
-        _leftButton.interactable = _gameActive;*/
-
         while (_gameActive)
         {
             _gameTimer += Time.deltaTime;
@@ -165,8 +163,16 @@ public class TeamDeadliftGame : MonoBehaviour, IMiniGames
         _balanceBoard.localRotation = Quaternion.Euler(0, 0, _boardAngle);
     }
 
-    private void OnPressedLeft() => _boardAngle += _moveStep;
-    private void OnPressedRight() => _boardAngle -= _moveStep;
+    private void OnPressedLeft()
+    {
+        SoundEffects.Instance.PlayClickButtonDeadlift();
+        _boardAngle += _moveStep;
+    }
+    private void OnPressedRight()
+    {
+        SoundEffects.Instance.PlayClickButtonDeadlift();
+        _boardAngle -= _moveStep;
+    }
 
     void EndGame()
     {
@@ -185,11 +191,14 @@ public class TeamDeadliftGame : MonoBehaviour, IMiniGames
 
     private void Exit()
     {
+        SoundEffects.Instance.PlayOpenPopupSelected();
+        AudioManager.Instance.PlayGYMMusic();
         _gamePanel.SetActive(false);
     }
 
     private void CreateScorePrefab()
-    {
+    {        
+        SoundEffects.Instance.PlayCreateScore();
         _scorePrefab = Instantiate(MyPrefabs.Instance.ScoreEffect, _parentObject);
         _scorePrefab.GetComponent<ScorePrefabEffect>().SetScoreValue(_scoreBonus);
         _flyingScore.StartFlyingUp(_parentObject.position, _scorePrefab, _duration, _flyDistance);

@@ -10,6 +10,9 @@ public class PlayerInfo
     public List<CharacterProgressData> OpenedCharacters = new();
     public CharacterProgressData CurrentCharacter;
 
+    public float VolumeEffect;
+    public float VolumeMusic;
+
     public Action OnScoreChanged;
 
     public int Score

@@ -53,6 +53,7 @@ public class UpdateManager : StatDataHelper
         {
             _levelManager.UpdateStatLevel(stat);
             OnStatsLvlUpdated?.Invoke(stat);
+            UpdateBodyView?.Invoke();
             CheckRequiresUpdateStats(stat);
             CheckRequiresUpdateLevel();
         }
